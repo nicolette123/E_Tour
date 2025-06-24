@@ -1,0 +1,52 @@
+.hero-banner {
+   background-image: url('../../public/images/home.png');
+    height: 500px;
+    border-radius: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 2rem;
+
+    .hero-overlay {
+      color: white;
+      max-width: 700px;
+
+      .hero-subtitle {
+        font-size: 1rem;
+        color: #e4ff50;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .hero-title {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+      }
+
+      .hero-desc {
+        font-size: 1rem;
+        color: #ddd;
+        margin-bottom: 1rem;
+      }
+      .explore-btn {
+        background: #1c6b1c;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      .hero-note {
+  font-size: 0.9rem;
+  color: #ccc;
+  position: absolute;
+  bottom: 20px;   // or whatever spacing you want from the bottom
+  right: 20px;    // or whatever spacing you want from the right
+  text-align: right;
+}
+    }
+  }
