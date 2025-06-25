@@ -1,0 +1,71 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 30px;
+  background-color: white;
+  max-width: 1200px;
+  margin: auto 0;
+  
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    img {
+      height: 40px;
+    }
+
+    span {
+      font-weight: bold;
+      color: #1c6b1c;
+      font-size: 18px;
+    }
+  }
+
+  .nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    font-size: 16px;
+    // background-color: #F9F9F9;
+    // border-radius: 4rem 4rem;
+    // height: 2rem;
+
+    li {
+      cursor: pointer;
+      color: #666;
+
+      &.active {
+        background-color: #1c6b1c;
+        color: white;
+        padding: 6px 18px;
+        border-radius: 20px;
+      }
+    }
+  }
+
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+
+    .login {
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 50px;
+      padding: 8px 16px;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .get-started {
+      background-color: #1c6b1c;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 18px;
+      cursor: pointer;
+    }
+  }
+}

@@ -27,7 +27,7 @@ function Footer() {
             <li><span>🔗</span> echoesofrwanda@gmail.com</li>
           </ul>
         </div>
-        <div className="footer-note">© Echoes of Rwanda 2025</div>
+        <div className="footers">© Echoes of Rwanda 2025</div>
       </footer>
   )
 }

@@ -1,18 +1,21 @@
 "use client";
 import React from 'react';
-import '../Styles/HomePage.scss';
-import HeroSection from '../component/HeroSection';
-import Service from '../component/Service';
-import Destination from '../component/Destination';
-import WhyEchoes from '../component/WhyEchoes';
-import Flow from '../component/Flow';
-import Premium from '../component/Premium';
-import Footer from '../component/Footer';
+  import '../../styles/HomePage.scss';
+// import '../styles/HomePage.scss';
+import HeroSection from '../../components/HeroSection';
+ import Service from '../../components/Service';
+import Destination from '../Destination';
+import WhyEchoes from '../WhyEchoes';
+import Premium from '../Premium';
+// import WhyEchoes from '../component/WhyEchoes';
+// import Flow from '../component/Flow';
+// import Premium from '../component/Premium';
+// import Footer from '../component/Footer';
 
 
 function Home() {
   return (
-    <section>
+    <section className="home-page">
      <div className="hero-banner">
         <div className="hero-overlay">
           <p className="hero-subtitle">Echoes of Rwanda - travel experience</p>
@@ -28,14 +31,15 @@ function Home() {
           </p>
         </div>
       </div>
-    <HeroSection />
-    <Service />
+    
+     <HeroSection /> 
+     <Service /> 
     {/* <Destination /> */}
-    {/* <Destination /> */}
-    <WhyEchoes />
-    <Flow />
-    <Premium />
-    <Footer />
+     <WhyEchoes />
+     <Premium />
+    {/* <Flow />
+    
+    <Footer />  */}
     </section>
     
   )

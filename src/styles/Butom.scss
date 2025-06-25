@@ -1,0 +1,64 @@
+button {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0.4rem;
+    padding-left: 0.8rem;
+    border-radius: var(--border-radius-button);
+    outline: none;
+    border: 1px solid transparent;
+    transition: all 0.5s ease;
+    font-size: inherit;
+
+    .button-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+button.primary {
+    background-color: var(--Primary);
+    color: white;
+
+    .button-icon {
+        background-color: white;
+        color: var(--Primary);
+    }
+
+    &:hover {
+        background-color: white;
+        color: var(--Primary);
+        border: 1px solid var(--Primary);
+
+        .button-icon {
+            background-color: var(--Primary);
+            color: white;
+        }
+
+
+    }
+}
+
+button.secondary {
+    background-color: white;
+    color: var(--Primary);
+
+    .button-icon {
+        background-color: var(--Primary);
+        color: white;
+    }
+
+    &:hover {
+        background-color: var(--Primary);
+        color: white;
+
+        .button-icon {
+            background-color: white;
+            color: var(--Primary);
+        }
+    }
+}

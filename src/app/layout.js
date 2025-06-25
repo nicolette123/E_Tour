@@ -1,15 +1,17 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Header from "../../src/components/layout/header";
+import Footer from "../../src/components/layout/footer";
+import {Bricolage_Grotesque } from 'next/font/google'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const grotesque = Bricolage_Grotesque({
   subsets: ["latin"],
+  weight: ['200', '300', '400', '500', '600', '700', '800'], // Add weights you need
+  variable: '--font-grotesque',
+  display: 'swap', 
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
 
 export const metadata = {
   title: "Create Next App",
@@ -18,9 +20,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={grotesque.className}>
+      <body>
+        <Header />
+        <main>
         {children}
+        </main>
+        <Footer />
+
       </body>
     </html>
   );
