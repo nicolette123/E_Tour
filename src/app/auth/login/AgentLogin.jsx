@@ -3,7 +3,7 @@ import '@/styles/login.scss';
 import Link from 'next/link';
 
 
-const UserLogin = () => {
+const AgentLogin = () => {
     return (
        <div className="container">
             <div className="login-container">
@@ -30,4 +30,4 @@ const UserLogin = () => {
     );
 };
 
-export default UserLogin;
+export default AgentLogin;
