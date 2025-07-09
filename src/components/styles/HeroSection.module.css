@@ -1,0 +1,131 @@
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #ffffff;
+  min-height: 80vh;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.textContent {
+  max-width: 50%;
+  padding-right: 2rem;
+}
+
+.textContent h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #367C2D;
+  line-height: 1.2;
+  margin-bottom: 4rem;
+}
+
+.subText {
+  font-size: 1.1rem;
+  color: #515151;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.bookingForm {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: flex;
+}
+
+.bookingForm select,
+.bookingForm input[type=text] {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.bookingForm input[type=text] {
+  cursor: default;
+}
+
+.bookNow {
+  background-color: #1a3c34;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+.bookNow:hover {
+  background-color: #14322a;
+}
+
+.imageContainer {
+  max-width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.chimpImage {
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: block;
+  width: 500px;
+  height: 782px;
+  opacity: 1;
+  top: 126px;
+  left: 796px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  .textContent,
+  .imageContainer {
+    max-width: 100%;
+    padding-right: 0;
+  }
+  .textContent h1 {
+    font-size: 2rem;
+  }
+  .bookingForm {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .bookingForm select,
+  .bookingForm input[type=text],
+  .bookNow {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+.aboutUs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 1088;
+  height: 1302;
+  opacity: 1;
+  top: 1002px;
+  left: 148px;
+}/*# sourceMappingURL=HeroSection.module.css.map */
