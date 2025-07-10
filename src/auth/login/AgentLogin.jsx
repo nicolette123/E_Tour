@@ -1,5 +1,5 @@
 'use client' 
-import '@/styles/login.scss';
+import '@/styles/login.css';
 import Link from 'next/link';
 
 
@@ -15,7 +15,7 @@ const AgentLogin = () => {
       <input type="password" id="password" placeholder='Enter your password' /> <br />
       <div className="remember-forgot">
         <label><input type="checkbox" /> Remember me</label>
-        <Link href="/reset-password">Reset Password?</Link>
+        <Link href="/ForgetPassword">Forget Password?</Link>
       </div>
       <div className='sign-in'><Link href="/sign-in">Sign In</Link></div>
       <div className='sign-up'><h3>Don't have an account yet? <Link href="/sign-up">Sign Up today.</Link></h3></div>

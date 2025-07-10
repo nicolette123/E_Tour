@@ -1,11 +1,15 @@
-import UserLogin from '@/app/auth/login/UserLogin';
-import AgentLogin from '@/app/auth/login/AgentLogin';
-import ForgetPassword from './auth/password/ForgetPassword';
+import UserLogin from '@/auth/login/UserLogin';
+import AgentLogin from '@/auth/login/AgentLogin';
+import ForgetPassword from '../auth/login/ForgetPassword';
+import ResetPassword from '../auth/login/ResetPassword';
+import ResetSuccess from '../auth/login/ResetSuccess';
 function Page() {
     return (
         <div>
+            {/* <ResetSuccess />
+            <ResetPassword />
             <ForgetPassword />
-            <AgentLogin />
+            <AgentLogin /> */}
             <UserLogin />
             
             
