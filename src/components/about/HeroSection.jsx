@@ -8,52 +8,57 @@ const HeroSection = () => {
     <section className={styles.hero}>
       <div className={styles.textContent}>
         <h1>
-          Echoes of Rwanda is where 
-       technology meets tourism      travelers meet the people who
-      make journeys special
-    </h1>
-    <p className={styles.subText}>Discover the Land of a Thousand Hills</p>
+          Echoes of Rwanda is where <br />
+          technology meets tourism <br />
+          travelers meet the people who <br />
+          make journeys special
+        </h1>
+        <p className={styles.subText}>Discover the Land of a Thousand Hills</p>
 
-    
+        <div className={styles.bookingForm}>
+          <div className={styles.formItem}>
+            <label>Guest</label>
+            <select>
+              <option>2 Adult</option>
+              <option>1 Adult</option>
+              <option>2 Child</option>
+            </select>
+          </div>
 
-    <div className={styles.bookingForm}>
-     <label>Guest</label>  
-      <select>
-        <option>2 Adults</option>
-        <option>1 Adult</option>
-        <option>2 Children</option>
-      </select>
-      <label>Date</label>
-    <div className="date">
-      
-      <input type="date" />
-    </div>
-    <label>Package</label>
+          <div className={styles.formItem}>
+            <label>Date</label>
+            <select>
+              <option>12 - 13 April 2021</option>
+              <option>20 - 22 May 2021</option>
+            </select>
+          </div>
 
-      <select>
-        <option>Akagera Tour</option>
-        <option>Nyungwe Tour</option>
-        <option>Volcanoes Tour</option>
-      </select>
+          <div className={styles.formItem}>
+            <label>Package</label>
+            <select>
+              <option>Akagera Tour</option>
+              <option>Nyungwe Tour</option>
+              <option>Volcanoes Tour</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-      <button className={styles.bookNow}>Book Now</button>
-    </div>
-  </div>
+      <div className={styles.imageContainer}>
+        <div className={styles.buttonWrapper}>
+          <button className={styles.bookNow}>Book Now</button>
+        </div>
 
-  <div className={styles.imageContainer}>
-    <Image
-      src="/images/green-hero.png"
-      alt="Chimpanzees in Rwanda"
-      width={500}
-      height={500}
-      className={styles.chimpImage}
-    />
-  </div>
-</section> 
-
-
-);
+        <Image
+          src="/images/green-hero.png"
+          alt="Chimpanzees in Rwanda"
+          width={500}
+          height={782}
+          className={styles.chimpImage}
+        />
+      </div>
+    </section>
+  );
 };
 
-export default HeroSection; 
-
+export default HeroSection;
