@@ -1,1 +1,12 @@
-/*# sourceMappingURL=signup.css.map */
+.register-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+.register-container .register-image {
+  width: 45%;
+  position: relative;
+  background-image: url("/images/login.jpg");
+  background-size: cover;
+}/*# sourceMappingURL=signup.css.map */

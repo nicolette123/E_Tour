@@ -24,7 +24,7 @@ const ResetSuccess = () => {
                     
                         <div className='reset'>
                             <div className='reset-icon'>
-                                <Link href="/user-login">  <img src="/images/okay.png" alt="okay" /></Link>
+                                <Link href="/agent-login">  <img src="/images/okay.png" alt="okay" /></Link>
                             </div>
                             <div className='reset-text'>
                             <h1>

@@ -6,6 +6,10 @@ import Link from 'next/link';
 const AgentLogin = () => {
     return (
        <div className="container">
+              <div className="image-container">
+    <div className='transparent'></div>
+    <h1>Echoes of Rwanda</h1>
+</div>
             <div className="login-container">
       <h1>Login</h1>
       <h2>Login to your account</h2>
@@ -15,17 +19,14 @@ const AgentLogin = () => {
       <input type="password" id="password" placeholder='Enter your password' /> <br />
       <div className="remember-forgot">
         <label><input type="checkbox" /> Remember me</label>
-        <Link href="/ForgetPassword">Forget Password?</Link>
+        <Link href="/Agent-forget-password">Forget Password?</Link>
       </div>
       <div className='sign-in'><Link href="/sign-in">Sign In</Link></div>
-      <div className='sign-up'><h3>Don't have an account yet? <Link href="/sign-up">Sign Up today.</Link></h3></div>
+      <div className='sign-up'><h3>Don't have an account yet? <Link href="/agent-register">Sign Up today.</Link></h3></div>
 
 
             </div>
-           <div className="image-container">
-    <div className='transparent'></div>
-    <h1><span className='highlight'>Explore</span> <br /> from your comfort Destination.</h1>
-</div>
+     
        </div> 
     );
 };

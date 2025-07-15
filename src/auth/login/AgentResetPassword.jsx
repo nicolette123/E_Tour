@@ -3,7 +3,7 @@ import '@/styles/reset.css';
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ResetPassword = () => {
+const AgentResetPassword = () => {
     return (
         <div className="main-container">
             <img src="/images/Ellipse 2.png" alt="circle" className='img1' />
@@ -37,7 +37,7 @@ const ResetPassword = () => {
                             <input type="password" id="password" placeholder='Enter Confirm Password' /></div>
 
                         <div className='reset-btn'>
-                            <Link href="/reset-success" >Reset Password</Link>
+                            <Link href="/agent-reset-success" >Reset Password</Link>
                         </div>
                     </div>
 
@@ -50,4 +50,4 @@ const ResetPassword = () => {
     )
 }
 
-export default ResetPassword;
+export default AgentResetPassword;

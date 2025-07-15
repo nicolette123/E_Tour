@@ -3,7 +3,7 @@ import "@/styles/forget.css";
 import Link from 'next/link';
 import Image from 'next/image';
 
-const ForgetPassword = () => {
+const AgentForgetPassword = () => {
     return (
         <div className="main-container">
 
@@ -24,7 +24,7 @@ const ForgetPassword = () => {
                 </div>
                 <div className='overlay-form'>
                     <div className='login'>
-                        <Link href="/">Login</Link></div>
+                        <Link href="/agent-login">Login</Link></div>
                     <div className='reset'>
                         <h1>
                             Reset Your Password Now
@@ -36,7 +36,7 @@ const ForgetPassword = () => {
                         <input type="email" id="email" placeholder='Email address' />
                         <br />
                         <div className='reset-btn'>
-                            <Link href="/reset-password" >Reset Password</Link>
+                            <Link href="/agent-reset-password" >Reset Password</Link>
                         </div>
                     </div>
 
@@ -49,4 +49,4 @@ const ForgetPassword = () => {
     )
 }
 
-export default ForgetPassword;
+export default AgentForgetPassword;

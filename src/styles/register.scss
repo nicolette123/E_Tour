@@ -1,30 +1,56 @@
-.container{
-    display: flex;
+.register-container {
+      display: flex;
     width: 100%;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
-   
     
-    .login-container{
-        width: 55%;
-        margin: 9rem 3rem;
-        
+    .register-image{
+    width: 45%;
+    position: relative;
+    background-image: url('/images/login.jpg');
+    background-size: cover;
+    
+     .transparent{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #367C2D;
+        opacity: 0.7;
+        z-index: 1;
+    }
         h1{
-            color: #367C2D;
-            font-size: 2.5rem;
-        }
-        h2{
-            margin-top: 1rem;
-            margin-bottom: 1.5rem;
-        }
+        position: absolute;
+        z-index: 2; 
+        font-size: 2.5rem;
+        margin: 34rem 3rem;
+        color: white;
+            
+    }
+    }
+    .register-form {
+     width: 55%;
+    margin: 5rem 3rem;
+    h1{
+        color: #367C2D;
+        font-weight: 600;
+        font-size: 2.5rem;
+        font-style: normal;
+    } 
+    .same-row {
+        display: flex;
+        width: 100%;
+        gap: 1rem;
+        .name-inputs {
+            width: 50%;
         
-        label{
+      label{
             margin-top: 1.2rem; 
             font-weight: 600;
             font-size: small;
         }
-        
-        input{
+         input{
             width: 100%;
             height: 3rem;
             padding: 0.5rem;
@@ -33,18 +59,33 @@
             margin-top: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        
-        .remember-forgot{
+        }    
+    } 
+     label{
+            margin-top: 1.2rem; 
+            font-weight: 600;
+            font-size: small;
+        }
+         input{
+            width: 100%;
+            height: 3rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid black;
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .checkboxes {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem; 
-            label{
-                margin-top: 0; // Reset margin for labels inside remember-forgot
-                display: flex;
-                align-items: center;
-                
-                
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 0rem;
+        label{
+           margin-top: 0; 
+            display: flex;
+            align-items: center; 
+            font-weight: 600;
+            font-size: small;
                    input[type="checkbox"]{
                     width: 30px;
                     height: 26px;
@@ -73,21 +114,11 @@
                         }
                     }
                 }
-            }
-            
-            a{
-                color: #367C2D;
-                font-weight: 600;
-                font-size: small;
-                
-                &:hover{
-                    text-decoration: underline;
-                }
-            }
+        }    
         }
-        
-        .sign-in{
-            background-color: #367C2D;
+        .create-account {
+            margin-top: 2rem;
+           background-color: #367C2D;
             color: white;
             padding: 1rem 1rem;
             border-radius: 0.5rem;
@@ -101,12 +132,10 @@
                       color: black;
                       border: 4px solid #367C2D;
         }
-    }
-        
-        .sign-up{
-            justify-items: center;
+        }
+.login{
+      justify-items: center;
             margin-top: 1.5rem;
-            
             h3{
                 color: #8F8F8F;
                 font-weight: 600;
@@ -119,36 +148,7 @@
                     text-decoration: underline;
                 }
                 }
-            }
-        }
-    
-    }
-   .image-container{
-    width: 45%;
-    position: relative;
-    background-image: url('/images/login.jpg');
-    background-size: cover;
-   
-    
-    .transparent{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #367C2D;
-        opacity: 0.7;
-        z-index: 1;
-    }
-    
-    h1{
-        position: absolute;
-        z-index: 2; // Higher z-index than transparent overlay
-        font-size: 2.5rem;
-        margin: 34rem 3rem;
-        color: white;
-        
-        
-    }
+            } 
+}
 }
 }

@@ -109,20 +109,33 @@
 .main-container .overlay .overlay-form .reset label {
   display: block;
   margin-top: 2rem;
+  font-size: small;
+  font-weight: 600;
 }
 .main-container .overlay .overlay-form .reset input {
   width: 100%;
-  height: 2rem;
-  border: 2px solid #367C2D;
-  border-radius: 2px;
+  height: 3rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
 }
 .main-container .overlay .overlay-form .reset .reset-btn {
-  margin-top: 3rem;
+  margin-top: 2rem;
   background-color: #367C2D;
   color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
   text-align: center;
+  width: 100%;
+  height: 3rem;
+  font-weight: 600;
+  font-size: small;
+  cursor: pointer;
+  transition: all 0.8s ease;
+  box-shadow: 0 0.2rem 0.5rem gray;
+}
+.main-container .overlay .overlay-form .reset .reset-btn:hover {
+  background-color: #eee;
+  color: black;
+  border: 4px solid #367C2D;
 }/*# sourceMappingURL=forget.css.map */
