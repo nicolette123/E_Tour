@@ -22,7 +22,7 @@
     .hero-overlay {
       color: white;
       max-width: 700px;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(54, 124, 45, 0.7);
       padding: 2rem 2rem;
       border-radius: 20px;
 
@@ -57,8 +57,8 @@
   font-size: 0.9rem;
   color: white;
   position: absolute;
-  bottom: 20px;   // or whatever spacing you want from the bottom
-  right: 20px;    // or whatever spacing you want from the right
+  bottom: 20px;   
+  right: 20px;    
   text-align: right;
 }
     }

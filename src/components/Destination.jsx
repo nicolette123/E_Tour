@@ -1,43 +1,27 @@
-// LockoutPreview.jsx
-import React from 'react';
-import '.././styles/Service.scss'
+import Image from 'next/image'
+import '../styles/Destination.scss'
 
-const carouselItems = [
-  { image: '/images/image 5.png' },
-  { image: '/images/kigali.jpg' },
-  {
-    image: '/images/image 4.png',
-    title: 'Akagera National Park',
-  },
-  { image: '/images/image 6.png' },
-  { image: '/images/lake-kivu.jpg' }
-];
+export default function Home() {
+  const destinations = [
+    { title: 'Akagera National Park', image: '/images/akagera.png' },
+    { title: 'Lake Kivu', image: '/images/kivu.png' },
+    { title: 'Kigali', image: '/images/kigalii.png' },
+    { title: 'Nyungwe Park', image: '/images/Nyungwee.png' },
+    { title: 'Volcanoes National Park', image: '/images/volcano.png' },
+    { title: 'Rwanda Memorial Genocide', image: '/images/genocide.png' }
+  ]
 
-const LockoutPreview = () => {
   return (
-    <section className="lockout-preview">
-      <h2 className="title">Popular Destination</h2>
-
-      <div className="carousel">
-        {carouselItems.map((item, idx) => (
-          <div className="carousel-item" key={idx}>
-            <img src={item.image} alt={`carousel-${idx}`} className="carousel-img" />
-            {item.title && (
-              <div className="carousel-caption">
-                <h3>{item.title}</h3>
-              </div>
-            )}
-            {/* {item.title && (
-            //   <>
-            //     <span className="carousel-arrow left">‹</span>
-            //     <span className="carousel-arrow right">›</span>
-            //   </>
-            )} */}
+    <div className="container">
+      <h1 className='destination-title'>Popular Destination</h1>
+      <div className="grid">
+        {destinations.map((dest, index) => (
+          <div key={index} className="card">
+            <Image src={dest.image} alt={dest.title} width={400} height={280} className="card-image" />
+            <div className="card-label">{dest.title}</div>
           </div>
         ))}
       </div>
-    </section>
-  );
-};
-
-export default LockoutPreview;
+    </div>
+  )
+}

@@ -14,7 +14,7 @@
 
 
   .premium-overlay {
-    background: rgba(0, 0, 0, 0.8);
+    background-color: rgba(54, 124, 45, 0.7);
     padding: 0.8rem 2rem;
     border-radius: 2rem;
     text-align: center;
@@ -22,7 +22,7 @@
     width: 100%;
 
     .premium-subtitle {
-      color: #e4ff50;
+      // color: #e4ff50;
       font-weight: 600;
       margin-bottom: 1rem;
     }
@@ -54,7 +54,6 @@
         max-width: 220px;
 
         .icon-circle {
-          background: #e4ff50;
           border-radius: 50%;
           width: 48px;
           height: 48px;

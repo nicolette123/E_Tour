@@ -3,14 +3,14 @@ import React from 'react';
   import '../../styles/HomePage.scss';
 // import '../styles/HomePage.scss';
 import HeroSection from '../../components/HeroSection';
- import Service from '../../components/Service';
+//  import Service from '../../components/Service';
 import Destination from '../Destination';
 import WhyEchoes from '../WhyEchoes';
 import Premium from '../Premium';
 // import WhyEchoes from '../component/WhyEchoes';
 // import Flow from '../component/Flow';
 // import Premium from '../component/Premium';
-// import Footer from '../component/Footer';
+import Testimonial from '../Testimonial';
 
 
 function Home() {
@@ -33,13 +33,14 @@ function Home() {
       </div>
     
      <HeroSection /> 
-     <Service /> 
-    {/* <Destination /> */}
+     {/* <Service /> */}
+    <Destination /> 
      <WhyEchoes />
      <Premium />
     {/* <Flow />
-    
     <Footer />  */}
+    <Testimonial />
+
     </section>
     
   )

@@ -10,12 +10,13 @@ const Header = () => {
       <nav className="nav">
         <ul>
           <li className="active">HOME</li>
-          <li>Travel guides</li>
-          <li>Explore</li>
+          <li>Tour Package</li>
+          <li>Gallery</li>
+          <li>About us</li>
         </ul>
       </nav>
       <div className="auth-buttons">
-        <button className="login">Log in</button>
+        <button className="login">Request trip</button>
         <button className="get-started">Get started</button>
       </div>
     </header>
