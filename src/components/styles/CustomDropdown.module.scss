@@ -1,0 +1,164 @@
+.dropdown {
+  position: relative;
+  width: 200px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: black;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+
+.arrow {
+  margin-left: auto;
+  font-size: 0.8rem;
+}
+
+.menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.option {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background-color: #367c2d;
+    color: white;
+  }
+}
+
+.selected {
+  background-color: #eaf4ea;
+  color: #31722f;
+}
+
+.checkmark {
+  color: #367c2d;
+}
+
+.dateContainer {
+  position: absolute;
+  display: flex;
+  top: 110%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  padding: 1rem;
+  border-radius: 6px;
+  height: 400px;
+}
+
+.dateOptions {
+  display: flex;
+  flex-direction: column;
+  padding-right: 1rem;
+  border-right: 1px solid #eee;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.dateOption {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  color: #222;
+  padding-right: 2rem;
+  width: 150px;
+
+  &:hover {
+    background-color: #ccd1d2;
+  }
+
+  input {
+    accent-color: #367c2d;
+  }
+}
+
+.active {
+  background-color: #e8f5e9;
+  font-weight: bold;
+}
+
+.calendar {
+  padding-left: 1rem;
+
+  .rdrDaySelected,
+  .rdrDayStartPreview,
+  .rdrDayEndPreview,
+  .rdrInRange {
+    background-color: #367c2d !important;
+    color: white;
+  }
+
+  .rdrDayHovered {
+    border: 1px solid #367c2d !important;
+  }
+
+  .rdrDayToday {
+    border-color: #367c2d !important;
+  }
+}
+
+.dateActions {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem;
+  align-items: flex-end;
+}
+
+.dates {
+  color: #367c2d;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cancel {
+  background: #eee;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.apply {
+  background-color: #367c2d;
+  color: white;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+}

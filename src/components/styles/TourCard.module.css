@@ -1,0 +1,84 @@
+.cardsSection {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.card img.cardImg {
+  width: 100%;
+  height: 200px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.card .cardBody {
+  padding: 1.5rem;
+}
+.card .cardBody h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  color: #12202F;
+}
+.card .cardBody p {
+  font-size: 0.95rem;
+  color: #333;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+.card .cardBody .learnMore {
+  background-color: #31722f;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.card .cardBody .learnMore:hover {
+  background-color: #255c24;
+}
+
+.nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+.nav .navBtn {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #31722f;
+  background: transparent;
+  color: #31722f;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+.nav .navBtn:hover {
+  background: #31722f;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}/*# sourceMappingURL=TourCard.module.css.map */
