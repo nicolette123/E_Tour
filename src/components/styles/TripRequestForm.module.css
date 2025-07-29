@@ -1,0 +1,66 @@
+.trip-request-form {
+  text-align: center;
+  padding: 40px;
+}
+.trip-request-form .subtitle {
+  color: #2e7d32;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.trip-request-form h2 {
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+.trip-request-form form {
+  background: #fff;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #eee;
+}
+.trip-request-form form h3 {
+  font-size: 24px;
+  color: #2e7d32;
+  margin-bottom: 30px;
+}
+.trip-request-form form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.trip-request-form form .form-grid label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.trip-request-form form .form-grid input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.trip-request-form form .form-grid .error {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+  text-align: left;
+  display: block;
+}
+.trip-request-form form button {
+  background: #2e7d32;
+  color: white;
+  font-size: 16px;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.trip-request-form form button:hover {
+  background: #256c29;
+}/*# sourceMappingURL=TripRequestForm.module.css.map */

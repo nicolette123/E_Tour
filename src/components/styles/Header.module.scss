@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  border-bottom: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.logoContainer img {
+  object-fit: contain;
+}
+
+.profile img {
+  border-radius: 50%;
+  cursor: pointer;
+}

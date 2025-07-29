@@ -140,6 +140,8 @@
 
   .textContent h1 {
     font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .bookingForm {
@@ -148,6 +150,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem 0;
+    margin-left: 0;
   }
 
   .formItem select {
@@ -169,13 +172,17 @@
   }
 
   .imageContainer {
-    justify-content: center;
-    margin-top: 2rem;
-    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
   }
 
   .chimpImage {
-    width: 100%;
+    width: 100vw;
     height: auto;
+    display: block;
+    object-fit: cover;
+    margin: 0;
   }
 }
