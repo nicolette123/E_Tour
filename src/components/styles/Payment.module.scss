@@ -1,0 +1,135 @@
+.paymentWrapper {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.heading {
+  font-size: 1.7rem;
+  color: #31722f;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.formContainer {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  text-align: left;
+
+  h3 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+}
+
+.methods {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.method {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 6px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.active {
+  border: 2px solid #31722f;
+  background: #fff;
+}
+
+.dropdown {
+  background: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  input,
+  select {
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+  }
+}
+
+.double {
+  display: flex;
+  gap: 1rem;
+
+  input,
+  select {
+    flex: 1;
+  }
+}
+
+.confirmBtn {
+  margin-top: 1.5rem;
+  background-color: #31722f;
+  color: white;
+  font-size: 1.2rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #255c24;
+  }
+}
+
+.cardInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .cardInput {
+    padding-right: 120px;
+    width: 100%;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0.7rem;
+  }
+
+  .cardIcons {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+
+    img {
+      height: 24px;
+      width: auto;
+    }
+  }
+}
