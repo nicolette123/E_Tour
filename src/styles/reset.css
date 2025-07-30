@@ -1,0 +1,141 @@
+.main-container {
+  background-image: url("/images/password.jpg");
+  width: 100%;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+}
+.main-container .overlay {
+  display: flex;
+  background-color: white;
+  width: 70rem;
+  height: 35rem;
+  z-index: 10;
+  transform: rotate(0deg);
+  opacity: 1;
+}
+.main-container .overlay .overlay-img {
+  background-color: #367C2D;
+  width: 50%;
+  height: 35rem;
+  position: relative;
+  background: #367C2D;
+  background: linear-gradient(46deg, rgb(54, 124, 45) 0%, rgb(54, 124, 45) 59%, rgb(255, 255, 255) 100%);
+}
+.main-container .overlay .overlay-img .stars {
+  width: 100%;
+  position: absolute;
+  top: -6rem; /* Use top instead of margin-top */
+  left: 1rem; /* Use left instead of margin-left */
+}
+.main-container .overlay .overlay-img .stars img {
+  width: 12rem;
+  margin-left: 18rem;
+  z-index: 2;
+  position: relative;
+  margin-top: 2rem;
+}
+.main-container .overlay .overlay-img .stars2 {
+  width: 100%;
+  position: absolute;
+  bottom: 4rem; /* Use bottom positioning */
+  right: 4rem;
+}
+.main-container .overlay .overlay-img .stars2 img {
+  width: 12rem;
+  position: relative;
+  z-index: 2;
+}
+.main-container .overlay .overlay-img img {
+  width: 20rem;
+  position: absolute;
+  left: 4rem;
+  top: 4rem;
+  z-index: 3;
+}
+.main-container .overlay .overlay-img h1 {
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  z-index: 3;
+}
+.main-container .overlay .overlay-form {
+  width: 50%;
+  position: relative;
+}
+.main-container .overlay .overlay-form .login {
+  background-color: #367C2D;
+  color: white;
+  width: 5rem;
+  height: 2rem;
+  margin: 1rem 0 0 27rem;
+  padding-top: 0.5rem;
+  text-align: center;
+  border-radius: 2px;
+}
+.main-container .overlay .overlay-form .reset {
+  margin: 7rem 7rem 0 5rem;
+}
+.main-container .overlay .overlay-form .reset h1 {
+  color: #367C2D;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+.main-container .overlay .overlay-form .reset p {
+  font-weight: 400;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+.main-container .overlay .overlay-form .reset label {
+  margin-top: 1.2rem;
+  font-weight: 600;
+  font-size: small;
+}
+.main-container .overlay .overlay-form .reset input {
+  width: 100%;
+  height: 3rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid black;
+  margin-top: 0.5rem;
+}
+.main-container .overlay .overlay-form .reset .reset-btn {
+  margin-top: 2rem;
+  background-color: #367C2D;
+  color: white;
+  padding: 1rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+  height: 3rem;
+  font-weight: 600;
+  font-size: small;
+}
+.main-container .overlay .overlay-form .reset .reset-btn:hover {
+  background-color: #eee;
+  color: black;
+  border: 4px solid #367C2D;
+}
+.main-container .overlay .overlay-form .reset .reset-icon {
+  text-align: center;
+  line-height: 0;
+}
+.main-container .overlay .overlay-form .reset .reset-icon img {
+  width: 13rem;
+  height: 13rem;
+}
+.main-container .overlay .overlay-form .reset .reset-text {
+  text-align: center;
+  margin: 2rem 0 0 1rem;
+}
+.main-container .overlay .overlay-form .reset .reset-text h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: black;
+}
+.main-container .overlay .overlay-form .reset .reset-text h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}/*# sourceMappingURL=reset.css.map */

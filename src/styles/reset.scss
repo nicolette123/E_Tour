@@ -1,0 +1,168 @@
+.main-container {
+    background-image: url('/images/password.jpg');
+    width: 100%;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    position: relative; 
+    
+   
+
+
+.overlay {
+    display: flex;
+    background-color: white;
+    width: 70rem;
+    height: 35rem;
+    z-index: 10; 
+    transform: rotate(0deg);
+    opacity: 1;
+    
+    .overlay-img {
+        background-color: #367C2D;
+        width: 50%;
+        height: 35rem;
+        position: relative; 
+        background: #367C2D;
+        background: linear-gradient(46deg, rgba(54, 124, 45, 1) 0%, rgba(54, 124, 45, 1) 59%, rgba(255, 255, 255, 1) 100%);
+        .stars {
+            width: 100%;
+            position: absolute;
+            top: -6rem; /* Use top instead of margin-top */
+            left: 1rem; /* Use left instead of margin-left */
+            
+            img {
+                width: 12rem;
+                margin-left: 18rem;
+                z-index: 2;
+                position: relative;
+                margin-top: 2rem;
+                
+            }
+        }
+        
+        .stars2 {
+            width: 100%;
+            position: absolute;
+            bottom: 4rem; /* Use bottom positioning */
+            right: 4rem;
+            img {
+                width: 12rem;
+                position: relative;
+                z-index: 2;
+            }
+        }
+        
+        img {
+            width: 20rem;
+            position: absolute;
+            left: 4rem;
+            top: 4rem; 
+            z-index: 3;
+        }
+
+       
+        
+        h1 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+            // position: absolute;
+            // top: 27rem; /* Use bottom positioning */
+            // left: 2rem;
+            // text-align: center;
+            z-index: 3;
+        }
+    }
+    
+    .overlay-form {
+        width: 50%;
+        position: relative;
+        
+        .login {
+            background-color: #367C2D;
+            color: white;
+            width: 5rem;
+            height: 2rem;
+            margin: 1rem 0 0 27rem;
+            padding-top: 0.5rem;
+            text-align: center;
+            border-radius: 2px;
+        }
+        
+        .reset {
+            margin: 7rem 7rem 0 5rem;
+            
+            h1 {
+                color: #367C2D;
+                font-size: 1.8rem;
+                font-weight: 600;
+            }
+            
+            p {
+                font-weight: 400;
+                font-size: 1.2rem;
+                margin-top: 1rem;
+            }
+            
+            label {
+                 margin-top: 1.2rem; 
+            font-weight: 600;
+            font-size: small;
+            }
+            
+            input {
+                width: 100%;
+            height: 3rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid black;
+            margin-top: 0.5rem;
+            }
+            
+            .reset-btn {
+                margin-top: 2rem;
+                background-color: #367C2D;
+                color: white;
+                padding: 1rem 1rem;
+                border: none;
+                border-radius: 0.5rem;
+                cursor: pointer;
+                text-align: center;
+                width: 100%;
+            height: 3rem;
+            font-weight: 600;
+            font-size: small;
+                 &:hover {
+                      background-color: #eee;
+                      color: black;
+                      border: 4px solid #367C2D;
+        }
+            }
+            .reset-icon{
+                text-align: center;
+                   line-height: 0; 
+                img {
+                    width: 13rem;
+                    height: 13rem;
+                  
+                
+                }
+            }
+            .reset-text{
+                
+                text-align: center;
+                margin:2rem 0 0 1rem;
+                h1 {
+                    font-size: 2rem;
+                    font-weight: 600;
+                    color: black;
+                }
+                h2 {
+                    font-size: 1.2rem;
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+}
+}

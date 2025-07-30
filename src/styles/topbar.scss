@@ -1,0 +1,45 @@
+.topbar {
+    display: flex;
+    
+    margin: 2rem 5rem 0 2rem;
+    
+   
+
+  
+
+   .topbar-title{
+   font-weight: 600;
+   font-size: 1.5rem;
+   
+   }
+    .topbar-search{
+        margin-left: 4rem;
+        color: #367C2D;
+        background-color: #E3E8FF80;
+        padding:0 0.5rem;
+        border-radius: 0.3rem;
+        input{
+            border: none;
+            outline: none;
+            padding: 0.5rem 1rem;
+            background: transparent; 
+            color: inherit;
+            }
+    }
+.dropdown-content{
+   margin-left: auto;
+    color: #367C2D;
+        background-color: #E3E8FF80;
+        padding:0 0.5rem;
+        border-radius: 0.3rem;
+        select{
+            border: none;
+            outline: none;
+            padding: 0.5rem 0;
+            background: transparent; 
+            color: inherit;
+            
+            } 
+}
+   }
+
