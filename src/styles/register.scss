@@ -1,56 +1,89 @@
 .register-container {
-      display: flex;
+    display: flex;
     width: 100%;
     height: 100vh;
     font-family: 'Poppins', sans-serif;
-    
-    .register-image{
-    width: 45%;
-    position: relative;
-    background-image: url('/images/login.jpg');
-    background-size: cover;
-    
-     .transparent{
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #367C2D;
-        opacity: 0.7;
-        z-index: 1;
+
+    .register-image {
+        width: 45%;
+        position: relative;
+        background-image: url('/images/login.jpg');
+        background-size: cover;
+
+        .transparent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #367C2D;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        h1 {
+            position: absolute;
+            z-index: 2;
+            font-size: 2.5rem;
+            margin: 34rem 3rem;
+            color: white;
+        }
     }
-        h1{
-        position: absolute;
-        z-index: 2; 
-        font-size: 2.5rem;
-        margin: 34rem 3rem;
-        color: white;
-            
-    }
-    }
+
     .register-form {
-     width: 55%;
-    margin: 5rem 3rem;
-    h1{
-        color: #367C2D;
-        font-weight: 600;
-        font-size: 2.5rem;
-        font-style: normal;
-    } 
-    .same-row {
-        display: flex;
-        width: 100%;
-        gap: 1rem;
-        .name-inputs {
-            width: 50%;
-        
-      label{
-            margin-top: 1.2rem; 
+        width: 55%;
+        margin: 5rem 3rem;
+
+        h1 {
+            color: #367C2D;
+            font-weight: 600;
+            font-size: 2.5rem;
+            font-style: normal;
+        }
+
+        .error {
+            color: red;
+            background-color: #ffe6e6;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: small;
+            font-weight: 600;
+        }
+
+        .same-row {
+            display: flex;
+            width: 100%;
+            gap: 1rem;
+
+            .name-inputs {
+                width: 50%;
+
+                label {
+                    margin-top: 1.2rem;
+                    font-weight: 600;
+                    font-size: small;
+                }
+
+                input {
+                    width: 100%;
+                    height: 3rem;
+                    padding: 0.5rem;
+                    border-radius: 0.5rem;
+                    border: 1px solid black;
+                    margin-top: 0.5rem;
+                    margin-bottom: 1.5rem;
+                }
+            }
+        }
+
+        label {
+            margin-top: 1.2rem;
             font-weight: 600;
             font-size: small;
         }
-         input{
+
+        input {
             width: 100%;
             height: 3rem;
             padding: 0.5rem;
@@ -59,34 +92,21 @@
             margin-top: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        }    
-    } 
-     label{
-            margin-top: 1.2rem; 
-            font-weight: 600;
-            font-size: small;
-        }
-         input{
-            width: 100%;
-            height: 3rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            border: 1px solid black;
-            margin-top: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
+
         .checkboxes {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
             margin-top: 0rem;
-        label{
-           margin-top: 0; 
-            display: flex;
-            align-items: center; 
-            font-weight: 600;
-            font-size: small;
-                   input[type="checkbox"]{
+
+            label {
+                margin-top: 0;
+                display: flex;
+                align-items: center;
+                font-weight: 600;
+                font-size: small;
+
+                input[type="checkbox"] {
                     width: 30px;
                     height: 26px;
                     margin-right: 0.5rem;
@@ -94,14 +114,14 @@
                     margin-bottom: 0;
                     border-radius: 6px;
                     border: 1px solid black;
-                    appearance: none; // Remove default checkbox styling
+                    appearance: none;
                     background-color: white;
                     cursor: pointer;
                     position: relative;
-                    
+
                     &:checked {
                         background-color: black;
-                        
+
                         &::after {
                             content: '✓';
                             position: absolute;
@@ -114,11 +134,12 @@
                         }
                     }
                 }
-        }    
+            }
         }
+
         .create-account {
             margin-top: 2rem;
-           background-color: #367C2D;
+            background-color: #367C2D;
             color: white;
             padding: 1rem 1rem;
             border-radius: 0.5rem;
@@ -127,28 +148,59 @@
             height: 3rem;
             font-weight: 600;
             font-size: small;
-             &:hover {
-                      background-color: #eee;
-                      color: black;
-                      border: 4px solid #367C2D;
+            cursor: pointer;
+            position: relative;
+
+            &:hover {
+                background-color: #eee;
+                color: black;
+                border: 4px solid #367C2D;
+            }
+
+            button {
+                all: unset;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+            }
+
+            .spinner {
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                border: 2px solid #fff;
+                border-top: 2px solid transparent;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin-right: 8px;
+            }
+
+            @keyframes spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
         }
-        }
-.login{
-      justify-items: center;
+
+        .login {
+            justify-items: center;
             margin-top: 1.5rem;
-            h3{
+
+            h3 {
                 color: #8F8F8F;
                 font-weight: 600;
                 font-size: small;
-                
-                a{
+
+                a {
                     color: #367C2D;
-                     
-                &:hover{
-                    text-decoration: underline;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
                 }
-                }
-            } 
-}
-}
+            }
+        }
+    }
 }

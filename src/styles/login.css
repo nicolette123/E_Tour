@@ -43,8 +43,8 @@
   align-items: center;
 }
 .container .login-container .remember-forgot label input[type=checkbox] {
-  width: 30px;
-  height: 26px;
+  width: 2rem;
+  height: 1.7rem;
   margin-right: 0.5rem;
   margin-top: 0;
   margin-bottom: 0;
@@ -94,6 +94,15 @@
   color: black;
   border: 4px solid #367C2D;
 }
+.container .login-container .sign-in button {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
 .container .login-container .sign-up {
   justify-items: center;
   margin-top: 1.5rem;
@@ -103,8 +112,18 @@
   font-weight: 600;
   font-size: small;
 }
-.container .login-container .sign-up h3 a {
+.container .login-container .sign-up h3 button {
+  all: unset;
   color: #367C2D;
+  cursor: pointer;
+}
+.container .login-container .sign-up h3 button:hover {
+  text-decoration: underline;
+}
+.container .login-container .sign-up h3 a {
+  all: unset;
+  color: #367C2D;
+  cursor: pointer;
 }
 .container .login-container .sign-up h3 a:hover {
   text-decoration: underline;

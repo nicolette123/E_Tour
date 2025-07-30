@@ -46,8 +46,8 @@
                 
                 
                    input[type="checkbox"]{
-                    width: 30px;
-                    height: 26px;
+                    width: 2rem;
+                    height: 1.7rem;
                     margin-right: 0.5rem;
                     margin-top: 0;
                     margin-bottom: 0;
@@ -101,6 +101,16 @@
                       color: black;
                       border: 4px solid #367C2D;
         }
+        
+            button {
+                all: unset;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
     }
         
         .sign-up{
@@ -112,8 +122,19 @@
                 font-weight: 600;
                 font-size: small;
                 
-                a{
+                button{
+                    all: unset;
                     color: #367C2D;
+                    cursor: pointer;
+                     
+                &:hover{
+                    text-decoration: underline;
+                }
+                }
+                a{
+                    all: unset;
+                    color: #367C2D;
+                    cursor: pointer;
                      
                 &:hover{
                     text-decoration: underline;

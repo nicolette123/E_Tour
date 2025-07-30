@@ -4,17 +4,24 @@ import ForgetPassword from '../auth/login/ForgetPassword';
 import ResetPassword from '../auth/login/ResetPassword';
 import ResetSuccess from '../auth/login/ResetSuccess';
 import UserType from '@/auth/login/UserType';
+import SideBar from '@/components/SideBar';
+import 'remixicon/fonts/remixicon.css'
+import TopBar from '@/components/TopBar';
+import StatsCard from '@/components/StatsCard';
+import DestinationCard from '@/components/DestinationCard';
+import TripTable from '@/components/TripTable';
+import AdminDash from '@/components/AdminDash';
+import Verification from '@/auth/login/Verification';
 function Page() {
     return (
         <div>
-            {/* <ResetSuccess />
-            <ResetPassword />
-            <ForgetPassword />
-            <AgentLogin /> */}
-            <UserType/>
-            {/* <UserLogin /> */}
-            
-            
+         
+            {/* <UserType/> */}
+           
+           
+            <AdminDash />
+           
+
         </div>
     );
 }

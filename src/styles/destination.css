@@ -1,0 +1,27 @@
+.destination {
+  background-color: #fff;
+  margin: 2rem 5rem 0 2rem;
+}
+.destination h1 {
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+.destination .destination-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.destination .destination-cards .destination-card img {
+  position: relative;
+  z-index: 1;
+  width: 12rem;
+  height: 8rem;
+  border-radius: 8px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.destination .destination-cards .destination-card p {
+  margin: 0.5rem 0;
+  text-align: center;
+}/*# sourceMappingURL=destination.css.map */
