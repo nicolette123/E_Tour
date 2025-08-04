@@ -1,0 +1,137 @@
+.trip-request-form {
+  text-align: center;
+  padding: 40px 10px;
+}
+.trip-request-form .subtitle {
+  color: #2e7d32;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.trip-request-form .title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #111;
+}
+.trip-request-form form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-left: 15px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+.trip-request-form form h3 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 30px;
+}
+.trip-request-form form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+  margin-bottom: 30px;
+}
+.trip-request-form form .form-grid .form-field {
+  text-align: left;
+  padding: 10px;
+}
+.trip-request-form form .form-grid .form-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+.trip-request-form form .form-grid .form-field input {
+  width: 90%;
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+}
+.trip-request-form form .form-grid .form-field input::-moz-placeholder {
+  color: #aaa;
+}
+.trip-request-form form .form-grid .form-field input::placeholder {
+  color: #aaa;
+}
+.trip-request-form form .form-grid .form-field input:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+.trip-request-form form .form-grid .form-field .error {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.trip-request-form form .submit-btn {
+  width: 100%;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 0;
+}
+.trip-request-form form .submit-btn:hover {
+  background: #256c29;
+}
+
+/* === Responsive Enhancements and Date Picker === */
+@media (max-width: 768px) {
+  .trip-request-form {
+    padding: 20px 15px;
+  }
+  .trip-request-form form {
+    padding: 30px 15px;
+  }
+  .trip-request-form form .form-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+  .trip-request-form form button {
+    width: 100%;
+  }
+}
+/* Input field enhancements */
+.trip-request-form form input[type=text],
+.trip-request-form form input[type=email],
+.trip-request-form form input[type=number],
+.trip-request-form form input[type=date] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #fff;
+}
+.trip-request-form form input[type=text]:focus,
+.trip-request-form form input[type=email]:focus,
+.trip-request-form form input[type=number]:focus,
+.trip-request-form form input[type=date]:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+/* Improve placeholders */
+.trip-request-form input::-moz-placeholder {
+  color: #999;
+  font-size: 13px;
+}
+.trip-request-form input::placeholder {
+  color: #999;
+  font-size: 13px;
+}
+
+/* Date picker style tweaks (optional, native input) */
+.trip-request-form input[type=date] {
+  color-scheme: light;
+}/*# sourceMappingURL=TripRequest.css.map */
