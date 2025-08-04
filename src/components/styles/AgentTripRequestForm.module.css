@@ -1,12 +1,13 @@
 .agent-trip-request-form {
   text-align: center;
   padding: 40px 10px;
+  /* Input enhancements */
+  /* Responsive */
 }
 .agent-trip-request-form .subtitle {
   color: #2e7d32;
   font-size: 26px;
-  margin-bottom: 7px;
-  margin-top: 8px;
+  margin: 8px 0 7px;
   font-weight: bold;
 }
 .agent-trip-request-form .image-upload-wrapper {
@@ -14,20 +15,22 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
-  border-color: #2e7d32;
-  border-radius: 3px;
 }
 .agent-trip-request-form .image-upload-wrapper .image-upload-label {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 4px solid #2e7d32;
+  border: 2px solid #2e7d32;
   padding: 2rem;
   cursor: pointer;
   border-radius: 12px;
   text-align: center;
   background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+.agent-trip-request-form .image-upload-wrapper .image-upload-label:hover {
+  border-color: #256c29;
 }
 .agent-trip-request-form .image-upload-wrapper .image-upload-label span {
   margin-top: 0.5rem;
@@ -40,6 +43,7 @@
 .agent-trip-request-form .image-upload-wrapper .image-upload-label svg {
   margin-bottom: 8px;
   width: 80px;
+  height: auto;
 }
 .agent-trip-request-form .image-upload-wrapper .preview {
   margin-top: 1rem;
@@ -87,12 +91,13 @@
   color: #333;
 }
 .agent-trip-request-form form .form-grid .form-field input {
-  width: 90%;
+  width: 100%;
   padding: 12px 16px;
   border: 1px solid #2e7d32;
   border-radius: 6px;
   font-size: 14px;
   color: #333;
+  background-color: #fff;
 }
 .agent-trip-request-form form .form-grid .form-field input::-moz-placeholder {
   color: #aaa;
@@ -101,7 +106,7 @@
   color: #aaa;
 }
 .agent-trip-request-form form .form-grid .form-field input:focus {
-  border-color: #2e7d32;
+  border-color: #256c29;
   outline: none;
 }
 .agent-trip-request-form form .form-grid .form-field .error {
@@ -124,8 +129,56 @@
 .agent-trip-request-form form .submit-btn:hover {
   background: #256c29;
 }
-
-/* === Responsive Enhancements === */
+.agent-trip-request-form input[type=text],
+.agent-trip-request-form input[type=email],
+.agent-trip-request-form input[type=number],
+.agent-trip-request-form input[type=date] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.agent-trip-request-form input[type=text]:focus,
+.agent-trip-request-form input[type=email]:focus,
+.agent-trip-request-form input[type=number]:focus,
+.agent-trip-request-form input[type=date]:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+.agent-trip-request-form input[type=text]::-moz-placeholder, .agent-trip-request-form input[type=email]::-moz-placeholder, .agent-trip-request-form input[type=number]::-moz-placeholder, .agent-trip-request-form input[type=date]::-moz-placeholder {
+  color: #999;
+  font-size: 13px;
+}
+.agent-trip-request-form input[type=text]::placeholder,
+.agent-trip-request-form input[type=email]::placeholder,
+.agent-trip-request-form input[type=number]::placeholder,
+.agent-trip-request-form input[type=date]::placeholder {
+  color: #999;
+  font-size: 13px;
+}
+.agent-trip-request-form input[type=date] {
+  color-scheme: light;
+}
+.agent-trip-request-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #2e7d32;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333;
+  resize: vertical;
+}
+.agent-trip-request-form textarea::-moz-placeholder {
+  color: #aaa;
+}
+.agent-trip-request-form textarea::placeholder {
+  color: #aaa;
+}
+.agent-trip-request-form textarea:focus {
+  border-color: #256c29;
+  outline: none;
+}
 @media (max-width: 768px) {
   .agent-trip-request-form {
     padding: 20px 15px;
@@ -137,40 +190,7 @@
     grid-template-columns: 1fr !important;
     gap: 16px;
   }
-  .agent-trip-request-form form button {
+  .agent-trip-request-form form .submit-btn {
     width: 100%;
   }
-}
-/* Input consistency */
-.agent-trip-request-form form input[type=text],
-.agent-trip-request-form form input[type=email],
-.agent-trip-request-form form input[type=number],
-.agent-trip-request-form form input[type=date] {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  background-color: #fff;
-}
-.agent-trip-request-form form input[type=text]:focus,
-.agent-trip-request-form form input[type=email]:focus,
-.agent-trip-request-form form input[type=number]:focus,
-.agent-trip-request-form form input[type=date]:focus {
-  border-color: #2e7d32;
-  outline: none;
-}
-
-/* Placeholder & date picker */
-.agent-trip-request-form input::-moz-placeholder {
-  color: #999;
-  font-size: 13px;
-}
-.agent-trip-request-form input::placeholder {
-  color: #999;
-  font-size: 13px;
-}
-
-.agent-trip-request-form input[type=date] {
-  color-scheme: light;
 }/*# sourceMappingURL=AgentTripRequestForm.module.css.map */
