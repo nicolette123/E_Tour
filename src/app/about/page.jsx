@@ -1,11 +1,11 @@
-import React from 'react'
-import './about.scss'
-import AboutUsWelcome from '../../components/abouUsComponent/AboutWelcome/AboutUsWelcome'
+import AboutUsWelcome from '../../components/aboutUsComponent/AboutUsWelcome';
+import HeroSection from '../../components/aboutUsComponent/HeroSection';
 
-export default function about() {
+export default function AboutPage() {
   return (
-    <div className='about'>about
-    <AboutUsWelcome/>
-    </div>
-  )
+    <main>
+      <HeroSection />
+      <AboutUsWelcome />
+    </main>
+  );
 }
