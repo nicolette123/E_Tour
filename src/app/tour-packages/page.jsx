@@ -1,8 +1,14 @@
-import React from 'react'
-import './tour.scss'
+import TourHero from '../../components/tourPackageComponents/TourHero';
+import TourCards from '../../components/tourPackageComponents/TourCards';
 
-export default function page() {
+export default function TourPackagePage() {
   return (
-    <div className='tour-package'>Tour package</div>
-  )
+    <main>
+     
+
+     <TourHero />
+      <TourCards />
+      
+    </main>
+  );
 }
