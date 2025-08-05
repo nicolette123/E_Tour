@@ -82,6 +82,7 @@
 .main-container .overlay .overlay-form {
   width: 50%;
   position: relative;
+  background-color: #fff;
 }
 .main-container .overlay .overlay-form .login {
   background-color: #367C2D;

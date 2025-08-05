@@ -29,6 +29,13 @@
   padding: 0.5rem;
   border-radius: 3rem;
 }
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-circle-line {
+  margin-right: 0.5rem;
+  color: #CB3CFF;
+  background-color: #ecbffd;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
 .stats-card .grid-container .grid-item h4 .ri-user-fill {
   margin-right: 0.5rem;
   color: #FDB52A;
@@ -36,7 +43,21 @@
   padding: 0.5rem;
   border-radius: 3rem;
 }
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-box-line {
+  margin-right: 0.5rem;
+  color: #FDB52A;
+  background-color: #feecc9;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
 .stats-card .grid-container .grid-item h4 .ri-heart-3-fill {
+  margin-right: 0.5rem;
+  color: #05C168;
+  background-color: #c1ffe2;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-box-fill {
   margin-right: 0.5rem;
   color: #05C168;
   background-color: #c1ffe2;

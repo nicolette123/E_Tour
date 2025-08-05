@@ -1,0 +1,82 @@
+.content-body {
+  background-color: rgba(227, 232, 255, 0.5019607843);
+  width: 95%;
+  margin: 5rem auto;
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 1rem rgba(0, 0, 0, 0.2509803922);
+  color: black;
+}
+.content-body h3 {
+  padding: 0 0 1rem 0;
+  border-bottom: black solid 1px;
+}
+.content-body .profile-card {
+  margin-top: 1rem;
+  text-align: center;
+}
+.content-body .profile-card .profile-header img {
+  border-radius: 50%;
+  border: 3px solid #9FA6B2;
+  padding: 0.3rem;
+}
+.content-body .profile-card .profile-header .profile-name {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.content-body .profile-card .profile-details .profile-field p {
+  margin-top: 1rem;
+  color: #6B7280;
+}
+.content-body .profile-card .profile-details .buttons {
+  margin-top: 1rem;
+}
+.content-body .profile-card .profile-details .buttons .button1 {
+  all: unset;
+  margin-right: 2rem;
+  padding-right: 2rem;
+  border-right: black solid 1px;
+  font-weight: 500;
+  color: #367C2D;
+  cursor: pointer;
+}
+.content-body .profile-card .profile-details .buttons .button2 {
+  all: unset;
+  font-weight: 700;
+  color: #FF1111;
+  cursor: pointer;
+}
+.content-body .profile-form {
+  margin-top: 2rem;
+  justify-items: center;
+}
+.content-body .profile-form .form-group label {
+  font-weight: 400;
+  font-size: 1rem;
+  margin-top: 12rem;
+  all: unset;
+}
+.content-body .profile-form .form-group input {
+  border-radius: 0.8rem;
+  width: 32.5rem;
+  height: 3rem;
+  border: #9FA6B2 1px solid;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.content-body .profile-form .form-buttons {
+  justify-items: center;
+  margin-top: 2rem;
+}
+.content-body .profile-form .form-buttons button {
+  background-color: #367C2D;
+  color: #fff;
+  width: 32.5rem;
+  height: 3rem;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  border: none;
+  font-weight: 400;
+  cursor: pointer;
+}/*# sourceMappingURL=setting.css.map */

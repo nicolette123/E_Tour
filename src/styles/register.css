@@ -31,6 +31,7 @@
 .register-container .register-form {
   width: 55%;
   margin: 5rem 3rem;
+  background-color: #fff;
 }
 .register-container .register-form h1 {
   color: #367C2D;

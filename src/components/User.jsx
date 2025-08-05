@@ -2,9 +2,9 @@
 import React, { useState } from 'react';
 import SideBar from '@/components/SideBar';
 import TopBar from './TopBar';
-import StatsCard from './StatsCard';
 import "@/styles/dashboard.css";
 import "@/styles/table.css";
+import "@/styles/stats.css";
 
 const mockData = [
   {
@@ -138,13 +138,46 @@ const Users = () => {
     user.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Compute stats from users data
+  const totalUsers = users.length;
+  const inactiveUsers = users.filter(user => user.status === "Inactive").length;
+  const activeUsers = users.filter(user => user.status === "Active").length;
+  const travellers = users.filter(user => user.status === "Completed").length;
+
   return (
     <div className="dashboard-container">
       <SideBar />
       <div className="main-content">
         <TopBar title="Users" />
         <div className="content-body">
-          <StatsCard />
+          <div className="stats-card">
+            <div className="grid-container">
+              <div className="grid-item">
+                <h4>
+                  <i className="ri-group-fill"></i> Total Users
+                </h4>
+                <p>{totalUsers}</p>
+              </div>
+              <div className="grid-item">
+                <h4>
+                  <i className="ri-user-fill"></i> Inactive Users
+                </h4>
+                <p>{inactiveUsers}</p>
+              </div>
+              <div className="grid-item">
+                <h4>
+                  <i className="ri-heart-3-fill"></i> Active Users
+                </h4>
+                <p>{activeUsers}</p>
+              </div>
+              <div className="grid-item">
+                <h4>
+                  <i className="ri-money-dollar-circle-fill"></i> Travellers
+                </h4>
+                <p>{travellers}</p>
+              </div>
+            </div>
+          </div>
           <div className="trip-table">
             <h3>Total Users</h3>
             <div className="table-header">
@@ -190,7 +223,7 @@ const Users = () => {
                           <td><input type="text" value={editFormData.location} onChange={(e) => handleEditChange(e, 'location')} /></td>
                           <td><input type="text" value={editFormData.company} onChange={(e) => handleEditChange(e, 'company')} /></td>
                           <td>
-                            <select value={editFormData.status} onChange={(e) => handleEditChange(e, 'ntrollerstatus')}>
+                            <select value={editFormData.status} onChange={(e) => handleEditChange(e, 'status')}>
                               <option value="Completed">Completed</option>
                               <option value="Active">Active</option>
                               <option value="Inactive">Inactive</option>

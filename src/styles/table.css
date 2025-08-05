@@ -2,18 +2,23 @@
 .trip-table {
   margin: 2rem 5rem 0 2rem;
 }
-.trip-table .table-header {
+
+.table-header {
   display: flex;
   background-color: #F7F9FB;
   padding: 1rem;
   gap: 1rem;
   border-radius: 0.5rem;
 }
-.trip-table .table-header i {
+
+.table-header i {
   width: 1.5rem;
   height: 1.5rem;
+  cursor: pointer;
+  color: rgba(28, 28, 28, 0.4);
 }
-.trip-table .table-header .search {
+
+.search {
   margin-left: auto;
   color: rgba(28, 28, 28, 0.2);
   padding: 0 0.5rem;
@@ -21,33 +26,37 @@
   border: 1px solid rgba(28, 28, 28, 0.1019607843);
   background-color: rgba(255, 255, 255, 0.4);
 }
-.trip-table .table-header .search input {
+
+.search input {
   border: none;
   outline: none;
   padding: 0.5rem 1rem;
   background: transparent;
   color: inherit;
 }
-.trip-table table {
+
+table {
   width: 100%;
   border-collapse: collapse;
 }
-.trip-table table thead .table-header-row {
+
+thead .table-header-row {
   color: rgba(28, 28, 28, 0.4);
   border-bottom: 1px solid rgba(28, 28, 28, 0.4);
 }
-.trip-table table thead .table-header-row th {
+
+thead .table-header-row th {
   padding: 1rem;
   text-align: left;
   color: rgba(28, 28, 28, 0.4);
   font-weight: 400;
-  gap: 12rem;
 }
-.trip-table table thead .table-header-row th input[type=checkbox] {
+
+thead .table-header-row th input[type=checkbox] {
   border: 1px solid rgba(28, 28, 28, 0.4);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none; /* Vendor prefix for Safari */
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 0.5rem;
@@ -55,23 +64,27 @@
   cursor: pointer;
   position: relative;
 }
-.trip-table table .table-body {
+
+.table-body {
   margin-top: 1rem;
   margin: auto;
 }
-.trip-table table .table-body tr {
+
+.table-body tr {
   border-bottom: 1px solid #E0E0E0;
 }
-.trip-table table .table-body tr td {
+
+.table-body td {
   padding: 1rem;
   text-align: left;
   font-weight: 400;
 }
-.trip-table table .table-body tr td input[type=checkbox] {
+
+.table-body td input[type=checkbox] {
   border: 1px solid rgba(28, 28, 28, 0.4);
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none; /* Vendor prefix for Safari */
   width: 1.7rem;
   height: 1.7rem;
   border-radius: 0.5rem;
@@ -79,27 +92,158 @@
   cursor: pointer;
   position: relative;
 }
-.trip-table table .table-body tr td input[type=checkbox]:checked {
-  background-color: black;
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 1rem;
 }
-.trip-table table .table-body tr td input[type=checkbox]:checked::after {
-  content: "✓";
+
+.notification-row {
+  background: #F7F9FB;
+  padding: 1rem;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.notification-header h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  flex-grow: 1;
+  color: #1C1C1C;
+  padding: 0;
+}
+
+.notification-header input[type=checkbox] {
+  border: 1px solid rgba(28, 28, 28, 0.4);
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none; /* Vendor prefix for Safari */
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 0.5rem;
+  background-color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+.notification-row p {
+  margin: 0;
+  color: rgba(28, 28, 28, 0.4);
+  font-size: 1rem;
+  padding: 0;
+}
+
+.notification-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notification-edit input {
+  padding: 0.5rem;
+  border: 1px solid rgba(28, 28, 28, 0.1019607843);
+  border-radius: 0.3rem;
+  background: rgba(255, 255, 255, 0.4);
+  color: #1C1C1C;
+  width: 100%;
+  max-width: 300px;
+}
+
+.edit-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-form button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.edit-form button:first-child {
+  background: #007bff;
+  color: #fff;
+}
+
+.edit-form button:last-child {
+  background: #6c757d;
+  color: #fff;
+}
+
+.more-container {
+  position: relative;
+}
+
+.more-container i {
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: rgba(28, 28, 28, 0.4);
+}
+
+.more-menu {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 14px;
-  font-weight: bold;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border: 1px solid rgba(28, 28, 28, 0.1019607843);
+  border-radius: 0.3rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
-.trip-table .more-menu button {
+
+.more-menu button {
   background-color: transparent;
   border: none;
   cursor: pointer;
   color: rgba(28, 28, 28, 0.4);
   font-size: 1.2rem;
   padding: 0.5rem;
+  width: 100%;
+  text-align: left;
 }
-.trip-table .more-menu button:hover {
+
+.more-menu button:hover {
   color: #000;
+}
+
+/* Enhanced checkbox styling for all contexts with higher specificity */
+input[type=checkbox] {
+  border: 1px solid rgba(28, 28, 28, 0.4) !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+       appearance: none !important;
+  width: 1.7rem !important;
+  height: 1.7rem !important;
+  border-radius: 0.5rem !important;
+  background-color: white !important;
+  cursor: pointer !important;
+  position: relative !important;
+}
+
+input[type=checkbox]:checked {
+  background-color: black !important;
+  display: block !important;
+}
+
+input[type=checkbox]:checked::after {
+  content: "✓" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  color: white !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  display: block !important;
 }/*# sourceMappingURL=table.css.map */

@@ -13,7 +13,7 @@ const SideBar = () => {
         { href: "/view-trips", label: "View Trips", icon: "ri-stacked-view" },
         { href: "/payment", label: "Payment", icon: "ri-bank-card-line" },
         { href: "/users", label: "Users", icon: "ri-user-line" },
-        { href: "/reports", label: "Reports", icon: "ri-folder-chart-line" },
+        
     ];
 
     const links2 = [

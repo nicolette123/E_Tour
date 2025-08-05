@@ -168,20 +168,19 @@ const Payment = () => {
             <div className="grid-container">
               <div className="grid-item">
                 <h4>
-                  
-                  <i className="ri-money-dollar-circle-fill"></i> Total Money
+                  <i className="ri-money-dollar-circle-line"></i> Total Money
                 </h4>
                 <p>{totalMoney}</p>
               </div>
               <div className="grid-item">
                 <h4>
-                  <i className="ri-money-dollar-circle-fill"></i> Mobile Money
+                 <i className="ri-money-dollar-box-line"></i> Mobile Money
                 </h4>
                 <p>{mobileMoney}</p>
               </div>
               <div className="grid-item">
                 <h4>
-                  <i className="ri-money-dollar-circle-fill"></i> Visa Card
+                <i className="ri-money-dollar-box-fill"></i> Visa Card
                 </h4>
                 <p>{visaCard}</p>
               </div>
