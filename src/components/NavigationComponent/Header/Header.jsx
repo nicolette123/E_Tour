@@ -7,9 +7,9 @@ import './Header.css';
 
 const navLinks = [
   { href: '/', label: 'HOME' },
-  { href: '/TourPackage', label: 'TOUR PACKAGE' },
-  { href: '/Gallery', label: 'GALLERY' },
-  { href: '/about-us', label: 'ABOUT US' },
+  { href: '/tour-packages', label: 'TOUR PACKAGE' },
+  { href: '/gallery', label: 'GALLERY' },
+  { href: '/about', label: 'ABOUT US' },
 ];
 
 const Header = () => {
