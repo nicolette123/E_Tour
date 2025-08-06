@@ -1,0 +1,85 @@
+.tourHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: white;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+}
+
+.introText {
+  margin-top: 4rem;
+
+  h3 {
+    color: #367C2D;
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-top: 2rem;
+}
+
+// 🟩 Search Bar Style
+.searchBar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e2e2e2;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  background-color: white;
+  min-width: 200px;
+
+  img {
+    margin-right: 0.5rem;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    width: 100%;
+  }
+}
+
+.icon {
+  color: black;
+  height: 20px;
+  width: 20px;
+}
+
+@media (max-width: 768px) {
+  .heroOverlay h1 {
+    font-size: 1.8rem;
+  }
+
+  .introText h2 {
+    font-size: 1.5rem;
+  }
+}

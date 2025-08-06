@@ -1,8 +1,17 @@
-import React from 'react'
-import './TripRequest.scss'
+'use client';
 
-export default function page() {
+import TripRequest from './TripRequest.jsx';
+
+import React from 'react';
+import styles from './TripRequest.module.scss'; 
+import api from '../../utils/api';
+
+
+
+export default function RequestTripPage() {
   return (
-    <div className='request-trip'>request trip</div>
-  )
+    <main>
+      <TripRequest />
+    </main>
+  );
 }
