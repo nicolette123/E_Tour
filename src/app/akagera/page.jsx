@@ -1,12 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Header from '../../components/tourDetailsComponents/Header';
 import Footer from '../../components/tourDetailsComponents/Footer';
+import Payment from '../../components/payment/Payment';
 import styles from '../../components/tourDetailsComponents/Akagera.module.scss';
 
 const AkageraPage = () => {
+  const [showPayment, setShowPayment] = useState(false);
+
+  const handleReserveClick = () => {
+    setShowPayment(true);
+  };
+
+  const handleClosePayment = () => {
+    setShowPayment(false);
+  };
+
   return (
     <div className={styles.akageraContainer}>
       <Header />
@@ -17,9 +28,10 @@ const AkageraPage = () => {
             <p>Nyagatare, Rwanda</p>
           </div>
           <div className={styles['action-buttons']}>
-            <a href="#"><Image src="/images/Akagera/Vector.png" alt="icon"width={20} height={20}/>
-              
-              Share</a>
+            <a href="#">
+              <Image src="/images/Akagera/Vector.png" alt="icon" width={20} height={20} />
+              Share
+            </a>
             <a href="#">Save</a>
           </div>
         </div>
@@ -84,12 +96,16 @@ const AkageraPage = () => {
                   <span>Refundable</span>
                   <span>20,000 RWF total</span>
                 </div>
-                <div className={styles['free-cancel']}>FREE CANCELLATION BEFORE 22 JUN</div>
+                <div className={styles['free-cancel']}>
+                  FREE CANCELLATION BEFORE 22 JUN
+                </div>
               </div>
 
               <div className={styles.buttons}>
                 <button className={styles.cancel}>cancel</button>
-                <button className={styles.reserve}>Reserve</button>
+                <button className={styles.reserve} onClick={handleReserveClick}>
+                  Reserve
+                </button>
               </div>
 
               <div className={styles.note}>You won’t be charged yet</div>
@@ -97,10 +113,12 @@ const AkageraPage = () => {
           </div>
         </div>
       </div>
+
+      {showPayment && <Payment onClose={handleClosePayment} />}
+
       <Footer />
     </div>
   );
 };
 
 export default AkageraPage;
-
