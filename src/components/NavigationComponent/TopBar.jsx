@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-
+import "../../styles/topbar.css"
 const TopBar = ({title}) => {
     return (
         <div className='topbar'>
