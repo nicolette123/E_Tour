@@ -1,7 +1,7 @@
 // app/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
-import Sidebar from "../../components/NavigationComponent/SideBar";
-import Topbar from "../../components/NavigationComponent/TopBar";
+import SideBar from "../../components/NavigationComponent/SideBar";
+// import SideBar from "../../components/NavigationComponent/TopBar";
 
 // Font configurations
 const geistSans = Geist({
@@ -21,15 +21,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    
-      <body>
-        <Topbar />
-        <div className="flex flex-1 overflow-hidden">
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
-            {children}
-          </main>
-        </div>
-      </body>
+<div className="dashboard-container">
+      <SideBar />
+      <div className="main-content">
+        {/* <TopBar title={"Dashboard"} /> */}
+        {/* <div className="content-body">
+          <StatsCard />
+          <DestinationCard />
+         <TripTable />
+        </div> */}
+      </div>
+    </div>
   );
 }
