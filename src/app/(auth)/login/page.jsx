@@ -75,18 +75,19 @@ const Login = () => {
             alert(`Welcome ${user?.name || 'User'}! Login successful! Redirecting...`);
             
             // Route based on user role from API response
-            switch (userRole.toLowerCase()) {
-                case 'admin':
-                    setTimeout(() => router.push('/admin'), 1000);
-                    break;
-                case 'agent':
-                    setTimeout(() => router.push('/agent'), 1000);
-                    break;
-                case 'client':
-                default:
-                    setTimeout(() => router.push('/client'), 1000);
-                    break;
-            }
+     switch (userRole.toLowerCase()) {
+    case 'admin':
+        router.push('/admin');
+        break;
+    case 'agent':
+        router.push('/agent');
+        break;
+    case 'client':
+    default:
+        router.push('/client');
+        break;
+}
+
         } catch (err) {
             console.error('Login Error:', err); // Debug log
             

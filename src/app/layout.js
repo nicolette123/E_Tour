@@ -1,7 +1,7 @@
+// app/layout.js (Root Layout - Modified)
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Header from "./../components/NavigationComponent/Header/Header";
-import Footer from "./../components/NavigationComponent/Footer/Footer";
+import ConditionalLayout from "./ConditionalLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,17 +14,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Echos of Rwanda",
-  description: "Echo of Rwanda pratiform",
+  title: "Echoes of Rwanda",
+  description: "Echoes of Rwanda platform",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Header/>
-        {children}
-        <Footer/>
+        <ConditionalLayout>
+          {children}
+        </ConditionalLayout>
       </body>
     </html>
   );

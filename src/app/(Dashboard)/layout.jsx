@@ -1,7 +1,11 @@
-// app/layout.js
+// app/dashboard/layout.js
 import { Geist, Geist_Mono } from "next/font/google";
 import SideBar from "../../components/NavigationComponent/SideBar";
-// import SideBar from "../../components/NavigationComponent/TopBar";
+import TopBar from "../../components/NavigationComponent/TopBar";
+import StatsCard from "../../components/NavigationComponent/StatsCard";
+import DestinationCard from "../../components/NavigationComponent/DestinationCard";
+import TripTable from "../../components/NavigationComponent/TripTable";
+import "./layout.css";
 
 // Font configurations
 const geistSans = Geist({
@@ -15,22 +19,27 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Echoes of Rwanda",
-  description: "Echoes of Rwanda platform",
+  title: "Echoes of Rwanda - Dashboard",
+  description: "Echoes of Rwanda platform dashboard",
 };
 
-export default function RootLayout({ children }) {
+export default function DashboardLayout({ children }) {
   return (
-<div className="dashboard-container">
-      <SideBar />
-      <div className="main-content">
-        {/* <TopBar title={"Dashboard"} /> */}
-        {/* <div className="content-body">
-          <StatsCard />
-          <DestinationCard />
-         <TripTable />
-        </div> */}
-      </div>
-    </div>
+    // This div will override the main app layout
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="dashboard-body">
+        <div className="dashboard-container">
+          <SideBar />
+          <div className="main-content">
+            <TopBar title="Dashboard" />
+            <div className="content-body">
+              <div className="dashboard-children">
+                {children}
+              </div>
+            </div>
+          </div>
+        </div>
+      </body>
+    </html>
   );
 }

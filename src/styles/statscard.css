@@ -1,0 +1,89 @@
+.stats-card {
+  background-color: #fff;
+  margin: 2rem 5rem 0 2rem;
+}
+.stats-card .grid-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5rem;
+  justify-content: center;
+}
+.stats-card .grid-container .grid-item {
+  background-color: rgba(227, 232, 255, 0.5019607843);
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  text-align: center;
+  border: 0.6px solid #343B4F;
+  width: 12rem;
+  height: 4rem;
+}
+.stats-card .grid-container .grid-item h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.stats-card .grid-container .grid-item h4 .ri-group-fill {
+  margin-right: 0.5rem;
+  color: #CB3CFF;
+  background-color: #ecbffd;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-circle-line {
+  margin-right: 0.5rem;
+  color: #CB3CFF;
+  background-color: #ecbffd;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-user-fill {
+  margin-right: 0.5rem;
+  color: #FDB52A;
+  background-color: #feecc9;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-box-line {
+  margin-right: 0.5rem;
+  color: #FDB52A;
+  background-color: #feecc9;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-heart-3-fill {
+  margin-right: 0.5rem;
+  color: #05C168;
+  background-color: #c1ffe2;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-box-fill {
+  margin-right: 0.5rem;
+  color: #05C168;
+  background-color: #c1ffe2;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-money-dollar-circle-fill {
+  margin-right: 0.5rem;
+  color: #086CD9;
+  background-color: #c9e0f9;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item h4 .ri-more-fill {
+  margin-right: 0.5rem;
+  color: #086CD9;
+  background-color: #c9e0f9;
+  padding: 0.5rem;
+  border-radius: 3rem;
+}
+.stats-card .grid-container .grid-item p {
+  color: #367C2D;
+  font-weight: 400;
+}
+.stats-card .grid-container .grid-item:hover {
+  background-color: #e2f9eb;
+  cursor: pointer;
+  transition: 0.3s ease;
+}/*# sourceMappingURL=statscard.css.map */

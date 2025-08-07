@@ -1,17 +1,141 @@
-.dashboard-container {
-  display: flex;
-  min-height: 100vh;
-  background-color: white;
+/* app/dashboard/layout.css */
+/* Dashboard override container */
+.dashboard-override {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  background-color: #f8fafc;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
 }
 
+/* Main dashboard container */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+/* Main content area */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 250px;
-  padding: 1rem;
+  margin-left: 250px; /* Adjust based on sidebar width */
+  overflow: hidden;
+  background-color: #ffffff;
 }
 
+/* Content body with proper scrolling */
 .content-body {
-  margin-top: 1rem;
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #f8fafc;
+}
+
+/* Dashboard sections with professional spacing */
+.dashboard-stats-section {
+  margin-bottom: 32px;
+}
+
+.dashboard-destinations-section {
+  margin-bottom: 32px;
+}
+
+.dashboard-trips-section {
+  margin-bottom: 32px;
+}
+
+.dashboard-children {
+  margin-top: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+/* Professional styling enhancements */
+.content-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.content-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.content-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.content-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .main-content {
+    margin-left: 0;
+  }
+  .dashboard-container {
+    position: relative;
+  }
+}
+@media (max-width: 768px) {
+  .content-body {
+    padding: 16px;
+  }
+  .dashboard-stats-section,
+  .dashboard-destinations-section,
+  .dashboard-trips-section {
+    margin-bottom: 24px;
+  }
+  .dashboard-children {
+    margin-top: 16px;
+  }
+}
+@media (max-width: 640px) {
+  .content-body {
+    padding: 12px;
+  }
+  .dashboard-stats-section,
+  .dashboard-destinations-section,
+  .dashboard-trips-section {
+    margin-bottom: 20px;
+  }
+}
+/* Ensure smooth transitions */
+* {
+  box-sizing: border-box;
+}
+
+/* Professional loading state */
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Error boundary styling */
+.dashboard-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  color: #991b1b;
+}
+
+/* Focus states for accessibility */
+.dashboard-container *:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
 }/*# sourceMappingURL=layout.css.map */
