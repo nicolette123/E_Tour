@@ -1,5 +1,5 @@
-import SideBar from "./../components/NavigationComponent/SideBar";
-import TopBar from "./../components/NavigationComponent/TopBar";
+import SideBar from "../components/NavigationComponent/SideBar/SideBar";
+import TopBar from "../components/NavigationComponent/TopBar/TopBar";
 
 function Page() {
     return (

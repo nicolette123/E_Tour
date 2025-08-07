@@ -1,16 +1,22 @@
-// app/layout.js (Root Layout - Modified)
-import { Geist, Geist_Mono } from "next/font/google";
+// app/layout.js (Root Layout - Improved)
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import ConditionalLayout from "./ConditionalLayout";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Primary font for body text - Inter is excellent for readability
+const inter = Inter({
   subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap", // Improves loading performance
+  weight: ["300", "400", "500", "600", "700"], // Multiple weights for flexibility
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Monospace font for code - JetBrains Mono is popular and readable
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -20,8 +26,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="font-sans antialiased">
         <ConditionalLayout>
           {children}
         </ConditionalLayout>

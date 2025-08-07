@@ -1,59 +1,57 @@
 "use client";
 
 import React, { useState } from "react";
-import "../../../(Dashboard)/layout.css";
-import "../../../../styles/triptable.css";
-import "../../../../styles/statscard.css";
+import "./trip.css";
 
 const mockData = [
   {
     id: 1,
-    tripname: "zipline",
+    tripname: "Zipline Adventure",
     startdate: "2025-01-01",
     enddate: "2025-01-02",
     location: "Kigali",
-    amount: "1000",
-    company: "Transport Co",
+    amount: 100000, // In RWF
+    company: "Rwanda Tours",
     status: "Completed",
   },
   {
     id: 2,
-    tripname: "zipline",
-    startdate: "2025-01-01",
-    enddate: "2025-01-02",
-    location: "Kigali",
-    amount: "1000",
-    company: "Transport Co",
-    status: "Completed",
+    tripname: "Nyungwe Trek",
+    startdate: "2025-02-01",
+    enddate: "2025-02-03",
+    location: "Nyungwe",
+    amount: 150000,
+    company: "Eco Travel",
+    status: "Pending",
   },
   {
     id: 3,
-    tripname: "zipline",
-    startdate: "2025-01-01",
-    enddate: "2025-01-02",
-    location: "Kigali",
-    amount: "1000",
-    company: "Transport Co",
+    tripname: "Lake Kivu Retreat",
+    startdate: "2025-03-01",
+    enddate: "2025-03-04",
+    location: "Gisenyi",
+    amount: 200000,
+    company: "Kivu Adventures",
     status: "Completed",
   },
   {
     id: 4,
-    tripname: "zipline",
-    startdate: "2025-01-01",
-    enddate: "2025-01-02",
-    location: "Kigali",
-    amount: "1000",
-    company: "Transport Co",
-    status: "Completed",
+    tripname: "Volcanoes Safari",
+    startdate: "2025-04-01",
+    enddate: "2025-04-05",
+    location: "Musanze",
+    amount: 300000,
+    company: "Gorilla Expeditions",
+    status: "Pending",
   },
   {
     id: 5,
-    tripname: "zipline",
-    startdate: "2025-01-01",
-    enddate: "2025-01-02",
-    location: "Kigali",
-    amount: "1000",
-    company: "Transport Co",
+    tripname: "Akagera Wildlife",
+    startdate: "2025-05-01",
+    enddate: "2025-05-03",
+    location: "Akagera",
+    amount: 120000,
+    company: "Wild Rwanda",
     status: "Rejected",
   },
 ];
@@ -145,7 +143,7 @@ const ViewTrips = () => {
       startdate: new Date().toISOString().split("T")[0],
       enddate: new Date().toISOString().split("T")[0],
       location: "New Location",
-      amount: "0",
+      amount: 0,
       company: "New Company",
       status: "Pending",
     };
@@ -167,84 +165,86 @@ const ViewTrips = () => {
   const totalTrips = trips.length;
   const newTrips = trips.filter((trip) => trip.status === "Pending").length;
   const completeTrips = trips.filter((trip) => trip.status === "Completed").length;
-  const pendingTrips = trips.filter((trip) => trip.status === "Pending").length;
+  const rejectedTrips = trips.filter((trip) => trip.status === "Rejected").length;
 
   return (
-    <div className="content-body">
-      <div className="stats-card">
-        <div className="grid-container">
-          <div className="grid-item">
-            <h4>
-              <i className="ri-group-fill"></i> Total Trips
-            </h4>
-            <p>{totalTrips}</p>
-          </div>
-          <div className="grid-item">
-            <h4>
-              <i className="ri-user-fill"></i> New Trips
-            </h4>
-            <p>{newTrips}</p>
-          </div>
-          <div className="grid-item">
-            <h4>
-              <i className="ri-heart-3-fill"></i> Complete Trips
-            </h4>
-            <p>{completeTrips}</p>
-          </div>
-          <div className="grid-item">
-            <h4>
-              <i className="ri-more-fill"></i> Pending Trips
-            </h4>
-            <p>{pendingTrips}</p>
-          </div>
+    <div className="view-trips">
+      <h1 className="dashboard-title">Trips Management</h1>
+
+      {/* Stats Cards */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <i className="ri-map-pin-line"></i>
+          <h3>Total Trips</h3>
+          <p>{totalTrips}</p>
+        </div>
+        <div className="stat-card">
+          <i className="ri-add-circle-line"></i>
+          <h3>New Trips</h3>
+          <p>{newTrips}</p>
+        </div>
+        <div className="stat-card">
+          <i className="ri-checkbox-circle-line"></i>
+          <h3>Completed Trips</h3>
+          <p>{completeTrips}</p>
+        </div>
+        <div className="stat-card">
+          <i className="ri-close-circle-line"></i>
+          <h3>Rejected Trips</h3>
+          <p>{rejectedTrips}</p>
         </div>
       </div>
-      <div className="trip-table">
-        <h3>Total Trips</h3>
+
+      {/* Trips Table */}
+      <div className="trips-table-container">
         <div className="table-header">
-          <i className="ri-add-large-fill" onClick={handleAddRow}></i>
-          <i className="ri-sort-alphabet-asc" onClick={() => handleSort("tripname")}></i>
-          <div className="search">
-            <i className="ri-search-line"></i>
-            <input
-              type="search"
-              placeholder="Search"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
+          <h2>All Trips</h2>
+          <div className="table-actions">
+            <button className="add-btn" onClick={handleAddRow}>
+              <i className="ri-add-line"></i> Add Trip
+            </button>
+            <div className="search-bar">
+              <i className="ri-search-line"></i>
+              <input
+                type="text"
+                placeholder="Search trips..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
           </div>
         </div>
-        <table>
+        <table className="trips-table">
           <thead>
-            <tr className="table-header-row">
+            <tr>
               <th>
                 <input type="checkbox" />
               </th>
               <th onClick={() => handleSort("tripname")}>
-                Trip Name {sortConfig.key === "tripname" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Trip Name {sortConfig.key === "tripname" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("startdate")}>
-                Start Date {sortConfig.key === "startdate" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Start Date {sortConfig.key === "startdate" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("enddate")}>
-                End Date {sortConfig.key === "enddate" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                End Date {sortConfig.key === "enddate" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("location")}>
-                Location {sortConfig.key === "location" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Location {sortConfig.key === "location" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("amount")}>
-                Amount {sortConfig.key === "amount" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Amount (RWF) {sortConfig.key === "amount" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("company")}>
-                Company {sortConfig.key === "company" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Company {sortConfig.key === "company" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th onClick={() => handleSort("status")}>
-                Status {sortConfig.key === "status" ? (sortConfig.direction === "ascending" ? "↑" : "↓") : ""}
+                Status {sortConfig.key === "status" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
-          <tbody className="table-body">
+          <tbody>
             {filteredTrips.length > 0 ? (
               filteredTrips.map((trip) => (
                 <tr key={trip.id}>
@@ -262,6 +262,7 @@ const ViewTrips = () => {
                           type="text"
                           value={editFormData.tripname}
                           onChange={(e) => handleEditChange(e, "tripname")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -269,6 +270,7 @@ const ViewTrips = () => {
                           type="date"
                           value={editFormData.startdate}
                           onChange={(e) => handleEditChange(e, "startdate")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -276,6 +278,7 @@ const ViewTrips = () => {
                           type="date"
                           value={editFormData.enddate}
                           onChange={(e) => handleEditChange(e, "enddate")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -283,6 +286,7 @@ const ViewTrips = () => {
                           type="text"
                           value={editFormData.location}
                           onChange={(e) => handleEditChange(e, "location")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -290,6 +294,7 @@ const ViewTrips = () => {
                           type="number"
                           value={editFormData.amount}
                           onChange={(e) => handleEditChange(e, "amount")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
@@ -297,19 +302,28 @@ const ViewTrips = () => {
                           type="text"
                           value={editFormData.company}
                           onChange={(e) => handleEditChange(e, "company")}
+                          className="edit-input"
                         />
                       </td>
                       <td>
-                        <select value={editFormData.status} onChange={(e) => handleEditChange(e, "status")}>
+                        <select
+                          value={editFormData.status}
+                          onChange={(e) => handleEditChange(e, "status")}
+                          className="edit-select"
+                        >
                           <option value="Completed">Completed</option>
                           <option value="Pending">Pending</option>
                           <option value="Rejected">Rejected</option>
                         </select>
                       </td>
                       <td>
-                        <div className="edit-form">
-                          <button onClick={() => handleSaveEdit(trip.id)}>Save</button>
-                          <button onClick={handleCancelEdit}>Cancel</button>
+                        <div className="edit-actions">
+                          <button className="action-btn save" onClick={() => handleSaveEdit(trip.id)}>
+                            <i className="ri-save-line"></i> Save
+                          </button>
+                          <button className="action-btn cancel" onClick={handleCancelEdit}>
+                            <i className="ri-close-line"></i> Cancel
+                          </button>
                         </div>
                       </td>
                     </>
@@ -319,20 +333,26 @@ const ViewTrips = () => {
                       <td>{trip.startdate}</td>
                       <td>{trip.enddate}</td>
                       <td>{trip.location}</td>
-                      <td>{trip.amount}</td>
+                      <td>{trip.amount.toLocaleString()}</td>
                       <td>{trip.company}</td>
-                      <td>{trip.status}</td>
+                      <td>
+                        <span className={`status ${trip.status.toLowerCase()}`}>{trip.status}</span>
+                      </td>
                       <td>
                         {selectedRows[trip.id] && (
                           <div className="more-container">
                             <i
-                              className="ri-more-fill"
+                              className="ri-more-2-fill"
                               onClick={() => handleMoreClick(trip.id)}
                             ></i>
                             {menuOpen === trip.id && (
                               <div className="more-menu">
-                                <button onClick={() => handleEdit(trip.id)}>Edit</button>
-                                <button onClick={() => handleDelete(trip.id)}>Delete</button>
+                                <button onClick={() => handleEdit(trip.id)}>
+                                  <i className="ri-edit-line"></i> Edit
+                                </button>
+                                <button onClick={() => handleDelete(trip.id)}>
+                                  <i className="ri-delete-bin-line"></i> Delete
+                                </button>
                               </div>
                             )}
                           </div>
@@ -344,7 +364,7 @@ const ViewTrips = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="9">No trips found</td>
+                <td colSpan="9" className="no-data">No trips found</td>
               </tr>
             )}
           </tbody>
