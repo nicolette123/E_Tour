@@ -26,21 +26,18 @@ export default function TourCards() {
     <section className={styles.cardsSection}>
       <div className={styles.grid}>
         {tours.map((tour) => (
-          <div key={tour._id} className={styles.card}>
+          <div key={tour.id} className={styles.card}>
             <img
-              src={tour.image || '/images/default.png'}
-              alt={tour.destination}
+              src={tour.images?.[0] || '/images/default.png'}
+              alt={tour.title}
               className={styles.cardImg}
             />
             <div className={styles.cardBody}>
-            <h3>{tour.title || 'Untitled Tour'}</h3>
-
+              <h3>{tour.title || 'Untitled Tour'}</h3>
               <p>{tour.description}</p>
               <button
                 className={styles.learnMore}
-                onClick={() => {
-                  if (tour._id) router.push(`/tours/${tour._id}`);
-                }}
+                onClick={() => router.push(`/akagera?id=${tour.id}`)}
               >
                 Learn More
               </button>
