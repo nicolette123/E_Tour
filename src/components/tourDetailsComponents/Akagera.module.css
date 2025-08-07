@@ -1,0 +1,196 @@
+@charset "UTF-8";
+.akageraContainer {
+  padding: 10rem;
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+.akageraContainer .tour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.akageraContainer .tour-header h2 {
+  color: #2e7d32;
+  font-weight: bold;
+}
+.akageraContainer .tour-header p {
+  font-size: 1.1rem;
+  color: #555;
+}
+.akageraContainer .tour-header .action-buttons a {
+  margin-left: 15px;
+  color: green;
+  text-decoration: underline;
+  font-weight: 500;
+}
+.akageraContainer .image-grid {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.akageraContainer .image-grid .main-image {
+  flex: 2;
+  width: 595px;
+  height: 546px;
+  padding-right: 2px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.akageraContainer .image-grid .thumb-images {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  height: 546px;
+}
+.akageraContainer .image-grid .thumb-images .thumbnail {
+  border-radius: 8px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+.akageraContainer .tour-content {
+  display: flex;
+  margin-top: 30px;
+  gap: 40px;
+}
+.akageraContainer .tour-content .left-content {
+  flex: 2;
+}
+.akageraContainer .tour-content .left-content h3 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.akageraContainer .tour-content .left-content h4 {
+  margin-top: 20px;
+  font-weight: 600;
+}
+.akageraContainer .tour-content .left-content p {
+  margin-top: 10px;
+  line-height: 1.6;
+  color: #555;
+}
+.akageraContainer .tour-content .right-content {
+  flex: 2;
+  font-family: "Arial", sans-serif;
+}
+.akageraContainer .tour-content .right-content .price-section {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  font-size: 14px;
+}
+.akageraContainer .tour-content .right-content .price-section p {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.akageraContainer .tour-content .right-content .price-section .booking-box {
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.akageraContainer .tour-content .right-content .price-section .booking-box .date-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: bold;
+}
+.akageraContainer .tour-content .right-content .price-section .booking-box .date-row .label {
+  color: #555;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.akageraContainer .tour-content .right-content .price-section .booking-box .guest-row {
+  border-top: 1px solid #bbb;
+  padding-top: 10px;
+  font-size: 13px;
+}
+.akageraContainer .tour-content .right-content .price-section .booking-box .guest-row span {
+  font-weight: bold;
+}
+.akageraContainer .tour-content .right-content .price-section .cancel-policy {
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  padding: 15px;
+}
+.akageraContainer .tour-content .right-content .price-section .cancel-policy h5 {
+  margin-bottom: 15px;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.akageraContainer .tour-content .right-content .price-section .cancel-policy .option {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+.akageraContainer .tour-content .right-content .price-section .cancel-policy .free-cancel {
+  font-size: 11px;
+  color: #888;
+  text-align: center;
+  font-weight: 500;
+}
+.akageraContainer .tour-content .right-content .price-section .buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.akageraContainer .tour-content .right-content .price-section .buttons button {
+  padding: 8px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  background-color: #2e7d32;
+  color: white;
+}
+.akageraContainer .tour-content .right-content .price-section .note {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #111;
+  font-weight: 500;
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+}
+
+/* 🔽 RESPONSIVE SECTION */
+@media (max-width: 768px) {
+  .akageraContainer {
+    padding: 1rem;
+  }
+  .akageraContainer .tour-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  .akageraContainer .image-grid {
+    flex-direction: column;
+  }
+  .akageraContainer .image-grid .main-image,
+  .akageraContainer .image-grid .thumb-images {
+    width: 100%;
+    height: auto;
+  }
+  .akageraContainer .image-grid .thumb-images {
+    grid-template-columns: 1fr 1fr;
+  }
+  .akageraContainer .tour-content {
+    flex-direction: column;
+  }
+  .akageraContainer .tour-content .left-content,
+  .akageraContainer .tour-content .right-content {
+    width: 100%;
+  }
+  .akageraContainer .tour-content .right-content .price-section {
+    width: 100%;
+  }
+}/*# sourceMappingURL=Akagera.module.css.map */
