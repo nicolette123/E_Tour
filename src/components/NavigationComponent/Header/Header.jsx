@@ -35,7 +35,8 @@ const Header = () => {
         </ul>
       </nav>
       <div className="auth-buttons">
-        <button className="login">Request trip</button>
+        <Link href="request-trip">
+        <button className="login">Request trip</button></Link>
         <Link href="/login">
           <button className="get-started">Get started</button>
         </Link>
