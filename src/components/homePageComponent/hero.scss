@@ -1,0 +1,92 @@
+.highlight-section {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    padding: 1rem 1rem;
+    background-color: white;
+  }
+
+  .highlight-card {
+    background: #f7fff6;
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: 300px;
+    position: relative;
+    color: #000;
+
+    &.text-card {
+      text-align: left;
+
+      .subheading {
+        font-size: 0.9rem;
+        color: #444;
+      }
+
+      .main-heading {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin: 0.5rem 0 1rem;
+      }
+
+      .explore-btn {
+        background: #1c6b1c;
+        color: white;
+        border: none;
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+
+    &.image-card {
+      padding: 0;
+      overflow: hidden;
+      .highlight-discount{
+        padding: 1rem 1rem;
+      }
+
+
+      img {
+        width: 100%;
+        border-radius: 16px;
+      }
+
+      .icon-overlay {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        background: #1c6b1c;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 50%;
+        font-size: 0.9rem;
+      }
+    }
+
+    &.user-card {
+      text-align: center;
+
+      .avatars {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+          margin-left: -10px;
+          border: 2px solid white;
+        }
+      }
+
+      .user-count {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #1c6b1c;
+      }
+    }
+  }

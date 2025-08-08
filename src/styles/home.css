@@ -1,0 +1,58 @@
+.home-page {
+  background-color: white;
+  margin: auto;
+  padding: 0 2rem;
+  max-width: 1200px;
+}
+.home-page .hero-banner {
+  background-image: url("../../public/images/urukari.jpg");
+  height: 400px;
+  border-radius: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.home-page .hero-banner .hero-overlay {
+  color: white;
+  max-width: 700px;
+  background-color: rgba(54, 124, 45, 0.7);
+  padding: 2rem 2rem;
+  border-radius: 20px;
+}
+.home-page .hero-banner .hero-overlay .hero-subtitle {
+  font-size: 1rem;
+  color: #e4ff50;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.home-page .hero-banner .hero-overlay .hero-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.home-page .hero-banner .hero-overlay .hero-desc {
+  font-size: 1rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+}
+.home-page .hero-banner .hero-overlay .explore-btn {
+  background: #1c6b1c;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.home-page .hero-banner .hero-overlay .hero-note {
+  font-size: 0.9rem;
+  color: white;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  text-align: right;
+}/*# sourceMappingURL=home.css.map */
