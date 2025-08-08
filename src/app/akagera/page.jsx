@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import Header from '../../components/tourDetailsComponents/Header';
@@ -8,7 +8,8 @@ import Footer from '../../components/tourDetailsComponents/Footer';
 import Payment from '../../components/payment/Payment';
 import styles from '../../components/tourDetailsComponents/Akagera.module.scss';
 
-const AkageraPage = () => {
+// Separate the component that uses useSearchParams
+const AkageraContent = () => {
   const [trip, setTrip] = useState(null);
   const [showPayment, setShowPayment] = useState(false);
   const searchParams = useSearchParams();
@@ -51,7 +52,7 @@ const AkageraPage = () => {
 
   return (
     <div className={styles.akageraContainer}>
-    {/*<Header />*/}
+      {/*<Header />*/}
 
       <div className={styles['tour-details']}>
         <div className={styles['tour-header']}>
@@ -122,28 +123,34 @@ const AkageraPage = () => {
                 </div>
               </div>
 
-             
-                {/*<h5>CANCELLATION POLICIES</h5>
-                <div className={styles.option}><span>Non - refundable</span><span>80,000 RWF total</span></div>
-                <div className={styles.option}><span>Refundable</span><span>20,000 RWF total</span></div>
-                <div className={styles['free-cancel']}>FREE CANCELLATION BEFORE 22 JUN</div>
-              </div>
-
-             
-                <button className={styles.cancel}>cancel</button>*/}
-                <div className={styles.buttons}>
+              <div className={styles.buttons}>
                 <button className={styles.reserve} onClick={() => setShowPayment(true)}>Reserve</button>
               </div>
 
-              <div className={styles.note}>You won’t be charged yet</div>
+              <div className={styles.note}>You won't be charged yet</div>
             </div>
           </div>
         </div>
       </div>
 
       {showPayment && <Payment onClose={() => setShowPayment(false)} />}
-   
     </div>
+  );
+};
+
+// Loading component for Suspense fallback
+const Loading = () => (
+  <div className={styles.akageraContainer}>
+    <p>Loading tour details...</p>
+  </div>
+);
+
+// Main component wrapped with Suspense
+const AkageraPage = () => {
+  return (
+    <Suspense fallback={<Loading />}>
+      <AkageraContent />
+    </Suspense>
   );
 };
 
