@@ -1,0 +1,76 @@
+.testimonials {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.say {
+  color: black;
+  padding: 1rem 1rem;
+  font-size: 1rem;
+}
+
+.testimonial-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #367C2D;
+}
+
+.testimonial-card-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.testimonial-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
+
+.testimonial-card h3 {
+  color: #367C2D;
+  font-weight: bold;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.testimonial-card p {
+  color: black;
+  font-size: 0.95rem;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.testimonial-image-wrapper {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  border: 4px solid #367C2D;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.testimonial-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.testimonial-dots {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.testimonial-dots span {
+  width: 40px;
+  height: 8px;
+  background-color: #367C2D;
+  border-radius: 4px;
+}/*# sourceMappingURL=testimonial.css.map */
