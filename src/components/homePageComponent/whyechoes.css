@@ -1,0 +1,59 @@
+.why-echoes {
+  background-color: #165016;
+  color: #fff;
+  text-align: center;
+  padding: 4rem 4rem;
+  border-radius: 2rem;
+}
+.why-echoes .section-subtitle {
+  color: #e4ff50;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+.why-echoes .section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+.why-echoes .section-description {
+  max-width: 700px;
+  margin: 0 auto 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #dcdcdc;
+}
+.why-echoes .features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.why-echoes .features .feature-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1.4;
+  gap: 1rem;
+}
+.why-echoes .features .feature-item .check {
+  font-size: 1.4rem;
+  color: #f5f76c;
+  margin-bottom: 0.5rem;
+}
+.why-echoes .learn-more-btn {
+  background: #fff;
+  color: #165016;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.why-echoes .learn-more-btn:hover {
+  background: #f0f0f0;
+}/*# sourceMappingURL=whyechoes.css.map */

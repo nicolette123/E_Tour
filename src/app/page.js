@@ -1,18 +1,15 @@
 "use client";
 import React from 'react';
-  // import '../../styles/HomePage.scss';
+  
 import '../styles/home.css';
 import Link from 'next/link';
-// import HeroSection from '../../components/HeroSection';
+
 import Hero from '../components/homePageComponent/Hero'
 //  import Service from '../../components/Service';
 import Destination from'../components/homePageComponent/Destination'
-// import WhyEchoes from '../WhyEchoes';
-// import Premium from '../Premium';
-// import WhyEchoes from '../component/WhyEchoes';
-// import Flow from '../component/Flow';
-// import Premium from '../component/Premium';
-// import Testimonial from '../Testimonial';
+import WhyEchoes from '../components/homePageComponent/WhyEchoes';
+import Testimonial from '../components/homePageComponent/Testimonial';
+import Premium from '../components/homePageComponent/Premium';
 
 
 function Home() {
@@ -36,10 +33,10 @@ function Home() {
     
       <Hero /> 
     <Destination /> 
-    {/* //  <WhyEchoes />
-    //  <Premium />
-    // <Testimonial />  */}
-
+    <WhyEchoes />
+   
+     <Testimonial />   
+ <Premium /> 
     </section>
     
   )
