@@ -119,3 +119,20 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+/* Add to your globals.css */
+.dashboard-page header,
+.dashboard-page footer,
+.collection-page header,
+.collection-page footer {
+  display: none !important;
+}
+
+/* Alternative: Hide by page path */
+[data-page-type="dashboard"] header,
+[data-page-type="dashboard"] footer,
+[data-page-type="collection"] header,
+[data-page-type="collection"] footer {
+  display: none !important;
+}
