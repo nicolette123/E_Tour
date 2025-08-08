@@ -1,41 +1,39 @@
-'use client';
-import React, { useState } from 'react';
-import SideBar from './SideBar';
-import TopBar from './TopBar';
-import "@/styles/dashboard.css";
-import "@/styles/table.css";
+"use client";
+
+import React, { useState } from "react";
+import "./notifications.css";
 
 const mockData = [
   {
     id: 1,
-    name: "Natalia",
-    message: "New order CM210 placed for Kigali"
+    name: "Natalia Uwase",
+    message: "New order CM210 placed for a Kigali city tour",
   },
   {
     id: 2,
-    name: "John",
-    message: "Order CM211 is pending approval"
+    name: "John Mugabo",
+    message: "Order CM211 for Musanze safari is pending approval",
   },
   {
     id: 3,
-    name: "Emma",
-    message: "Order CM212 was rejected"
-  }
+    name: "Emma Ingabire",
+    message: "Order CM212 for Nyungwe trek was rejected",
+  },
 ];
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState(mockData);
   const [selectedRows, setSelectedRows] = useState({});
   const [menuOpen, setMenuOpen] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
+  const [searchTerm, setSearchTerm] = useState("");
   const [editRowId, setEditRowId] = useState(null);
   const [editFormData, setEditFormData] = useState({});
 
   const handleCheckboxChange = (id) => {
-    setSelectedRows(prev => ({
+    setSelectedRows((prev) => ({
       ...prev,
-      [id]: !prev[id]
+      [id]: !prev[id],
     }));
   };
 
@@ -44,24 +42,24 @@ const Notifications = () => {
   };
 
   const handleEdit = (id) => {
-    const notification = notifications.find(n => n.id === id);
+    const notification = notifications.find((n) => n.id === id);
     setEditRowId(id);
     setEditFormData({
       name: notification.name,
-      message: notification.message
+      message: notification.message,
     });
     setMenuOpen(null);
   };
 
   const handleEditChange = (event, field) => {
-    setEditFormData(prev => ({
+    setEditFormData((prev) => ({
       ...prev,
-      [field]: event.target.value
+      [field]: event.target.value,
     }));
   };
 
   const handleSaveEdit = (id) => {
-    setNotifications(notifications.map(n =>
+    setNotifications(notifications.map((n) =>
       n.id === id ? { ...n, ...editFormData } : n
     ));
     setEditRowId(null);
@@ -74,8 +72,8 @@ const Notifications = () => {
   };
 
   const handleDelete = (id) => {
-    setNotifications(notifications.filter(n => n.id !== id));
-    setSelectedRows(prev => {
+    setNotifications(notifications.filter((n) => n.id !== id));
+    setSelectedRows((prev) => {
       const newSelected = { ...prev };
       delete newSelected[id];
       return newSelected;
@@ -84,17 +82,17 @@ const Notifications = () => {
   };
 
   const handleSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
 
     const sortedNotifications = [...notifications].sort((a, b) => {
-      const aValue = a[key] ? a[key].toString().toLowerCase() : '';
-      const bValue = b[key] ? b[key].toString().toLowerCase() : '';
-      if (aValue < bValue) return direction === 'ascending' ? -1 : 1;
-      if (aValue > bValue) return direction === 'ascending' ? 1 : -1;
+      const aValue = a[key] ? a[key].toString().toLowerCase() : "";
+      const bValue = b[key] ? b[key].toString().toLowerCase() : "";
+      if (aValue < bValue) return direction === "ascending" ? -1 : 1;
+      if (aValue > bValue) return direction === "ascending" ? 1 : -1;
       return 0;
     });
     setNotifications(sortedNotifications);
@@ -102,9 +100,9 @@ const Notifications = () => {
 
   const handleAddRow = () => {
     const newNotification = {
-      id: notifications.length + 1,
+      id: Math.max(...notifications.map((n) => n.id), 0) + 1,
       name: "New User",
-      message: "New notification"
+      message: "New notification",
     };
     setNotifications([...notifications, newNotification]);
   };
@@ -113,94 +111,113 @@ const Notifications = () => {
     setSearchTerm(event.target.value);
   };
 
-  // Compute stats
-  const totalNotifications = notifications.length;
-
-  const filteredNotifications = notifications.filter(n =>
-    n.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    n.message.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredNotifications = notifications.filter(
+    (n) =>
+      n.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      n.message.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const totalNotifications = notifications.length;
+
   return (
-    <div className="dashboard-container">
-      <SideBar />
-      <div className="main-content">
-        <TopBar title="Notifications" />
-        <div className="content-body">
-          <div className="trip-table">
-            <h3>Notifications</h3>
-            <div className="table-header">
-              <i className="ri-add-large-fill" onClick={handleAddRow}></i>
-              <i className="ri-sort-alphabet-asc" onClick={() => handleSort('name')}></i>
-              <div className="search">
-                <i className="ri-search-line"></i>
-                <input
-                  type="search"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                />
-              </div>
+    <div className="notifications-dashboard">
+      <h1 className="dashboard-title">Notifications</h1>
+
+      {/* Stats Card */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <i className="ri-notification-3-line"></i>
+          <h3>Total Notifications</h3>
+          <p>{totalNotifications}</p>
+        </div>
+      </div>
+
+      {/* Notifications List */}
+      <div className="notifications-container">
+        <div className="notifications-header">
+          <h2>All Notifications</h2>
+          <div className="notifications-actions">
+            <button className="add-btn" onClick={handleAddRow}>
+              <i className="ri-add-line"></i> Add Notification
+            </button>
+            <div className="search-bar">
+              <i className="ri-search-line"></i>
+              <input
+                type="text"
+                placeholder="Search notifications..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
             </div>
-            <div className="notification-list">
-              {filteredNotifications.length > 0 ? (
-                filteredNotifications.map(n => (
-                  <div key={n.id} className="notification-row" style={{ borderBottom: '1px solid #E0E0E0' }}>
-                    <div className="notification-header">
+          </div>
+        </div>
+        <div className="notification-list">
+          {filteredNotifications.length > 0 ? (
+            filteredNotifications.map((n) => (
+              <div key={n.id} className="notification-card">
+                <div className="notification-header">
+                  <input
+                    type="checkbox"
+                    checked={!!selectedRows[n.id]}
+                    onChange={() => handleCheckboxChange(n.id)}
+                  />
+                  <h5>
+                    {editRowId === n.id ? (
                       <input
-                        type="checkbox"
-                        checked={!!selectedRows[n.id]}
-                        onChange={() => handleCheckboxChange(n.id)}
+                        type="text"
+                        value={editFormData.name}
+                        onChange={(e) => handleEditChange(e, "name")}
+                        className="edit-input"
                       />
-                      <h5>
-                        {editRowId === n.id ? (
-                          <input
-                            type="text"
-                            value={editFormData.name}
-                            onChange={(e) => handleEditChange(e, 'name')}
-                          />
-                        ) : (
-                          n.name
-                        )}
-                      </h5>
-                      {selectedRows[n.id] && (
-                        <div className="more-container">
-                          <i
-                            className="ri-more-fill"
-                            onClick={() => handleMoreClick(n.id)}
-                          ></i>
-                          {menuOpen === n.id && (
-                            <div className="more-menu">
-                              <button onClick={() => handleEdit(n.id)}>Edit</button>
-                              <button onClick={() => handleDelete(n.id)}>Delete</button>
-                            </div>
-                          )}
+                    ) : (
+                      n.name
+                    )}
+                  </h5>
+                  {selectedRows[n.id] && (
+                    <div className="more-container">
+                      <i
+                        className="ri-more-2-fill"
+                        onClick={() => handleMoreClick(n.id)}
+                      ></i>
+                      {menuOpen === n.id && (
+                        <div className="more-menu">
+                          <button onClick={() => handleEdit(n.id)}>
+                            <i className="ri-edit-line"></i> Edit
+                          </button>
+                          <button onClick={() => handleDelete(n.id)}>
+                            <i className="ri-delete-bin-line"></i> Delete
+                          </button>
                         </div>
                       )}
                     </div>
-                    {editRowId === n.id ? (
-                      <div className="notification-edit">
-                        <input
-                          type="text"
-                          value={editFormData.message}
-                          onChange={(e) => handleEditChange(e, 'message')}
-                          placeholder="Message"
-                        />
-                        <div className="edit-form">
-                          <button onClick={() => handleSaveEdit(n.id)}>Save</button>
-                          <button onClick={handleCancelEdit}>Cancel</button>
-                        </div>
-                      </div>
-                    ) : (
-                      <p>{n.message}</p>
-                    )}
+                  )}
+                </div>
+                {editRowId === n.id ? (
+                  <div className="notification-edit">
+                    <input
+                      type="text"
+                      value={editFormData.message}
+                      onChange={(e) => handleEditChange(e, "message")}
+                      className="edit-input"
+                      placeholder="Message"
+                    />
+                    <div className="edit-actions">
+                      <button className="action-btn save" onClick={() => handleSaveEdit(n.id)}>
+                        <i className="ri-save-line"></i> Save
+                      </button>
+                      <button className="action-btn cancel" onClick={handleCancelEdit}>
+                        <i className="ri-close-line"></i> Cancel
+                      </button>
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p>No notifications found</p>
-              )}
-            </div>
-          </div>
+                ) : (
+                  <p>{n.message}</p>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="no-data">No notifications found</div>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,123 @@
+/* ManageTrip.css */
+.manage-trip-container {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f4f7f9;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.trip-list {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.trip-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.trip-details {
+  margin-bottom: 1rem;
+}
+
+.trip-title {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.trip-details p {
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+.trip-status {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.status-upcoming {
+  color: #2ecc71;
+}
+
+.status-completed {
+  color: #7f8c8d;
+}
+
+.trip-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.action-button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: white;
+  border-color: #3498db;
+}
+
+.edit-button:hover {
+  background-color: #2980b9;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.no-trips-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  padding: 2rem;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .trip-card {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .trip-details {
+    margin-bottom: 1rem;
+  }
+
+  .trip-actions {
+    justify-content: stretch;
+  }
+
+  .action-button {
+    flex: 1;
+  }
+}

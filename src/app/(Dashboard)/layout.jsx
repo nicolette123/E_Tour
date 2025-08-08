@@ -1,45 +1,40 @@
-// app/dashboard/layout.js
-import { Geist, Geist_Mono } from "next/font/google";
-import SideBar from "../../components/NavigationComponent/SideBar";
-import TopBar from "../../components/NavigationComponent/TopBar";
-import StatsCard from "../../components/NavigationComponent/StatsCard";
-import DestinationCard from "../../components/NavigationComponent/DestinationCard";
-import TripTable from "../../components/NavigationComponent/TripTable";
+"use client";
+
+import { useState, useEffect } from "react";
+
+import SideBar from "../../components/NavigationComponent/SideBar/SideBar";
+import TopBar from "../../components/NavigationComponent/TopBar/TopBar";
 import "./layout.css";
 
-// Font configurations
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
-export const metadata = {
-  title: "Echoes of Rwanda - Dashboard",
-  description: "Echoes of Rwanda platform dashboard",
-};
+
 
 export default function DashboardLayout({ children }) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
+  // Listen for sidebar toggle events
+ 
+  
+
   return (
-    // This div will override the main app layout
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    
       <body className="dashboard-body">
-        <div className="dashboard-container">
+        <div className={`dashboard-container ${isSidebarCollapsed ? "sidebar-collapsed" : ""}`}>
           <SideBar />
           <div className="main-content">
-            <TopBar title="Dashboard" />
+            <TopBar
+              title="Dashboard"
+              user={{ name: "Jane Doe", role: "admin" }}
+            />
             <div className="content-body">
-              <div className="dashboard-children">
+
+              <section className="dashboard-children" aria-label="Additional Content">
                 {children}
-              </div>
+              </section>
             </div>
           </div>
         </div>
       </body>
-    </html>
   );
 }

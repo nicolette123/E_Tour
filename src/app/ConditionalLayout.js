@@ -6,23 +6,18 @@ import Footer from "./../components/NavigationComponent/Footer/Footer";
 
 export default function ConditionalLayout({ children }) {
   const pathname = usePathname();
-  const isDashboard = pathname?.includes("/collection") || pathname?.includes("/dashboard");
+  
+  const isDashboard = pathname?.includes("/collection") || pathname?.startsWith("/admin") || pathname?.startsWith("/agent") || pathname?.startsWith("/cliant");
 
   return (
     <>
       {/* Header - hidden on dashboard/collection pages */}
-      <div style={{ display: isDashboard ? "none" : "block" }}>
-        <Header />
-      </div>
+      {!isDashboard && <Header />}
       
       <main className="main-content-wrapper">
         {children}
       </main>
-      
-      {/* Footer - hidden on dashboard/collection pages */}
-      <div style={{ display: isDashboard ? "none" : "block" }}>
-        <Footer />
-      </div>
+      {!isDashboard && <Footer />}
     </>
   );
 }
