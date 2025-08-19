@@ -1,102 +1,240 @@
-/* app/dashboard/layout.css */
-/* Dashboard override container */
-.dashboard-override {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 10000;
-  background-color: #f8fafc;
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+:root {
+  --primary-green: #22c55e; /* Emerald green */
+  --accent-yellow: #facc15; /* Sunny yellow */
+  --accent-blue: #3b82f6; /* Lake blue */
+  --accent-red: #f43f5e; /* Coral red */
+  --background-light: #f8fafc;
+  --background-light-end: #e2e8f0;
+  --background-dark: #e0f2fe;
+  --background-dark-end: #bae6fd;
+  --text-primary: #1e293b;
+  --text-secondary: #4b5563;
+  --border-light: rgba(0, 0, 0, 0.08);
+  --shadow-light: rgba(0, 0, 0, 0.06);
 }
 
-/* Main dashboard container */
+.dashboard-body {
+  background: linear-gradient(180deg, var(--background-light) 0%, var(--background-light-end) 100%);
+  min-height: 100vh;
+  color: var(--text-primary);
+}
+
 .dashboard-container {
   display: flex;
   height: 100vh;
   width: 100%;
+  transition: all 0.3s ease;
 }
 
-/* Main content area */
+.dashboard-container.sidebar-collapsed .main-content {
+  margin-left: 80px;
+}
+
+/* Main Content Area */
 .main-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-left: 250px; /* Adjust based on sidebar width */
+  margin-left: 280px; /* Matches sidebar width */
   overflow: hidden;
-  background-color: #ffffff;
+  transition: margin-left 0.3s ease;
 }
 
-/* Content body with proper scrolling */
+/* Content Body */
 .content-body {
   flex: 1;
-  padding: 24px;
+  padding: 32px;
   overflow-y: auto;
-  overflow-x: hidden;
-  background-color: #f8fafc;
+  background: var(--background-light);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-/* Dashboard sections with professional spacing */
-.dashboard-stats-section {
-  margin-bottom: 32px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Section Titles */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  font-family: var(--font-geist-sans);
 }
 
-.dashboard-destinations-section {
-  margin-bottom: 32px;
-}
-
-.dashboard-trips-section {
-  margin-bottom: 32px;
-}
-
+/* Dashboard Sections */
+.dashboard-stats-section,
+.dashboard-destinations-section,
+.dashboard-trips-section,
 .dashboard-children {
-  margin-top: 24px;
-  background-color: #ffffff;
+  margin-bottom: 40px;
+  padding: 24px;
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  overflow: hidden;
+  box-shadow: 0 2px 8px var(--shadow-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Professional styling enhancements */
+.dashboard-stats-section:hover,
+.dashboard-destinations-section:hover,
+.dashboard-trips-section:hover,
+.dashboard-children:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+/* Stats Section */
+.dashboard-stats-section .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+/* Destinations Section */
+.dashboard-destinations-section .destinations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+/* Trips Section */
+.dashboard-trips-section .trips-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Children Section */
+.dashboard-children {
+  min-height: 200px;
+}
+
+/* Scrollbar Styling */
 .content-body::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .content-body::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 3px;
+  background: var(--background-light-end);
+  border-radius: 4px;
 }
 
 .content-body::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: var(--accent-blue);
+  border-radius: 4px;
 }
 
 .content-body::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #2563eb;
 }
 
-/* Responsive design */
-@media (max-width: 1024px) {
-  .main-content {
-    margin-left: 0;
+/* Loading State */
+.dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px var(--shadow-light);
+  aria-live: polite;
+}
+
+.dashboard-loading::after {
+  content: "";
+  width: 28px;
+  height: 28px;
+  border: 4px solid var(--accent-green);
+  border-top: 4px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-top: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  .dashboard-container {
-    position: relative;
+  100% {
+    transform: rotate(360deg);
   }
 }
-@media (max-width: 768px) {
+/* Error State */
+.dashboard-error {
+  background: rgba(244, 63, 94, 0.1); /* Coral red */
+  border: 1px solid var(--accent-red);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  color: var(--accent-red);
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  aria-live: assertive;
+}
+
+.dashboard-error::before {
+  content: "\e87c"; /* Remix Icon ri-error-warning-line */
+  font-family: "remixicon";
+  font-size: 1.5rem;
+}
+
+/* Focus States for Accessibility */
+.dashboard-container *:focus {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
   .content-body {
-    padding: 16px;
+    padding: 24px;
   }
   .dashboard-stats-section,
   .dashboard-destinations-section,
-  .dashboard-trips-section {
-    margin-bottom: 24px;
-  }
+  .dashboard-trips-section,
   .dashboard-children {
-    margin-top: 16px;
+    margin-bottom: 32px;
+    padding: 20px;
+  }
+  .section-title {
+    font-size: 1.4rem;
+  }
+}
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 80px; /* Default to collapsed sidebar */
+  }
+  .dashboard-container:not(.sidebar-collapsed) .main-content {
+    margin-left: 80px;
+  }
+  .content-body {
+    padding: 16px;
+  }
+  .dashboard-stats-section .stats-grid,
+  .dashboard-destinations-section .destinations-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-stats-section,
+  .dashboard-destinations-section,
+  .dashboard-trips-section,
+  .dashboard-children {
+    margin-bottom: 24px;
+    padding: 16px;
+  }
+  .section-title {
+    font-size: 1.3rem;
   }
 }
 @media (max-width: 640px) {
@@ -105,37 +243,49 @@
   }
   .dashboard-stats-section,
   .dashboard-destinations-section,
-  .dashboard-trips-section {
+  .dashboard-trips-section,
+  .dashboard-children {
     margin-bottom: 20px;
+    padding: 12px;
+  }
+  .section-title {
+    font-size: 1.2rem;
   }
 }
-/* Ensure smooth transitions */
-* {
-  box-sizing: border-box;
-}
-
-/* Professional loading state */
-.dashboard-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  color: #64748b;
-  font-size: 14px;
-}
-
-/* Error boundary styling */
-.dashboard-error {
-  background-color: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
-  color: #991b1b;
-}
-
-/* Focus states for accessibility */
-.dashboard-container *:focus {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+/* Dark Mode Support (No Black) */
+@media (prefers-color-scheme: dark) {
+  .dashboard-body {
+    background: linear-gradient(180deg, var(--background-dark) 0%, var(--background-dark-end) 100%);
+  }
+  .content-body {
+    background: var(--background-dark);
+  }
+  .dashboard-stats-section,
+  .dashboard-destinations-section,
+  .dashboard-trips-section,
+  .dashboard-children {
+    background: var(--background-dark-end);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .content-body::-webkit-scrollbar-track {
+    background: var(--background-dark);
+  }
+  .content-body::-webkit-scrollbar-thumb {
+    background: var(--accent-blue);
+  }
+  .content-body::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+  .dashboard-loading {
+    background: var(--background-dark-end);
+    color: #1e3a8a;
+  }
+  .dashboard-error {
+    background: rgba(244, 63, 94, 0.15);
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+  }
+  .section-title {
+    color: #1e3a8a;
+  }
 }/*# sourceMappingURL=layout.css.map */
