@@ -4,11 +4,11 @@ import "../homePageComponent/destination.css";
 export default function Home() {
   const destinations = [
     { title: "Akagera National Park", image: "/images/akagera.png" },
-    { title: "Lake Kivu", image: "/images/kivu.png" },
-    { title: "Kigali", image: "/images/kigalii.png" },
-    { title: "Nyungwe Park", image: "/images/Nyungwee.png" },
-    { title: "Volcanoes National Park", image: "/images/volcano.png" },
-    { title: "Rwanda Memorial Genocide", image: "/images/genocide.png" },
+    { title: "Lake Kivu", image: "/images/lake-kivu.png" },
+    { title: "Kigali", image: "/images/kigali.jpg" },
+    { title: "Nyungwe Park", image: "/images/nyungwe.jpg" },
+    { title: "Volcanoes National Park", image: "/images/volcano.jpg" },
+    { title: "Rwanda Memorial Genocide", image: "/images/genocide.jpg" },
   ];
 
   return (
