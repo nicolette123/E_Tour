@@ -2,8 +2,15 @@
 
 import styles from './HeroSection.module.scss';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
+  const router = useRouter();
+
+  const handleBookNow = () => {
+    router.push('/request-trip'); // Navigate to Trip Request page
+  };
+
   return (
     <section className={styles.hero}>
       <div className={styles.textContent}>
@@ -17,7 +24,6 @@ const HeroSection = () => {
 
         <div className={styles.bookingForm}>
           <div className={styles.formItem}>
-            
             <label>Guest</label>
             <select>
               <option>2 Adult</option>
@@ -45,7 +51,9 @@ const HeroSection = () => {
 
       <div className={styles.imageContainer}>
         <div className={styles.buttonWrapper}>
-          <button className={styles.bookNow}>Book Now</button>
+          <button className={styles.bookNow} onClick={handleBookNow}>
+            Book Now
+          </button>
         </div>
         <Image
           src="/images/green-hero.png"
