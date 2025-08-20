@@ -1,14 +1,15 @@
 // src/components/HeroSection.jsx
 import React from 'react';
 import './hero.css'
-
+import Link from 'next/link';
 const Hero = () => {
   return (
      <div className="highlight-section">
         <div className="highlight-card text-card">
           <span className="subheading">Country of thousand hills</span>
           <h3 className="main-heading">Don’t miss out<br />experience it for yourself.</h3>
-          <button className="explore-btn">Join us</button>
+        <Link href="/login">
+          <button className="explore-btn">Join us</button></Link>
         </div>
 
         <div className="highlight-card image-card">

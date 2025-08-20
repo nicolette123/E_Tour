@@ -23,7 +23,7 @@ function Home() {
           </h1>
           <p className="hero-desc">
             Echoes of Rwanda is a smart travel assistant that creates <br /> personalized trip plans based on your preferences, making it easy to <br /> explore Rwanda with less stress and more authentic experiences.
-          </p><Link href="/login">
+          </p><Link href="/request-trip">
            <button className="explore-btn">Get started</button></Link>
           <p className="hero-note">
             Explore attractions, build custom <br /> itineraries, and book unforgettable <br /> experiences all in one place.

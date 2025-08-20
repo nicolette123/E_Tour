@@ -1,6 +1,6 @@
 import React from 'react'
 import './whyechoes.scss';
-
+import Link from 'next/link';
 function WhyEchoes() {
   return (
       <section className="why-echoes">
@@ -29,8 +29,8 @@ function WhyEchoes() {
             <p>Curated local<br />experiences</p>
           </div>
         </div>
-
-        <button className="learn-more-btn">Learn More</button>
+       <Link href="/tour-packages">
+        <button className="learn-more-btn">Learn More</button></Link>
       </section>
   )
 }

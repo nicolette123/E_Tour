@@ -1,6 +1,7 @@
 // app/layout.js (Root Layout - Improved)
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import 'remixicon/fonts/remixicon.css';
 import ConditionalLayout from "./ConditionalLayout";
 
 // Primary font for body text - Inter is excellent for readability
