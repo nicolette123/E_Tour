@@ -56,8 +56,10 @@
   background-color: white;
   min-width: 200px;
 
-  img {
+  .searchIcon {
     margin-right: 0.5rem;
+    color: var(--color-gray-500);
+    transition: color var(--transition-fast);
   }
 
   input {

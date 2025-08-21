@@ -1,44 +1,70 @@
 "use client";
 import React from 'react';
-  
-import '../styles/home.css';
 import Link from 'next/link';
+import { Rocket, Package, Sparkles } from 'lucide-react';
+import '../styles/home.css';
 
-import Hero from '../components/homePageComponent/Hero'
-//  import Service from '../../components/Service';
-import Destination from'../components/homePageComponent/Destination'
-import WhyEchoes from '../components/homePageComponent/WhyEchoes';
-import Testimonial from '../components/homePageComponent/Testimonial';
-import Premium from '../components/homePageComponent/Premium';
-
+// Import components
+import Hero from '../components/homePageComponent/HeroComponent.jsx'
+import Destination from '../components/homePageComponent/Destination.jsx'
+import WhyEchoes from '../components/homePageComponent/WhyEchoes.jsx';
+import Testimonial from '../components/homePageComponent/Testimonial.jsx';
+import Premium from '../components/homePageComponent/Premium.jsx';
 
 function Home() {
   return (
-    <section className="home-page">
-     <div className="hero-banner">
-        <div className="hero-overlay">
-          <p className="hero-subtitle">Echoes of Rwanda - travel experience</p>
-          <h1 className="hero-title">
-            Explore vibrant cities, cultural<br />gems, and nature escapes
-          </h1>
-          <p className="hero-desc">
-            Echoes of Rwanda is a smart travel assistant that creates <br /> personalized trip plans based on your preferences, making it easy to <br /> explore Rwanda with less stress and more authentic experiences.
-          </p><Link href="/login">
-           <button className="explore-btn">Get started</button></Link>
-          <p className="hero-note">
-            Explore attractions, build custom <br /> itineraries, and book unforgettable <br /> experiences all in one place.
-          </p>
+    <main className="home-page">
+      {/* Hero Banner Section */}
+      <section className="hero-banner">
+        <div className="hero-content">
+          <div className="hero-overlay">
+            <div className="hero-text">
+              <span className="hero-subtitle animate-fade-in">
+                Echoes of Rwanda - Premium Travel Experience
+              </span>
+              <h1 className="hero-title animate-fade-in">
+                Explore Vibrant Cities, Cultural Gems, and Nature Escapes
+              </h1>
+              <p className="hero-description animate-fade-in">
+                Echoes of Rwanda is a smart travel assistant that creates personalized trip plans
+                based on your preferences, making it easy to explore Rwanda with less stress and
+                more authentic experiences.
+              </p>
+
+              <div className="hero-actions animate-fade-in">
+                <Link href="/login" className="btn btn-primary hero-cta">
+                  <Rocket className="btn-icon" size={20} />
+                  <span className="btn-text">Get Started</span>
+                </Link>
+                <Link href="/tour-packages" className="btn btn-secondary hero-secondary">
+                  <Package className="btn-icon" size={20} />
+                  <span className="btn-text">Explore Tours</span>
+                </Link>
+              </div>
+            </div>
+
+            <div className="hero-note">
+              <p>
+                <Sparkles className="note-icon" size={18} />
+                Explore attractions, build custom itineraries, and book unforgettable experiences all in one place.
+              </p>
+            </div>
+          </div>
         </div>
-      </div>
-    
-      <Hero /> 
-    <Destination /> 
-    <WhyEchoes />
-   
-     <Testimonial />   
- <Premium /> 
-    </section>
-    
+
+        {/* Hero Background Elements */}
+        <div className="hero-background">
+          <div className="hero-image-overlay"></div>
+        </div>
+      </section>
+
+      {/* Page Sections */}
+      <Hero />
+      <Destination />
+      <WhyEchoes />
+      <Testimonial />
+      <Premium />
+    </main>
   )
 };
 

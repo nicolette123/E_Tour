@@ -11,7 +11,7 @@
   height: calc(100vh);
   background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%); /* Bright gradient */
   color: #1e293b;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-open-sans), 'Open Sans', sans-serif;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -216,6 +216,34 @@
 
 .logout-btn:hover i {
   color: #ffffff;
+}
+
+.logout-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.logout-btn:disabled:hover {
+  background: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
+}
+
+.logout-btn:disabled:hover i {
+  color: #f43f5e;
+}
+
+/* Loading animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 /* Responsive Design */

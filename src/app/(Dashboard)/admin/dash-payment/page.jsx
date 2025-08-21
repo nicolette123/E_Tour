@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import "./payment.css";
+import { DollarSign, CreditCard, Smartphone, Banknote, TrendingUp, Eye, Download } from "lucide-react";
+import "../shared-styles.css";
 
 const mockData = [
   {
@@ -157,53 +158,105 @@ const Payment = () => {
   const cashPayments = payments.filter((payment) => payment.paymentMethod === "Cash").length;
 
   return (
-    <div className="payment-dashboard">
-      <h1 className="dashboard-title">Payment Management</h1>
+    <div className="admin-page">
+      {/* Professional Header */}
+      <div className="admin-page-header">
+        <h1 className="admin-page-title">Payment Management</h1>
+        <p className="admin-page-description">
+          Monitor and manage all payment transactions and revenue streams
+        </p>
+      </div>
 
-      {/* Stats Cards */}
+      {/* Professional Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
-          <i className="ri-money-dollar-circle-line"></i>
-          <h3>Total Revenue (RWF)</h3>
-          <p>{totalMoney.toLocaleString()}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon">
+              <DollarSign />
+            </div>
+            <div className="stat-card-trend">
+              <TrendingUp className="w-5 h-5 mr-1" />
+              <span className="text-base font-semibold">+15.2%</span>
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Total Revenue (RWF)</div>
+            <div className="stat-card-value">{totalMoney.toLocaleString()}</div>
+            <div className="stat-card-subtitle">All time revenue</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-smartphone-line"></i>
-          <h3>Mobile Money</h3>
-          <p>{mobileMoney}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-success)' }}>
+              <Smartphone />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Mobile Money</div>
+            <div className="stat-card-value">{mobileMoney}</div>
+            <div className="stat-card-subtitle">Mobile transactions</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-bank-card-line"></i>
-          <h3>Card Payments</h3>
-          <p>{cardPayments}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-info)' }}>
+              <CreditCard />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Card Payments</div>
+            <div className="stat-card-value">{cardPayments}</div>
+            <div className="stat-card-subtitle">Credit & debit cards</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-coins-line"></i>
-          <h3>Cash Payments</h3>
-          <p>{cashPayments}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-warning)' }}>
+              <Banknote />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Cash Payments</div>
+            <div className="stat-card-value">{cashPayments}</div>
+            <div className="stat-card-subtitle">Cash transactions</div>
+          </div>
         </div>
       </div>
 
-      {/* Payments Table */}
-      <div className="payments-table-container">
-        <div className="table-header">
-          <h2>Payment History</h2>
-          <div className="table-actions">
-            <button className="add-btn" onClick={handleAddRow}>
-              <i className="ri-add-line"></i> Add Payment
-            </button>
-            <div className="search-bar">
-              <i className="ri-search-line"></i>
-              <input
-                type="text"
-                placeholder="Search payments..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+      {/* Professional Payments Table */}
+      <div className="data-table-container">
+        <div className="data-table-header">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+            <div className="data-table-title">Payment History</div>
+
+            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+              <button className="btn btn-primary" onClick={handleAddRow}>
+                <DollarSign className="w-4 h-4 mr-2" />
+                Add Payment
+              </button>
+
+              <button className="btn btn-secondary">
+                <Download className="w-4 h-4 mr-2" />
+                Export
+              </button>
+
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search payments..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="form-input"
+                  style={{ width: '250px' }}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <table className="payments-table">
+        <table className="data-table">
           <thead>
             <tr>
               <th>

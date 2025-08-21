@@ -1,8 +1,8 @@
 // app/ConditionalLayout.js
 "use client";
 import { usePathname } from "next/navigation";
-import Header from "./../components/NavigationComponent/Header/Header";
-import Footer from "./../components/NavigationComponent/Footer/Footer";
+import Header from "./../components/NavigationComponent/Header/Header.jsx";
+import Footer from "./../components/NavigationComponent/Footer/Footer.jsx";
 
 export default function ConditionalLayout({ children }) {
   const pathname = usePathname();

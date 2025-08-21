@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 import styles from './CustomDropdown.module.scss';
-import Image from 'next/image';
-import { FaCheck } from 'react-icons/fa';
+import { Check } from 'lucide-react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-const CustomDropdown = ({ label, options = [], iconSrc, isDate }) => {
+const CustomDropdown = ({ label, options = [], icon: IconComponent, isDate }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(isDate ? label : options[0]);
   const [tempRange, setTempRange] = useState([
@@ -48,13 +47,10 @@ const CustomDropdown = ({ label, options = [], iconSrc, isDate }) => {
   return (
     <div className={styles.dropdown}>
       <button onClick={toggleDropdown} className={styles.toggle}>
-        {iconSrc && (
-          <Image
-            src={iconSrc}
-            alt="icon"
-            width={16}
-            height={16}
+        {IconComponent && (
+          <IconComponent
             className={styles.icon}
+            size={16}
           />
         )}
         <span>{selected}</span>
@@ -70,7 +66,7 @@ const CustomDropdown = ({ label, options = [], iconSrc, isDate }) => {
               onClick={() => handleSelect(option)}
               className={`${styles.option} ${selected === option ? styles.selected : ''}`}
             >
-              {selected === option && <FaCheck className={styles.checkmark} />}
+              {selected === option && <Check className={styles.checkmark} size={16} />}
               {option}
             </div>
           ))}

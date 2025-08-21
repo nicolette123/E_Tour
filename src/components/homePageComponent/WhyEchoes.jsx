@@ -1,9 +1,11 @@
 import React from 'react'
+import { Check } from 'lucide-react'
 import './whyechoes.scss';
 
 function WhyEchoes() {
   return (
-      <section className="why-echoes">
+    <section className="why-echoes">
+      <div className="container">
         <p className="section-subtitle">Why Use Echoes of Rwanda?</p>
         <h2 className="section-title">Because you deserve more than<br />copy paste travel advice.</h2>
         <p className="section-description">
@@ -13,25 +15,34 @@ function WhyEchoes() {
 
         <div className="features">
           <div className="feature-item">
-            <span className="check">✔</span>
-            <p>Smart itinerary<br />generator</p>
+            <div className="check">
+              <Check size={16} />
+            </div>
+            <p>Smart itinerary generator</p>
           </div>
           <div className="feature-item">
-            <span className="check">✔</span>
-            <p>Interactive<br />route maps</p>
+            <div className="check">
+              <Check size={16} />
+            </div>
+            <p>Interactive route maps</p>
           </div>
           <div className="feature-item">
-            <span className="check">✔</span>
-            <p>Offline export<br />to PDF</p>
+            <div className="check">
+              <Check size={16} />
+            </div>
+            <p>Offline export to PDF</p>
           </div>
           <div className="feature-item">
-            <span className="check">✔</span>
-            <p>Curated local<br />experiences</p>
+            <div className="check">
+              <Check size={16} />
+            </div>
+            <p>Curated local experiences</p>
           </div>
         </div>
 
         <button className="learn-more-btn">Learn More</button>
-      </section>
+      </div>
+    </section>
   )
 }
 

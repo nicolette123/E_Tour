@@ -2,6 +2,7 @@
 
 import styles from './TourHero.module.scss';
 import Image from 'next/image';
+import { Search, Calendar, MapPin, Building2 } from 'lucide-react';
 import CustomDropdown from '../../components/tourPackageComponents/CustomDropdown';
 
 const TourHero = () => {
@@ -14,26 +15,26 @@ const TourHero = () => {
 
       <div className={styles.filters}>
         <div className={styles.searchBar}>
-          <Image src="/images/search.jpg" alt="Search" width={20} height={20} />
+          <Search className={styles.searchIcon} size={20} />
           <input type="text" placeholder="Search" />
         </div>
 
         <CustomDropdown
           label="Posted at"
           isDate
-          iconSrc="/images/post.png" 
+          icon={Calendar}
         />
 
         <CustomDropdown
           label="Trip type"
           options={['Trip type', 'Adventure Tour', 'Hiking Trip', 'City Tour', 'Beach Activity', 'Park Trip']}
-          iconSrc="/images/triptype.png" 
+          icon={MapPin}
         />
 
         <CustomDropdown
           label="Company"
-          options={['Company','G-Adventure', 'Travel leaders Group', 'Travello', 'Road scholar', 'Cox & Kings']}
-          iconSrc="/images/company3.png"
+          options={['Company', 'G-Adventure', 'Travel leaders Group', 'Travello', 'Road scholar', 'Cox & Kings']}
+          icon={Building2}
         />
       </div>
     </section>

@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import "./trip.css";
+import { MapPin, Calendar, Users, DollarSign, Eye, Edit, Trash2, Plus, Search, Filter } from "lucide-react";
+import "../shared-styles.css";
 
 const mockData = [
   {
@@ -168,53 +169,97 @@ const ViewTrips = () => {
   const rejectedTrips = trips.filter((trip) => trip.status === "Rejected").length;
 
   return (
-    <div className="view-trips">
-      <h1 className="dashboard-title">Trips Management</h1>
+    <div className="admin-page">
+      {/* Professional Header */}
+      <div className="admin-page-header">
+        <h1 className="admin-page-title">Trips Management</h1>
+        <p className="admin-page-description">
+          Manage all tour packages and trip offerings with comprehensive tools
+        </p>
+      </div>
 
-      {/* Stats Cards */}
+      {/* Professional Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
-          <i className="ri-map-pin-line"></i>
-          <h3>Total Trips</h3>
-          <p>{totalTrips}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon">
+              <MapPin />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Total Trips</div>
+            <div className="stat-card-value">{totalTrips}</div>
+            <div className="stat-card-subtitle">All trip packages</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-add-circle-line"></i>
-          <h3>New Trips</h3>
-          <p>{newTrips}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-info)' }}>
+              <Plus />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">New Trips</div>
+            <div className="stat-card-value">{newTrips}</div>
+            <div className="stat-card-subtitle">Recently added</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-checkbox-circle-line"></i>
-          <h3>Completed Trips</h3>
-          <p>{completeTrips}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-success)' }}>
+              <Calendar />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Completed Trips</div>
+            <div className="stat-card-value">{completeTrips}</div>
+            <div className="stat-card-subtitle">Successfully completed</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-close-circle-line"></i>
-          <h3>Rejected Trips</h3>
-          <p>{rejectedTrips}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-error)' }}>
+              <Users />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Rejected Trips</div>
+            <div className="stat-card-value">{rejectedTrips}</div>
+            <div className="stat-card-subtitle">Cancelled or rejected</div>
+          </div>
         </div>
       </div>
 
-      {/* Trips Table */}
-      <div className="trips-table-container">
-        <div className="table-header">
-          <h2>All Trips</h2>
-          <div className="table-actions">
-            <button className="add-btn" onClick={handleAddRow}>
-              <i className="ri-add-line"></i> Add Trip
-            </button>
-            <div className="search-bar">
-              <i className="ri-search-line"></i>
-              <input
-                type="text"
-                placeholder="Search trips..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+      {/* Professional Trips Table */}
+      <div className="data-table-container">
+        <div className="data-table-header">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+            <div className="data-table-title">All Trips</div>
+
+            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+              <button className="btn btn-primary" onClick={handleAddRow}>
+                <Plus className="w-4 h-4 mr-2" />
+                Add Trip
+              </button>
+
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search trips..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="form-input pl-10"
+                  style={{ width: '250px' }}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <table className="trips-table">
+        <table className="data-table">
           <thead>
             <tr>
               <th>

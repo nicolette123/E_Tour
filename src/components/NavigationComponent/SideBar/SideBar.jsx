@@ -2,12 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "../../../hooks/useApi";
 import "./sidebar.css";
 
 const SideBar = () => {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   // Listen for sidebar toggle events
   useEffect(() => {
@@ -28,13 +32,57 @@ const SideBar = () => {
 
   const userRole = getUserRole();
 
+  // Handle logout functionality
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+    try {
+      // Call the logout API
+      const result = await logout();
+
+      // Clear local storage regardless of API response
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('tokenExpiry');
+      }
+
+      // Always redirect to login page
+      router.push('/login');
+
+    } catch (error) {
+      console.error('Logout error:', error);
+
+      // Even if logout API fails, clear local storage and redirect
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('tokenExpiry');
+      }
+
+      router.push('/login');
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
+
   // Role-based links tailored for Echoes of Rwanda
   const links = {
     admin: [
       { href: "/admin", label: "Dashboard", icon: "ri-dashboard-line" },
+      { href: "/admin/analytics", label: "Analytics", icon: "ri-bar-chart-line" },
+      { href: "/admin/bookings", label: "Bookings", icon: "ri-calendar-check-line" },
+      { href: "/admin/custom-trips", label: "Custom Trips", icon: "ri-route-line" },
       { href: "/admin/view-trips", label: "All Tours", icon: "ri-map-pin-line" },
-      { href: "/admin/dash-payment", label: "Payments", icon: "ri-bank-line" },
       { href: "/admin/users", label: "Users", icon: "ri-user-line" },
+      { href: "/admin/reviews", label: "Reviews", icon: "ri-star-line" },
+      { href: "/admin/contact-messages", label: "Messages", icon: "ri-message-3-line" },
+      { href: "/admin/dash-payment", label: "Payments", icon: "ri-bank-line" },
     ],
     agent: [
       { href: "/agent", label: "Agent Dashboard", icon: "ri-dashboard-line" },
@@ -52,6 +100,7 @@ const SideBar = () => {
 
   const secondaryLinks = {
     admin: [
+      { href: "/admin/profile", label: "Profile", icon: "ri-user-settings-line" },
       { href: "/admin/notifications", label: "Notifications", icon: "ri-notification-4-line" },
       { href: "/admin/settings", label: "Settings", icon: "ri-settings-5-line" },
     ],
@@ -95,8 +144,13 @@ const SideBar = () => {
       </ul>
       <div className="sidebar-footer">
         <h4 className="welcome">Murakaza neza 👋</h4>
-        <button className="logout-btn">
-          <i className="ri-logout-box-line"></i> Logout
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+        >
+          <i className={isLoggingOut ? "ri-loader-4-line animate-spin" : "ri-logout-box-line"}></i>
+          {isLoggingOut ? "Logging out..." : "Logout"}
         </button>
       </div>
     </div>

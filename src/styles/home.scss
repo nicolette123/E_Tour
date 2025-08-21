@@ -1,66 +1,272 @@
-.home-page{
-  background-color: white;
-  margin: auto;
-  padding: 0 2rem;
-  max-width: 1200px;
- 
- 
- .hero-banner {
-   background-image: url('../../public/images/urukari.jpg');
-    height: 400px;
-    border-radius: 30px;
+// Modern Home Page Styles
+.home-page {
+  background-color: var(--color-white);
+  min-height: 100vh;
+
+  // Hero Banner Section
+  .hero-banner {
     position: relative;
+    min-height: 75vh; // Reduced from 100vh to 75vh (25% shorter)
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 2rem 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-   
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    overflow: hidden;
+
+    // Background image with overlay
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: url('../../public/images/urukari.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
 
     .hero-overlay {
-      color: white;
-      max-width: 700px;
-      background-color: rgba(54, 124, 45, 0.7);
-      padding: 2rem 2rem;
-      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--color-white);
+      max-width: 700px; // Reduced from 900px to 700px
+      margin: 0 auto;
+      padding: var(--space-2xl) var(--space-lg); // Further reduced height padding
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius-2xl);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: var(--shadow-xl);
+    }
 
-      .hero-subtitle {
-        font-size: 1rem;
-        color: #e4ff50;
-        font-weight: 600;
-        margin-bottom: 1rem;
+    .hero-text {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .hero-subtitle {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-secondary);
+      background: rgba(228, 255, 80, 0.2);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-lg);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      border: 1px solid rgba(228, 255, 80, 0.3);
+    }
+
+    .hero-title {
+      font-family: var(--font-playfair);
+      font-size: 3.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: var(--space-lg);
+      color: var(--color-white); // Changed from black to white
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+      @media (max-width: 768px) {
+        font-size: 2.5rem;
       }
 
-      .hero-title {
+      @media (max-width: 480px) {
         font-size: 2rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
+      }
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: var(--space-2xl);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+
+      @media (max-width: 768px) {
+        font-size: 1.125rem;
       }
 
-      .hero-desc {
+      @media (max-width: 480px) {
         font-size: 1rem;
-        color: #ddd;
-        margin-bottom: 1rem;
       }
-      .explore-btn {
-        background: #1c6b1c;
-        color: white;
-        border: none;
-        padding: 0.6rem 1.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-      }
+    }
 
-      .hero-note {
-  font-size: 0.9rem;
-  color: white;
-  position: absolute;
-  bottom: 20px;   
-  right: 20px;    
-  text-align: right;
-}
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+
+      .btn {
+        padding: var(--space-md) var(--space-xl);
+        font-size: 1.125rem;
+        font-weight: 600;
+        border-radius: var(--radius-xl);
+        transition: all var(--transition-normal);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        min-width: 160px;
+        justify-content: center;
+
+        .btn-icon {
+          font-size: 1.25rem;
+        }
+
+        &.hero-cta {
+          background: #DEF65B; // Custom yellow-green background
+          color: #367C2D; // Custom dark green text
+          border: 2px solid #DEF65B;
+          box-shadow: var(--shadow-lg);
+
+          &:hover {
+            background: #D4E640; // Slightly darker on hover
+            border-color: #D4E640;
+            color: #2a5f22; // Darker text on hover
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+          }
+        }
+
+        &.hero-secondary {
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--color-white);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(10px);
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+          }
+        }
+
+        @media (max-width: 480px) {
+          min-width: 140px;
+          padding: var(--space-sm) var(--space-lg);
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .hero-note {
+      position: relative;
+
+      p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.1);
+        padding: var(--space-sm) var(--space-lg);
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        margin: 0;
+
+        .note-icon {
+          font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 0.875rem;
+          padding: var(--space-xs) var(--space-md);
+        }
+      }
+    }
+
+    // Background decorative elements
+    .hero-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 70%, rgba(228, 255, 80, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+      }
     }
   }
- }
+
+  // Animation delays for staggered entrance
+  .animate-fade-in {
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+
+    &:nth-child(1) { animation-delay: 0.2s; }
+    &:nth-child(2) { animation-delay: 0.4s; }
+    &:nth-child(3) { animation-delay: 0.6s; }
+    &:nth-child(4) { animation-delay: 0.8s; }
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Section spacing
+  section:not(.hero-banner) {
+    padding: var(--space-4xl) 0;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    .hero-banner {
+      min-height: 70vh; // Reduced height on tablets
+
+      .hero-overlay {
+        max-width: 90%; // Smaller on tablets
+        padding: var(--space-xl) var(--space-md); // Reduced height padding
+      }
+    }
+
+    section:not(.hero-banner) {
+      padding: var(--space-2xl) 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-banner {
+      min-height: 65vh; // Further reduced height on mobile
+
+      .hero-overlay {
+        max-width: 95%; // Even smaller on mobile
+        padding: var(--space-lg) var(--space-sm); // Further reduced height padding
+      }
+    }
+  }
+}

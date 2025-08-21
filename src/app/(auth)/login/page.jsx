@@ -1,21 +1,41 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-//import { apiMethods} from @/utils/api
+import { useAuth } from '../../../hooks/useApi';
+import { LoadingSpinner, ErrorMessage, SuccessMessage } from '../../../components/common/ApiComponents';
+import { runApiDiagnostics } from '../../../utils/apiCheck';
+import { redirectToRoleDashboard } from '../../../utils/roleBasedRouting';
 import '../../../styles/login.css';
-import { api, get, post, put, del, API_URL } from '../../../utils/api';
 
 const Login = () => {
     const router = useRouter();
+    const { login, isAuthenticated, loading: authLoading, user } = useAuth();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
         rememberMe: false,
     });
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
+
+    // Run API diagnostics in development
+    useEffect(() => {
+        if (process.env.NODE_ENV === 'development') {
+            runApiDiagnostics().catch(console.error);
+        }
+    }, []);
+
+    // Redirect if already authenticated
+    useEffect(() => {
+        if (!authLoading && isAuthenticated && user) {
+            console.log('User already authenticated, redirecting based on role:', user.role);
+            console.log('User data:', user);
+            redirectToRoleDashboard(router, user.role, true); // Use replace to avoid back button issues
+        }
+    }, [isAuthenticated, authLoading, user, router]);
 
     const validateEmail = (email) => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +58,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
         setLoading(true);
 
         // Client-side validation
@@ -53,57 +74,35 @@ const Login = () => {
         }
 
         try {
-            // API call using the post method
-            const response = await post('/auth/login', {
+            // Use the new API service for login
+            const response = await login({
                 email: formData.email,
                 password: formData.password,
+                rememberMe: formData.rememberMe,
             });
-            
-            console.log('Full API Response:', response); // Debug log
-            
-            // Handle response and determine user role - FIXED: Access nested data structure
-            const userRole = response.data?.user?.role || 'client';
-            const token = response.data?.token;
-            const user = response.data?.user;
-            
-            // Store token and user data (you might want to use localStorage, sessionStorage, or a state management solution)
-            if (token) {
-                localStorage.setItem('authToken', token);
-                localStorage.setItem('userData', JSON.stringify(user));
+
+            if (response.success) {
+                setSuccess(response.data.message || 'Login successful!');
+
+                // Get user role for routing
+                const userRole = response.data.user?.role || 'client';
+
+                console.log('Login successful, redirecting based on role:', userRole);
+                console.log('User data:', response.data.user);
+
+                // Route based on user role from API response
+                setTimeout(() => {
+                    redirectToRoleDashboard(router, userRole);
+                }, 1500); // Show success message briefly before redirect
+
+            } else {
+                // Handle API error response
+                setError(response.message || 'Login failed. Please check your credentials.');
             }
-            
-            alert(`Welcome ${user?.name || 'User'}! Login successful! Redirecting...`);
-            
-            // Route based on user role from API response
-     switch (userRole.toLowerCase()) {
-    case 'admin':
-        router.push('/admin');
-        break;
-    case 'agent':
-        router.push('/agent');
-        break;
-    case 'client':
-    default:
-        router.push('/client');
-        break;
-}
 
         } catch (err) {
-            console.error('Login Error:', err); // Debug log
-            
-            // Handle different error structures
-            let errorMessage = 'Login failed. Please try again.';
-            
-            // Check for API error message in the response structure
-            if (err.response?.data?.message) {
-                errorMessage = err.response.data.message;
-            } else if (err.data?.message) {
-                errorMessage = err.data.message;
-            } else if (err.message) {
-                errorMessage = err.message;
-            }
-            
-            setError(errorMessage);
+            console.error('Login Error:', err);
+            setError('An unexpected error occurred. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -118,14 +117,15 @@ const Login = () => {
             <div className="login-container">
                 <h1>Login</h1>
                 <h2>Login to your account</h2>
-                
+
                 {/* Demo instructions
                 <div className="demo-info">
                     <p><small>Demo: Use "admin", "client", or "agent" as email for quick testing</small></p>
                 </div> */}
-                
-                {error && <p className="error" role="alert">{error}</p>}
-                
+
+                <ErrorMessage error={error} className="mb-4" />
+                <SuccessMessage message={success} className="mb-4" />
+
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="email">E-mail Address</label>
                     <br />
@@ -168,10 +168,11 @@ const Login = () => {
                         <Link href="/forgot-password" className="forgot-link">Forget Password?</Link>
                     </div>
                     <div className="sign-in">
-                        <button type="submit" disabled={loading} aria-busy={loading}>
+                        <button type="submit" disabled={loading} aria-busy={loading} className="flex items-center justify-center">
                             {loading ? (
                                 <>
-                                    <span className="spinner"></span> Signing In...
+                                    <LoadingSpinner size="sm" className="mr-2" />
+                                    Signing In...
                                 </>
                             ) : (
                                 'Sign In'

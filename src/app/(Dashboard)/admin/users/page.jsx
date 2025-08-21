@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import "./user.scss";
+import { Users, UserPlus, Search, Filter, Edit, Trash2, Eye, Shield, UserCheck } from "lucide-react";
+import "../shared-styles.css";
 
 const mockData = [
   {
@@ -30,7 +31,7 @@ const mockData = [
   },
 ];
 
-const Users = () => {
+const AdminUsers = () => {
   const [users, setUsers] = useState(mockData);
   const [selectedRows, setSelectedRows] = useState({});
   const [menuOpen, setMenuOpen] = useState(null);
@@ -141,71 +142,115 @@ const Users = () => {
   const completedUsers = users.filter((user) => user.status === "Completed").length;
 
   return (
-    <div className="users-dashboard">
-      <h1 className="dashboard-title">User Management</h1>
+    <div className="admin-page">
+      {/* Professional Header */}
+      <div className="admin-page-header">
+        <h1 className="admin-page-title">User Management</h1>
+        <p className="admin-page-description">
+          Manage all user accounts and permissions with comprehensive tools
+        </p>
+      </div>
 
-      {/* Stats Cards */}
+      {/* Professional Stats Cards */}
       <div className="stats-grid">
         <div className="stat-card">
-          <i className="ri-group-line"></i>
-          <h3>Total Users</h3>
-          <p>{totalUsers}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon">
+              <UsersIcon />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Total Users</div>
+            <div className="stat-card-value">{totalUsers}</div>
+            <div className="stat-card-subtitle">All registered users</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-user-off-line"></i>
-          <h3>Inactive Users</h3>
-          <p>{inactiveUsers}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-error)' }}>
+              <UserCheck />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Inactive Users</div>
+            <div className="stat-card-value">{inactiveUsers}</div>
+            <div className="stat-card-subtitle">Inactive accounts</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-user-line"></i>
-          <h3>Active Users</h3>
-          <p>{activeUsers}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-success)' }}>
+              <Shield />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Active Users</div>
+            <div className="stat-card-value">{activeUsers}</div>
+            <div className="stat-card-subtitle">Active accounts</div>
+          </div>
         </div>
+
         <div className="stat-card">
-          <i className="ri-user-check-line"></i>
-          <h3>Completed Trips</h3>
-          <p>{completedUsers}</p>
+          <div className="stat-card-header">
+            <div className="stat-card-icon" style={{ backgroundColor: 'var(--color-info)' }}>
+              <UserPlus />
+            </div>
+          </div>
+          <div className="stat-card-content">
+            <div className="stat-card-label">Completed Trips</div>
+            <div className="stat-card-value">{completedUsers}</div>
+            <div className="stat-card-subtitle">Verified accounts</div>
+          </div>
         </div>
       </div>
 
-      {/* Users Table */}
-      <div className="users-table-container">
-        <div className="table-header">
-          <h2>All Users</h2>
-          <div className="table-actions">
-            <button className="add-btn" onClick={handleAddRow}>
-              <i className="ri-add-line"></i> Add User
-            </button>
-            <div className="search-bar">
-              <i className="ri-search-line"></i>
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+      {/* Professional Users Table */}
+      <div className="data-table-container">
+        <div className="data-table-header">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full">
+            <div className="data-table-title">All Users</div>
+
+            <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+              <button className="btn btn-primary" onClick={handleAddRow}>
+                <UserPlus className="w-4 h-4 mr-2" />
+                Add User
+              </button>
+
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search users..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="form-input pl-10"
+                  style={{ width: '250px' }}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <table className="users-table">
+        <table className="data-table">
           <thead>
             <tr>
               <th>
-                <input type="checkbox" />
+                <input type="checkbox" className="form-checkbox" />
               </th>
-              <th onClick={() => handleSort("name")}>
+              <th onClick={() => handleSort("name")} className="cursor-pointer hover:bg-gray-100">
                 Name {sortConfig.key === "name" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
-              <th onClick={() => handleSort("phonenumber")}>
+              <th onClick={() => handleSort("phonenumber")} className="cursor-pointer hover:bg-gray-100">
                 Phone Number {sortConfig.key === "phonenumber" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
-              <th onClick={() => handleSort("location")}>
+              <th onClick={() => handleSort("location")} className="cursor-pointer hover:bg-gray-100">
                 Location {sortConfig.key === "location" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
-              <th onClick={() => handleSort("company")}>
+              <th onClick={() => handleSort("company")} className="cursor-pointer hover:bg-gray-100">
                 Company {sortConfig.key === "company" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
-              <th onClick={() => handleSort("status")}>
+              <th onClick={() => handleSort("status")} className="cursor-pointer hover:bg-gray-100">
                 Status {sortConfig.key === "status" && (sortConfig.direction === "ascending" ? "↑" : "↓")}
               </th>
               <th>Actions</th>
@@ -220,6 +265,7 @@ const Users = () => {
                       type="checkbox"
                       checked={!!selectedRows[user.id]}
                       onChange={() => handleCheckboxChange(user.id)}
+                      className="form-checkbox"
                     />
                   </td>
                   {editRowId === user.id ? (
@@ -285,27 +331,30 @@ const Users = () => {
                       <td>{user.location}</td>
                       <td>{user.company}</td>
                       <td>
-                        <span className={`status ${user.status.toLowerCase()}`}>{user.status}</span>
+                        <span className={`status-badge ${user.status.toLowerCase() === 'active' ? 'success' :
+                          user.status.toLowerCase() === 'inactive' ? 'error' :
+                            user.status.toLowerCase() === 'completed' ? 'info' : 'warning'
+                          }`}>
+                          {user.status}
+                        </span>
                       </td>
                       <td>
-                        {selectedRows[user.id] && (
-                          <div className="more-container">
-                            <i
-                              className="ri-more-2-fill"
-                              onClick={() => handleMoreClick(user.id)}
-                            ></i>
-                            {menuOpen === user.id && (
-                              <div className="more-menu">
-                                <button onClick={() => handleEdit(user.id)}>
-                                  <i className="ri-edit-line"></i> Edit
-                                </button>
-                                <button onClick={() => handleDelete(user.id)}>
-                                  <i className="ri-delete-bin-line"></i> Delete
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        )}
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => handleEdit(user.id)}
+                            className="btn btn-sm btn-secondary"
+                          >
+                            <Edit className="w-3 h-3 mr-1" />
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDelete(user.id)}
+                            className="btn btn-sm btn-error"
+                          >
+                            <Trash2 className="w-3 h-3 mr-1" />
+                            Delete
+                          </button>
+                        </div>
                       </td>
                     </>
                   )}
@@ -323,4 +372,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default AdminUsers;

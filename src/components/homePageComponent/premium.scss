@@ -1,5 +1,8 @@
 .premium-section {
   background-image: url('../../../public/images/prem.jpg');
+  background-size: cover; // Ensure full coverage
+  background-position: center; // Center the background
+  background-repeat: no-repeat; // Prevent repetition
   padding: 2rem 2rem;
   border-radius: 2rem;
   display: flex;
@@ -9,28 +12,36 @@
   overflow: hidden;
   color: #fff;
   margin-top: 3rem;
+  min-height: 500px; // Ensure minimum height for better coverage
  
 
 
 
   .premium-overlay {
-    background-color: rgba(54, 124, 45, 0.7);
-    padding: 0.8rem 2rem;
+    background-color: #367C2D; // Solid background color as requested
+    padding: 2rem 2.5rem; // Increased padding for better spacing
     border-radius: 2rem;
     text-align: center;
     max-width: 900px;
     width: 100%;
+    box-shadow: var(--shadow-xl); // Added shadow for depth
+    border: 1px solid rgba(255, 255, 255, 0.1); // Subtle border
 
     .premium-subtitle {
-      // color: #e4ff50;
+      color: #DEF65B; // Yellow accent color
       font-weight: 600;
       margin-bottom: 1rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .premium-title {
       font-size: 2rem;
       font-weight: bold;
       margin-bottom: 1.2rem;
+      color: var(--color-white); // Ensure white color
+      font-family: var(--font-playfair), serif; // Use premium font
     }
 
     .premium-description {
@@ -38,7 +49,7 @@
       line-height: 1.6;
       max-width: 700px;
       margin: 0 auto 2rem;
-      color: #eee;
+      color: var(--color-white); // Changed to pure white
     }
 
     .premium-options {
@@ -55,40 +66,116 @@
 
         .icon-circle {
           border-radius: 50%;
-          width: 48px;
-          height: 48px;
+          width: 64px;
+          height: 64px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 0 auto 1rem;
-          font-size: 1.5rem;
+          background: #DEF65B; // Yellow background for icons
+          backdrop-filter: blur(10px);
+          border: 2px solid #DEF65B;
+          transition: all var(--transition-normal);
+
+          .option-icon {
+            color: #367C2D; // Dark green icon color for contrast
+            transition: all var(--transition-normal);
+          }
+
+          &:hover {
+            background: #D4E640; // Darker yellow on hover
+            border-color: #D4E640;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+
+            .option-icon {
+              transform: scale(1.1);
+              color: #2a5f22; // Darker green on hover
+            }
+          }
         }
 
         h4 {
           font-size: 1.1rem;
-          color: #fff;
+          color: var(--color-white); // Pure white for titles
           margin-bottom: 0.5rem;
+          font-weight: 600;
         }
 
         p {
           font-size: 0.95rem;
-          color: #ddd;
+          color: var(--color-white); // Changed to pure white for better readability
+          opacity: 0.9; // Slight transparency for hierarchy
         }
       }
     }
 
     .get-started-btn {
-      background: #fff;
-      color: #165016;
-      border: none;
-      padding: 0.75rem 1rem;
+      display: inline-block; // Added for Link component
+      background: #DEF65B; // Yellow background
+      color: #367C2D; // Dark green text
+      border: 2px solid #DEF65B;
+      padding: 0.75rem 2rem; // Increased horizontal padding
       border-radius: 10px;
       font-size: 1rem;
+      font-weight: 600; // Bold text
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-md);
+      text-decoration: none; // Remove underline for Link
 
       &:hover {
-        background: #f0f0f0;
+        background: #D4E640; // Darker yellow on hover
+        border-color: #D4E640;
+        color: #2a5f22; // Darker green text on hover
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // Responsive design
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+    min-height: 400px;
+
+    .premium-overlay {
+      padding: 1.5rem 1rem;
+      max-width: 95%;
+
+      .premium-title {
+        font-size: 1.5rem;
+      }
+
+      .premium-options {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+
+        .option {
+          max-width: 280px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .premium-overlay {
+      .premium-title {
+        font-size: 1.3rem;
+      }
+
+      .premium-description {
+        font-size: 0.9rem;
+      }
+
+      .get-started-btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
       }
     }
   }
