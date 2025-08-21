@@ -333,5 +333,4 @@ export const apiUtils = {
 // Export everything for convenience
 export {
   apiService,
-  apiUtils,
 };

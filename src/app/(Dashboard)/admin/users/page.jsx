@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Users, UserPlus, Search, Filter, Edit, Trash2, Eye, Shield, UserCheck } from "lucide-react";
+import { UserPlus, Search, Edit, Trash2, Shield, UserCheck } from "lucide-react";
 import "../shared-styles.css";
 
 const mockData = [
@@ -34,7 +34,7 @@ const mockData = [
 const AdminUsers = () => {
   const [users, setUsers] = useState(mockData);
   const [selectedRows, setSelectedRows] = useState({});
-  const [menuOpen, setMenuOpen] = useState(null);
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" });
   const [searchTerm, setSearchTerm] = useState("");
   const [editRowId, setEditRowId] = useState(null);
@@ -47,9 +47,6 @@ const AdminUsers = () => {
     }));
   };
 
-  const handleMoreClick = (id) => {
-    setMenuOpen(menuOpen === id ? null : id);
-  };
 
   const handleEdit = (id) => {
     const user = users.find((user) => user.id === id);

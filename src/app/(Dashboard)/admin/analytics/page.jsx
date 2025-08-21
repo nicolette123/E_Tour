@@ -10,7 +10,6 @@ import {
   DollarSign,
   Calendar,
   Download,
-  Filter,
   RefreshCw,
   Eye,
   ArrowUpRight,
@@ -320,6 +319,5 @@ export default function AdminAnalytics() {
         </div>
       </div>
     </div>
-    </div >
   );
 }
