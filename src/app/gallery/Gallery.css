@@ -9,11 +9,12 @@
   padding: 0 var(--space-lg);
 }
 .gallery-page .gallery-hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: var(--color-white);
-  padding: var(--space-5xl) 0;
-  text-align: center;
   position: relative;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   overflow: hidden;
 }
 .gallery-page .gallery-hero::before {
@@ -23,24 +24,42 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("/images/pattern.svg") repeat;
-  opacity: 0.05;
+  background-image: url("/images/lake-kivu.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
   z-index: 1;
 }
 .gallery-page .gallery-hero .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(15px);
-          backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-3xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
-.gallery-page .gallery-hero .hero-content .hero-icon {
+.gallery-page .gallery-hero .hero-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white);
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+}
+.gallery-page .gallery-hero .hero-text {
+  margin-bottom: var(--space-2xl);
+}
+.gallery-page .gallery-hero .hero-text .hero-icon {
   margin-bottom: var(--space-lg);
   opacity: 0.9;
   background: rgba(255, 255, 255, 0.2);
@@ -52,20 +71,20 @@
   display: inline-block;
   color: #DEF65B;
 }
-.gallery-page .gallery-hero .hero-content .hero-title {
+.gallery-page .gallery-hero .hero-text .hero-title {
   font-family: var(--font-playfair);
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: var(--space-lg);
-  color: var(--color-white);
+  color: #DEF65B;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 @media (max-width: 768px) {
-  .gallery-page .gallery-hero .hero-content .hero-title {
+  .gallery-page .gallery-hero .hero-text .hero-title {
     font-size: 2.5rem;
   }
 }
-.gallery-page .gallery-hero .hero-content .hero-description {
+.gallery-page .gallery-hero .hero-text .hero-description {
   font-size: 1.25rem;
   line-height: 1.7;
   color: var(--color-white);
@@ -75,10 +94,39 @@
   font-weight: 400;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
+.gallery-page .gallery-hero .hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.gallery-page .gallery-hero .hero-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(228, 255, 80, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+}
 @media (max-width: 768px) {
-  .gallery-page .gallery-hero .hero-content {
-    padding: var(--space-2xl);
-    margin: 0 var(--space-lg);
+  .gallery-page .gallery-hero {
+    min-height: 70vh;
+  }
+  .gallery-page .gallery-hero .hero-overlay {
+    max-width: 90%;
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+@media (max-width: 480px) {
+  .gallery-page .gallery-hero {
+    min-height: 65vh;
+  }
+  .gallery-page .gallery-hero .hero-overlay {
+    max-width: 95%;
+    padding: var(--space-lg) var(--space-sm);
   }
 }
 .gallery-page .gallery-controls {
@@ -257,10 +305,10 @@
   box-shadow: var(--shadow-2xl);
   border-color: var(--color-primary-light);
 }
-.gallery-page .gallery-content .gallery-item:hover .image-wrapper .item-image {
+.gallery-page .gallery-content .gallery-item:hover .image-wrapper .gallery-image {
   transform: scale(1.05);
 }
-.gallery-page .gallery-content .gallery-item:hover .image-wrapper .item-overlay {
+.gallery-page .gallery-content .gallery-item:hover .image-wrapper .image-overlay {
   opacity: 1;
 }
 .gallery-page .gallery-content .gallery-item .image-wrapper {

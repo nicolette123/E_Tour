@@ -36,11 +36,12 @@
   font-weight: 400;
 }
 .about-page .about-hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: var(--color-white);
-  padding: var(--space-5xl) 0;
-  text-align: center;
   position: relative;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   overflow: hidden;
 }
 .about-page .about-hero::before {
@@ -50,24 +51,42 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("/images/pattern.svg") repeat;
-  opacity: 0.05;
+  background-image: url("/images/nyungwe.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
   z-index: 1;
 }
 .about-page .about-hero .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
   position: relative;
   z-index: 2;
-  background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(15px);
-          backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--radius-2xl);
-  padding: var(--space-3xl);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
-.about-page .about-hero .hero-content .hero-badge {
+.about-page .about-hero .hero-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white);
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+}
+.about-page .about-hero .hero-text {
+  margin-bottom: var(--space-2xl);
+}
+.about-page .about-hero .hero-text .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -82,10 +101,10 @@
   margin-bottom: var(--space-xl);
   color: #DEF65B;
 }
-.about-page .about-hero .hero-content .hero-badge .badge-icon {
+.about-page .about-hero .hero-text .hero-badge .badge-icon {
   color: #DEF65B;
 }
-.about-page .about-hero .hero-content .hero-title {
+.about-page .about-hero .hero-text .hero-title {
   font-family: var(--font-playfair);
   font-size: 4rem;
   font-weight: 700;
@@ -94,11 +113,11 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 @media (max-width: 768px) {
-  .about-page .about-hero .hero-content .hero-title {
+  .about-page .about-hero .hero-text .hero-title {
     font-size: 2.5rem;
   }
 }
-.about-page .about-hero .hero-content .hero-description {
+.about-page .about-hero .hero-text .hero-description {
   font-size: 1.375rem;
   line-height: 1.7;
   color: var(--color-white);
@@ -108,10 +127,10 @@
   font-weight: 400;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
-.about-page .about-hero .hero-content .hero-cta {
+.about-page .about-hero .hero-text .hero-cta {
   margin-top: var(--space-2xl);
 }
-.about-page .about-hero .hero-content .hero-cta .book-now-btn {
+.about-page .about-hero .hero-text .hero-cta .book-now-btn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
@@ -126,16 +145,45 @@
   transition: all var(--transition-normal);
   box-shadow: var(--shadow-lg);
 }
-.about-page .about-hero .hero-content .hero-cta .book-now-btn:hover {
+.about-page .about-hero .hero-text .hero-cta .book-now-btn:hover {
   background: #E8FF7A;
   border-color: #E8FF7A;
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
 }
+.about-page .about-hero .hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.about-page .about-hero .hero-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(228, 255, 80, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+}
 @media (max-width: 768px) {
-  .about-page .about-hero .hero-content {
-    padding: var(--space-2xl);
-    margin: 0 var(--space-lg);
+  .about-page .about-hero {
+    min-height: 70vh;
+  }
+  .about-page .about-hero .hero-overlay {
+    max-width: 90%;
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+@media (max-width: 480px) {
+  .about-page .about-hero {
+    min-height: 65vh;
+  }
+  .about-page .about-hero .hero-overlay {
+    max-width: 95%;
+    padding: var(--space-lg) var(--space-sm);
   }
 }
 .about-page .about-story {

@@ -143,32 +143,39 @@ export default function TourPackagePage() {
     <div className="tour-packages-page">
       {/* Hero Section */}
       <section className="packages-hero">
-        <div className="container">
-          <div className="hero-content">
-            <Package className="hero-icon" size={48} />
-            <h1 className="hero-title">Rwanda Tour Packages</h1>
-            <p className="hero-description">
-              Discover carefully crafted tour packages designed to showcase the best of Rwanda.
-              From thrilling wildlife encounters to cultural immersions and luxury experiences.
-            </p>
-            <div className="hero-stats">
-              <div className="stat-item">
-                <Award className="stat-icon" size={24} />
-                <span className="stat-number">24</span>
-                <span className="stat-label">Tour Packages</span>
-              </div>
-              <div className="stat-item">
-                <Shield className="stat-icon" size={24} />
-                <span className="stat-number">100%</span>
-                <span className="stat-label">Safe & Secure</span>
-              </div>
-              <div className="stat-item">
-                <Compass className="stat-icon" size={24} />
-                <span className="stat-number">5+</span>
-                <span className="stat-label">Destinations</span>
+        <div className="hero-content">
+          <div className="hero-overlay">
+            <div className="hero-text">
+              <Package className="hero-icon" size={48} />
+              <h1 className="hero-title">Rwanda Tour Packages</h1>
+              <p className="hero-description">
+                Discover carefully crafted tour packages designed to showcase the best of Rwanda.
+                From thrilling wildlife encounters to cultural immersions and luxury experiences.
+              </p>
+              <div className="hero-stats">
+                <div className="stat-item">
+                  <Award className="stat-icon" size={24} />
+                  <span className="stat-number">24</span>
+                  <span className="stat-label">Tour Packages</span>
+                </div>
+                <div className="stat-item">
+                  <Shield className="stat-icon" size={24} />
+                  <span className="stat-number">100%</span>
+                  <span className="stat-label">Safe & Secure</span>
+                </div>
+                <div className="stat-item">
+                  <Compass className="stat-icon" size={24} />
+                  <span className="stat-number">5+</span>
+                  <span className="stat-label">Destinations</span>
+                </div>
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Hero Background Elements */}
+        <div className="hero-background">
+          <div className="hero-image-overlay"></div>
         </div>
       </section>
 

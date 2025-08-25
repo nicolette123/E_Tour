@@ -97,15 +97,22 @@ export default function GalleryPage() {
     <div className="gallery-page">
       {/* Hero Section */}
       <section className="gallery-hero">
-        <div className="container">
-          <div className="hero-content">
-            <Camera className="hero-icon" size={48} />
-            <h1 className="hero-title">Rwanda Photo Gallery</h1>
-            <p className="hero-description">
-              Discover the breathtaking beauty of Rwanda through our curated collection of stunning photographs.
-              From wildlife adventures to cultural experiences, explore the Land of a Thousand Hills.
-            </p>
+        <div className="hero-content">
+          <div className="hero-overlay">
+            <div className="hero-text">
+              <Camera className="hero-icon" size={48} />
+              <h1 className="hero-title">Rwanda Photo Gallery</h1>
+              <p className="hero-description">
+                Discover the breathtaking beauty of Rwanda through our curated collection of stunning photographs.
+                From wildlife adventures to cultural experiences, explore the Land of a Thousand Hills.
+              </p>
+            </div>
           </div>
+        </div>
+
+        {/* Hero Background Elements */}
+        <div className="hero-background">
+          <div className="hero-image-overlay"></div>
         </div>
       </section>
 

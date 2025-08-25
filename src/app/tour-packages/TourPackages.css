@@ -9,59 +9,137 @@
   padding: 0 var(--space-lg);
 }
 .tour-packages-page .packages-hero {
+  position: relative;
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-  color: var(--color-white);
-  padding: var(--space-4xl) 0;
-  text-align: center;
+  overflow: hidden;
+}
+.tour-packages-page .packages-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("/images/volcano.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3;
+  z-index: 1;
 }
 .tour-packages-page .packages-hero .hero-content {
-  max-width: 800px;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container-xl);
   margin: 0 auto;
+  padding: 0 var(--space-lg);
 }
-.tour-packages-page .packages-hero .hero-content .hero-icon {
+.tour-packages-page .packages-hero .hero-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white);
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--space-lg);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+}
+.tour-packages-page .packages-hero .hero-text {
+  margin-bottom: var(--space-2xl);
+}
+.tour-packages-page .packages-hero .hero-text .hero-icon {
   margin-bottom: var(--space-lg);
-  opacity: 0.9;
+  color: #DEF65B;
 }
-.tour-packages-page .packages-hero .hero-content .hero-title {
+.tour-packages-page .packages-hero .hero-text .hero-title {
   font-family: var(--font-playfair);
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: var(--space-lg);
+  color: #DEF65B;
 }
 @media (max-width: 768px) {
-  .tour-packages-page .packages-hero .hero-content .hero-title {
+  .tour-packages-page .packages-hero .hero-text .hero-title {
     font-size: 2.5rem;
   }
 }
-.tour-packages-page .packages-hero .hero-content .hero-description {
+.tour-packages-page .packages-hero .hero-text .hero-description {
   font-size: 1.125rem;
   line-height: 1.6;
-  opacity: 0.9;
+  color: var(--color-white);
   margin-bottom: var(--space-2xl);
 }
-.tour-packages-page .packages-hero .hero-content .hero-stats {
+.tour-packages-page .packages-hero .hero-text .hero-stats {
   display: flex;
   justify-content: center;
   gap: var(--space-2xl);
   flex-wrap: wrap;
 }
-.tour-packages-page .packages-hero .hero-content .hero-stats .stat-item {
+.tour-packages-page .packages-hero .hero-text .hero-stats .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-xs);
 }
-.tour-packages-page .packages-hero .hero-content .hero-stats .stat-item .stat-icon {
-  opacity: 0.8;
+.tour-packages-page .packages-hero .hero-text .hero-stats .stat-item .stat-icon {
+  color: var(--color-white);
 }
-.tour-packages-page .packages-hero .hero-content .hero-stats .stat-item .stat-number {
+.tour-packages-page .packages-hero .hero-text .hero-stats .stat-item .stat-number {
   font-size: 1.5rem;
   font-weight: 700;
   font-family: var(--font-playfair);
+  color: var(--color-white);
 }
-.tour-packages-page .packages-hero .hero-content .hero-stats .stat-item .stat-label {
+.tour-packages-page .packages-hero .hero-text .hero-stats .stat-item .stat-label {
   font-size: 0.875rem;
-  opacity: 0.8;
+  color: var(--color-white);
+}
+.tour-packages-page .packages-hero .hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+.tour-packages-page .packages-hero .hero-background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 70%, rgba(228, 255, 80, 0.1) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+}
+@media (max-width: 768px) {
+  .tour-packages-page .packages-hero {
+    min-height: 70vh;
+  }
+  .tour-packages-page .packages-hero .hero-overlay {
+    max-width: 90%;
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+@media (max-width: 480px) {
+  .tour-packages-page .packages-hero {
+    min-height: 65vh;
+  }
+  .tour-packages-page .packages-hero .hero-overlay {
+    max-width: 95%;
+    padding: var(--space-lg) var(--space-sm);
+  }
 }
 .tour-packages-page .packages-filters {
   background: var(--color-gray-50);

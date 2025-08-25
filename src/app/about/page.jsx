@@ -3,31 +3,36 @@ import React from 'react';
 import { Info, Users, Award, Shield, Heart, Globe, Target, Eye, CheckCircle, Star, MapPin, Phone, Mail, Search, Compass } from 'lucide-react';
 import './About.scss';
 
-
-
 export default function AboutPage() {
   return (
     <div className="about-page">
       {/* Hero Section */}
       <section className="about-hero">
-        <div className="container">
-          <div className="hero-content">
-            <div className="hero-badge">
-              <Globe className="badge-icon" size={20} />
-              <span>Immersive Travel for Curious Explorers</span>
-            </div>
-            <h1 className="hero-title">Redefining Rwanda Travel</h1>
-            <p className="hero-description">
-              We blend smart technology with local storytelling to make each journey personal,
-              meaningful, and immersive. Experience Rwanda not just as a destination, but as a living story.
-            </p>
-            <div className="hero-cta">
-              <a href="/request-trip" className="book-now-btn">
-                <Star size={20} />
-                Start Your Journey
-              </a>
+        <div className="hero-content">
+          <div className="hero-overlay">
+            <div className="hero-text">
+              <div className="hero-badge">
+                <Globe className="badge-icon" size={20} />
+                <span>Immersive Travel for Curious Explorers</span>
+              </div>
+              <h1 className="hero-title">Redefining Rwanda Travel</h1>
+              <p className="hero-description">
+                We blend smart technology with local storytelling to make each journey personal,
+                meaningful, and immersive. Experience Rwanda not just as a destination, but as a living story.
+              </p>
+              <div className="hero-cta">
+                <a href="/request-trip" className="book-now-btn">
+                  <Star size={20} />
+                  Start Your Journey
+                </a>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Hero Background Elements */}
+        <div className="hero-background">
+          <div className="hero-image-overlay"></div>
         </div>
       </section>
 
