@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { Check } from 'lucide-react'
 import './whyechoes.scss';
 
@@ -40,7 +41,7 @@ function WhyEchoes() {
           </div>
         </div>
 
-        <button className="learn-more-btn">Learn More</button>
+        <Link href="/about" className="learn-more-btn">Learn More</Link>
       </div>
     </section>
   )

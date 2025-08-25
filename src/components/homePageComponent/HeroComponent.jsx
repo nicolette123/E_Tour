@@ -24,7 +24,7 @@ const Hero = () => {
                 Discover the breathtaking beauty of Rwanda's landscapes,
                 from rolling hills to pristine lakes and vibrant culture.
               </p>
-              <Link href="/tour-packages" className="btn btn-primary explore-btn">
+              <Link href="/request-trip" className="btn btn-primary explore-btn">
                 <Star className="btn-icon" size={18} />
                 <span className="btn-text">Join Us</span>
               </Link>

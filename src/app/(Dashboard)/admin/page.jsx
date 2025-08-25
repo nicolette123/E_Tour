@@ -32,6 +32,7 @@ import {
   Award,
   Briefcase
 } from 'lucide-react';
+import './shared-styles.css';
 
 export default function Admin() {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
@@ -194,178 +195,86 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--background-secondary)' }}>
-      {/* Dashboard Overview */}
-      <div className="mb-8">
-        <h1
-          className="text-4xl font-bold mb-2"
-          style={{ color: 'var(--text-primary)' }}
-        >
-          Dashboard Overview
-        </h1>
-        <p
-          className="text-lg"
-          style={{ color: 'var(--text-secondary)' }}
-        >
+    <div className="admin-page">
+      {/* Professional Header */}
+      <div className="admin-page-header">
+        <h1 className="admin-page-title">Dashboard Overview</h1>
+        <p className="admin-page-description">
           Monitor your tourism business performance and key metrics
         </p>
       </div>
 
-      {/* Professional Stats Cards - Reorganized */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+      {/* Professional Stats Cards */}
+      <div className="stats-grid">
         {/* Total Users Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-6">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: 'var(--primary-green)' }}
-            >
-              <Users className="w-8 h-8 text-white" />
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <div className="stat-card-content">
+              <div className="stat-card-label">Total Users</div>
+              <div className="stat-card-value">{dashboardStats.totalUsers.toLocaleString()}</div>
+              <div className="stat-card-subtitle">Active: {dashboardStats.activeUsers.toLocaleString()}</div>
             </div>
-            <div
-              className="flex items-center"
-              style={{ color: 'var(--color-success)' }}
-            >
-              <TrendingUp className="w-5 h-5 mr-1" />
-              <span className="text-base font-semibold">+{dashboardStats.usersChange}%</span>
+            <div className="stat-card-icon">
+              <Users />
             </div>
           </div>
-          <div>
-            <p
-              className="text-base font-semibold mb-2"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Total Users
-            </p>
-            <p
-              className="text-4xl font-bold mb-3"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {dashboardStats.totalUsers.toLocaleString()}
-            </p>
-            <p
-              className="text-sm"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              Active: {dashboardStats.activeUsers.toLocaleString()}
-            </p>
+          <div className="stat-card-trend">
+            <TrendingUp size={16} />
+            <span>+{dashboardStats.usersChange}%</span>
           </div>
         </div>
 
         {/* Total Destinations Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-6">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: 'var(--accent-blue)' }}
-            >
-              <MapPin className="w-8 h-8 text-white" />
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <div className="stat-card-content">
+              <div className="stat-card-label">Destinations</div>
+              <div className="stat-card-value">{dashboardStats.totalDestinations}</div>
+              <div className="stat-card-subtitle">Featured locations</div>
             </div>
-            <div
-              className="flex items-center"
-              style={{ color: 'var(--color-success)' }}
-            >
-              <TrendingUp className="w-5 h-5 mr-1" />
-              <span className="text-base font-semibold">+{dashboardStats.destinationsChange}%</span>
+            <div className="stat-card-icon">
+              <MapPin />
             </div>
           </div>
-          <div>
-            <p
-              className="text-base font-semibold mb-2"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Destinations
-            </p>
-            <p
-              className="text-4xl font-bold mb-3"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {dashboardStats.totalDestinations}
-            </p>
-            <p
-              className="text-sm"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              Featured locations
-            </p>
+          <div className="stat-card-trend">
+            <TrendingUp size={16} />
+            <span>+{dashboardStats.destinationsChange}%</span>
           </div>
         </div>
 
         {/* Total Bookings Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-6">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: 'var(--color-info)' }}
-            >
-              <Calendar className="w-8 h-8 text-white" />
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <div className="stat-card-content">
+              <div className="stat-card-label">Total Bookings</div>
+              <div className="stat-card-value">{dashboardStats.totalBookings.toLocaleString()}</div>
+              <div className="stat-card-subtitle">Pending: {dashboardStats.pendingBookings}</div>
             </div>
-            <div
-              className="flex items-center"
-              style={{ color: 'var(--color-success)' }}
-            >
-              <TrendingUp className="w-5 h-5 mr-1" />
-              <span className="text-base font-semibold">+{dashboardStats.bookingsChange}%</span>
+            <div className="stat-card-icon">
+              <Calendar />
             </div>
           </div>
-          <div>
-            <p
-              className="text-base font-semibold mb-2"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Total Bookings
-            </p>
-            <p
-              className="text-4xl font-bold mb-3"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {dashboardStats.totalBookings.toLocaleString()}
-            </p>
-            <p
-              className="text-sm"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              Pending: {dashboardStats.pendingBookings}
-            </p>
+          <div className="stat-card-trend">
+            <TrendingUp size={16} />
+            <span>+{dashboardStats.bookingsChange}%</span>
           </div>
         </div>
 
         {/* Total Revenue Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
-          <div className="flex items-center justify-between mb-6">
-            <div
-              className="w-16 h-16 rounded-2xl flex items-center justify-center"
-              style={{ backgroundColor: 'var(--color-warning)' }}
-            >
-              <DollarSign className="w-8 h-8 text-white" />
+        <div className="stat-card">
+          <div className="stat-card-header">
+            <div className="stat-card-content">
+              <div className="stat-card-label">Total Revenue</div>
+              <div className="stat-card-value">{formatCurrency(dashboardStats.totalRevenue)}</div>
+              <div className="stat-card-subtitle">This month</div>
             </div>
-            <div
-              className="flex items-center"
-              style={{ color: 'var(--color-success)' }}
-            >
-              <TrendingUp className="w-5 h-5 mr-1" />
-              <span className="text-base font-semibold">+{dashboardStats.revenueChange}%</span>
+            <div className="stat-card-icon">
+              <DollarSign />
             </div>
           </div>
-          <div>
-            <p
-              className="text-base font-semibold mb-2"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Total Revenue
-            </p>
-            <p
-              className="text-4xl font-bold mb-3"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {formatCurrency(dashboardStats.totalRevenue)}
-            </p>
-            <p
-              className="text-sm"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              This month
-            </p>
+          <div className="stat-card-trend">
+            <TrendingUp size={16} />
+            <span>+{dashboardStats.revenueChange}%</span>
           </div>
         </div>
       </div>

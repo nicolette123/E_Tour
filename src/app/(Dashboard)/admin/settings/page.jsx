@@ -32,7 +32,7 @@ export default function AdminSettings() {
       siteDescription: 'Discover the beauty of Rwanda through our curated travel experiences',
       contactEmail: 'info@echoesrwanda.com',
       supportEmail: 'support@echoesrwanda.com',
-      phoneNumber: '+250 788 123 456',
+      phoneNumber: '+250784800280',
       address: 'Kigali, Rwanda',
       timezone: 'Africa/Kigali',
       language: 'en',
@@ -156,8 +156,8 @@ export default function AdminSettings() {
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
                       className={`w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors ${activeTab === tab.id
-                          ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                          : 'text-gray-700 hover:bg-gray-50'
+                        ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                        : 'text-gray-700 hover:bg-gray-50'
                         }`}
                     >
                       <Icon className="w-5 h-5 mr-3" />

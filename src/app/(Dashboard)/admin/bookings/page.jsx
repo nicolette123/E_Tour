@@ -28,6 +28,8 @@ export default function AdminBookings() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
   const [selectedBookings, setSelectedBookings] = useState([]);
+  const [editRowId, setEditRowId] = useState(null);
+  const [editFormData, setEditFormData] = useState({});
   const [bookings, setBookings] = useState([
     {
       id: '1',
@@ -149,6 +151,50 @@ export default function AdminBookings() {
       setSelectedBookings([]);
     } catch (error) {
       console.error('Failed to perform bulk action:', error);
+    }
+  };
+
+  const handleEdit = (id) => {
+    const booking = bookings.find((booking) => booking.id === id);
+    setEditRowId(id);
+    setEditFormData({
+      customerName: booking.customerName,
+      customerEmail: booking.customerEmail,
+      tripTitle: booking.tripTitle,
+      destination: booking.destination,
+      tripDate: booking.tripDate,
+      status: booking.status,
+      amount: booking.amount,
+      seatsBooked: booking.seatsBooked,
+      paymentStatus: booking.paymentStatus,
+      agentName: booking.agentName
+    });
+  };
+
+  const handleEditChange = (event, field) => {
+    setEditFormData((prev) => ({
+      ...prev,
+      [field]: event.target.value,
+    }));
+  };
+
+  const handleSaveEdit = (id) => {
+    setBookings(bookings.map((booking) =>
+      booking.id === id ? { ...booking, ...editFormData } : booking
+    ));
+    setEditRowId(null);
+    setEditFormData({});
+  };
+
+  const handleCancelEdit = () => {
+    setEditRowId(null);
+    setEditFormData({});
+  };
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      setBookings(bookings.filter((booking) => booking.id !== id));
+      setSelectedBookings(selectedBookings.filter(selectedId => selectedId !== id));
     }
   };
 
@@ -460,16 +506,19 @@ export default function AdminBookings() {
                         <Eye className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => console.log('Edit booking:', booking.id)}
+                        onClick={() => handleEdit(booking.id)}
                         className="text-gray-600 hover:text-gray-800"
+                        title="Edit booking"
                       >
                         <Edit className="w-4 h-4" />
                       </button>
-                      <div className="relative">
-                        <button className="text-gray-600 hover:text-gray-800">
-                          <MoreHorizontal className="w-4 h-4" />
-                        </button>
-                      </div>
+                      <button
+                        onClick={() => handleDelete(booking.id)}
+                        className="text-red-600 hover:text-red-800"
+                        title="Delete booking"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
                     </div>
                   </td>
                 </tr>

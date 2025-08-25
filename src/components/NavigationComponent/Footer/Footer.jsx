@@ -36,6 +36,7 @@ const Footer = () => {
       { href: '/faq', label: 'FAQ' },
       { href: '/terms', label: 'Terms of Service' },
       { href: '/privacy', label: 'Privacy Policy' },
+      { href: '/cookies', label: 'Cookie Policy' },
     ],
   };
 
@@ -149,7 +150,7 @@ const Footer = () => {
               <Phone className="contact-icon" size={20} />
               <div className="contact-details">
                 <span className="contact-label">Phone</span>
-                <a href="tel:+250345896" className="contact-value">+250 345 896</a>
+                <a href="tel:+250784800280" className="contact-value">+250784800280</a>
               </div>
             </div>
 
@@ -172,25 +173,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Newsletter Signup */}
-          <div className="newsletter">
-            <h5 className="newsletter-title">Stay Updated</h5>
-            <p className="newsletter-description">
-              Get the latest travel tips and exclusive offers
-            </p>
-            <form className="newsletter-form">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="newsletter-input"
-                required
-              />
-              <button type="submit" className="btn btn-accent newsletter-button">
-                <Send className="btn-icon" size={16} />
-                <span className="btn-text">Subscribe</span>
-              </button>
-            </form>
-          </div>
+
         </div>
       </div>
 
