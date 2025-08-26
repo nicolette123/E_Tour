@@ -33,6 +33,22 @@ const UserRegister = () => {
 
   const goToVerification = () => {
     console.log('🔄 Navigating to verification page...');
+    
+    // Double-check localStorage before navigating
+    const storedUserId = localStorage.getItem('userId');
+    const storedUserEmail = localStorage.getItem('userEmail');
+    
+    console.log('🔄 Pre-navigation localStorage check:', {
+      userId: storedUserId,
+      userEmail: storedUserEmail
+    });
+    
+    if (!storedUserId) {
+      console.error('❌ Critical: No userId in localStorage before navigation!');
+      alert('Error: User data not saved. Please try registration again.');
+      return;
+    }
+    
     try {
       router.push('/verification');
       console.log('✅ Router.push called successfully');
@@ -57,6 +73,7 @@ const UserRegister = () => {
       ...(name === 'isAgent' && { role: checked ? 'agent' : 'client' }),
     }));
 
+    // Real-time validation
     if (name === 'email' && value && !validateEmail(value)) {
       setError('Please enter a valid email address');
     } else if (name === 'email' && error === 'Please enter a valid email address') {
@@ -131,45 +148,110 @@ const UserRegister = () => {
       if (response.success) {
         console.log('Full registration response:', response);
 
-        // FIXED: Extract user data correctly from API response
-        // Based on the API response structure: response.data contains the user info directly
-        const userData = response.data;
-        const userId = userData.id; // Direct access to id
+        // FIXED: Handle the nested response structure where user data is at response.data.user
+        let userData;
+        
+        // Check if the response has the new nested structure
+        if (response.data && response.data.user) {
+          console.log('✅ Using nested user structure from response.data.user');
+          userData = response.data.user;
+        } else if (response.data && response.data.id) {
+          console.log('✅ Using direct structure from response.data');
+          userData = response.data;
+        } else {
+          console.error('❌ Unknown response structure');
+          console.log('Full response structure:', JSON.stringify(response, null, 2));
+          setError('Registration completed but user data structure is unexpected. Please contact support.');
+          setLoading(false);
+          return;
+        }
+
+        // Extract user information from the correct location
+        const userId = userData.id;
         const userEmail = userData.email;
         const userName = userData.name;
+        const emailVerified = userData.emailVerified;
+        const emailSent = userData.emailSent;
 
         console.log('Extracted user data:', { 
           userId, 
           userEmail, 
           userName, 
-          emailVerified: userData.emailVerified,
-          emailSent: userData.emailSent
+          emailVerified,
+          emailSent,
+          userDataSource: response.data.user ? 'response.data.user' : 'response.data'
         });
 
         // Validate that we have the required data
         if (!userId) {
           console.error('❌ No userId found in registration response!');
           console.log('Full response structure:', JSON.stringify(response, null, 2));
+          console.log('UserData object:', userData);
+          console.log('Available keys in userData:', Object.keys(userData || {}));
           setError('Registration completed but user ID is missing. Please contact support.');
           setLoading(false);
           return;
         }
 
-        // Store user information for verification process
-        localStorage.setItem('userId', userId);
-        localStorage.setItem('userEmail', userEmail);
-        localStorage.setItem('userName', userName);
-        localStorage.setItem('pendingVerification', 'true');
-        
-        console.log('✅ Stored verification data:', {
-          userId,
-          userEmail,
-          userName,
-          pendingVerification: true
-        });
+        if (!userEmail) {
+          console.error('❌ No userEmail found in registration response!');
+          setError('Registration completed but email is missing. Please contact support.');
+          setLoading(false);
+          return;
+        }
 
-        setSuccess('Registration successful! Please check your email for verification instructions.');
+        // Test localStorage before storing
+        try {
+          localStorage.setItem('test', 'test');
+          localStorage.removeItem('test');
+          console.log('✅ localStorage is accessible');
+        } catch (storageError) {
+          console.error('❌ localStorage not accessible:', storageError);
+          setError('Cannot store user data locally. Please check browser settings.');
+          setLoading(false);
+          return;
+        }
+
+        // Store user information for verification process
+        try {
+          localStorage.setItem('userId', userId);
+          localStorage.setItem('userEmail', userEmail);
+          localStorage.setItem('userName', userName || '');
+          localStorage.setItem('pendingVerification', 'true');
+          
+          // Verify storage worked
+          const storedUserId = localStorage.getItem('userId');
+          const storedUserEmail = localStorage.getItem('userEmail');
+          const storedUserName = localStorage.getItem('userName');
+          
+          console.log('✅ Storage verification:', {
+            storedUserId,
+            storedUserEmail,
+            storedUserName,
+            userIdMatches: storedUserId === userId,
+            emailMatches: storedUserEmail === userEmail
+          });
+          
+          if (storedUserId !== userId) {
+            throw new Error('Failed to verify userId storage');
+          }
+          
+          if (storedUserEmail !== userEmail) {
+            throw new Error('Failed to verify userEmail storage');
+          }
+          
+        } catch (storageError) {
+          console.error('❌ Failed to store data:', storageError);
+          setError('Failed to store user data. Please try again.');
+          setLoading(false);
+          return;
+        }
+
+        // Show success message with registration details
+        const successMessage = response.data.message || 'Registration successful! Please check your email for verification instructions.';
+        setSuccess(successMessage);
         setShowVerificationButton(true);
+        
         console.log('✅ Registration successful, showing verification button and auto-redirect...');
 
         // Show countdown and redirect to verification page
@@ -177,7 +259,7 @@ const UserRegister = () => {
         const countdownInterval = setInterval(() => {
           countdown--;
           if (countdown > 0) {
-            setSuccess(`Registration successful! Redirecting to verification page in ${countdown} seconds... (or click the button below)`);
+            setSuccess(`${successMessage} Redirecting to verification page in ${countdown} seconds... (or click the button below)`);
           } else {
             clearInterval(countdownInterval);
             setSuccess('Redirecting to verification page now...');
@@ -190,6 +272,7 @@ const UserRegister = () => {
           console.log('🔄 Auto-redirecting to verification page now...');
           goToVerification();
         }, 5000);
+        
       } else {
         setError(response.message || 'Registration failed. Please try again.');
       }
@@ -274,6 +357,55 @@ const UserRegister = () => {
             </p>
           </div>
         )}
+
+        {/* Development Debug Panel */}
+        {process.env.NODE_ENV === 'development' && (
+          <div style={{ 
+            background: '#f8f9fa', 
+            border: '1px solid #dee2e6',
+            padding: '15px', 
+            margin: '15px 0', 
+            fontSize: '12px', 
+            borderRadius: '4px',
+            fontFamily: 'monospace'
+          }}>
+            <strong>🔧 Debug Info (Development Only):</strong><br />
+            <div style={{ marginTop: '10px' }}>
+              <div>Form Valid: {formData.agreeToTerms && validateEmail(formData.email) && formData.password.length >= 8 ? 'Yes' : 'No'}</div>
+              <div>Email Valid: {validateEmail(formData.email) ? 'Yes' : 'No'}</div>
+              <div>Password Strong: {/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(formData.password) ? 'Yes' : 'No'}</div>
+              <div>Passwords Match: {formData.password === formData.confirmPassword ? 'Yes' : 'No'}</div>
+              <div>Terms Agreed: {formData.agreeToTerms ? 'Yes' : 'No'}</div>
+              <div>Is Agent: {formData.isAgent ? 'Yes' : 'No'}</div>
+              <div>Role: {formData.role}</div>
+            </div>
+            
+            <button
+              type="button"
+              onClick={() => {
+                console.log('🧪 Current localStorage state:');
+                for (let i = 0; i < localStorage.length; i++) {
+                  const key = localStorage.key(i);
+                  const value = localStorage.getItem(key);
+                  console.log(`  ${key}: ${value}`);
+                }
+                console.log('🧪 Current form data:', { ...formData, password: '[HIDDEN]', confirmPassword: '[HIDDEN]' });
+              }}
+              style={{ 
+                fontSize: '10px', 
+                padding: '4px 8px',
+                backgroundColor: '#17a2b8',
+                color: 'white',
+                border: 'none',
+                borderRadius: '3px',
+                marginTop: '10px'
+              }}
+            >
+              Log Debug Info
+            </button>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           <div className="same-row">
             <div className="name-inputs">
