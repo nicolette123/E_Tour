@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { api } from '../../../services/api';
+import { LoadingSpinner, ErrorMessage, SuccessMessage } from '../../../components/common/ApiComponents';
 import '../../../styles/signup.css';
-import { post } from '../../../utils/api';
 
 const UserRegister = () => {
   const router = useRouter();
@@ -21,11 +22,31 @@ const UserRegister = () => {
     role: 'client',
   });
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showVerificationButton, setShowVerificationButton] = useState(false);
 
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const goToVerification = () => {
+    console.log('🔄 Navigating to verification page...');
+    try {
+      router.push('/verification');
+      console.log('✅ Router.push called successfully');
+    } catch (error) {
+      console.error('❌ Router.push failed:', error);
+      // Fallback: use window.location if router fails
+      try {
+        window.location.href = '/verification';
+        console.log('✅ Window.location fallback used');
+      } catch (fallbackError) {
+        console.error('❌ Window.location fallback also failed:', fallbackError);
+        alert('Unable to redirect automatically. Please go to the verification page manually.');
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -52,7 +73,16 @@ const UserRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
+    setShowVerificationButton(false);
     setLoading(true);
+
+    // Enhanced validation
+    if (!validateEmail(formData.email)) {
+      setError('Please enter a valid email address');
+      setLoading(false);
+      return;
+    }
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     if (!passwordRegex.test(formData.password)) {
@@ -73,64 +103,131 @@ const UserRegister = () => {
       return;
     }
 
-    if (formData.isAgent && (!formData.companyName || !formData.location)) {
-      setError('Please fill in both company name and location');
+    if (formData.isAgent && (!formData.companyName.trim() || !formData.location.trim())) {
+      setError('Please fill in both company name and location for agent registration');
       setLoading(false);
       return;
     }
 
+    // Prepare payload according to API documentation
     const payload = {
-      name: formData.name,
-      email: formData.email,
+      name: formData.name.trim(),
+      email: formData.email.trim().toLowerCase(),
       password: formData.password,
+      role: formData.role,
       notificationsEnabled: formData.receiveNotifications,
       agreedToTerms: formData.agreeToTerms,
-      role: formData.role,
       ...(formData.isAgent && {
-        companyName: formData.companyName,
-        location: formData.location,
+        companyName: formData.companyName.trim(),
+        location: formData.location.trim(),
       }),
     };
 
     try {
-      console.log('Submitting registration with payload:', payload);
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://echoes-of-rwanda.onrender.com/api/v1';
-      const response = await post(`${API_URL}/auth/register`, payload);
-      console.log('Registration response:', response.data);
-      const userId = response.data.userId || response.data.id || response.data.user?.id;
-      if (userId) {
+      console.log('Submitting registration with payload:', { ...payload, password: '[HIDDEN]' });
+
+      const response = await api.auth.signup(payload);
+
+      if (response.success) {
+        console.log('Full registration response:', response);
+
+        // FIXED: Extract user data correctly from API response
+        // Based on the API response structure: response.data contains the user info directly
+        const userData = response.data;
+        const userId = userData.id; // Direct access to id
+        const userEmail = userData.email;
+        const userName = userData.name;
+
+        console.log('Extracted user data:', { 
+          userId, 
+          userEmail, 
+          userName, 
+          emailVerified: userData.emailVerified,
+          emailSent: userData.emailSent
+        });
+
+        // Validate that we have the required data
+        if (!userId) {
+          console.error('❌ No userId found in registration response!');
+          console.log('Full response structure:', JSON.stringify(response, null, 2));
+          setError('Registration completed but user ID is missing. Please contact support.');
+          setLoading(false);
+          return;
+        }
+
+        // Store user information for verification process
         localStorage.setItem('userId', userId);
-        console.log('Stored userId in localStorage:', userId);
-        alert('Registration successful! Redirecting to verification...');
-        setTimeout(() => router.push('/verification'), 2000);
+        localStorage.setItem('userEmail', userEmail);
+        localStorage.setItem('userName', userName);
+        localStorage.setItem('pendingVerification', 'true');
+        
+        console.log('✅ Stored verification data:', {
+          userId,
+          userEmail,
+          userName,
+          pendingVerification: true
+        });
+
+        setSuccess('Registration successful! Please check your email for verification instructions.');
+        setShowVerificationButton(true);
+        console.log('✅ Registration successful, showing verification button and auto-redirect...');
+
+        // Show countdown and redirect to verification page
+        let countdown = 5;
+        const countdownInterval = setInterval(() => {
+          countdown--;
+          if (countdown > 0) {
+            setSuccess(`Registration successful! Redirecting to verification page in ${countdown} seconds... (or click the button below)`);
+          } else {
+            clearInterval(countdownInterval);
+            setSuccess('Redirecting to verification page now...');
+          }
+        }, 1000);
+
+        // Redirect to verification page after showing success message
+        setTimeout(() => {
+          clearInterval(countdownInterval);
+          console.log('🔄 Auto-redirecting to verification page now...');
+          goToVerification();
+        }, 5000);
       } else {
-        console.warn('No userId found in response. Response data:', response.data);
-        setError('Registration successful, but no user ID returned. Please contact support.');
+        setError(response.message || 'Registration failed. Please try again.');
       }
     } catch (err) {
-      console.error('Registration error:', {
-        message: err.message,
-        status: err.response?.status,
-        data: err.response?.data,
-      });
+      console.error('Registration error:', err);
+
       let errorMessage = 'Registration failed. Please try again.';
+
       if (err.response) {
-        switch (err.response.status) {
+        const status = err.response.status;
+        const message = err.response.data?.message || err.message;
+
+        switch (status) {
           case 400:
-            errorMessage = err.response.data?.message || 'Invalid input. Please check your details.';
+            errorMessage = message || 'Invalid input. Please check your details.';
             break;
           case 409:
             errorMessage = 'Email already exists. Please use a different email or log in.';
+            break;
+          case 422:
+            errorMessage = message || 'Validation failed. Please check your input.';
             break;
           case 500:
             errorMessage = 'Server error. Please try again later or contact support.';
             break;
           default:
-            errorMessage = err.response.data?.message || 'Registration failed. Please try again.';
+            errorMessage = message || 'Registration failed. Please try again.';
         }
       } else if (err.request) {
-        errorMessage = 'Unable to reach the server. Please check your internet connection.';
+        if (err.message && (err.message.includes('CORS') || err.message.includes('ERR_FAILED'))) {
+          errorMessage = 'Server connection issue. Please ensure you\'re running the app on http://localhost:3000 or try refreshing the page.';
+        } else {
+          errorMessage = 'Unable to reach the server. Please check your internet connection.';
+        }
+      } else {
+        errorMessage = err.message || 'An unexpected error occurred. Please try again.';
       }
+
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -145,10 +242,37 @@ const UserRegister = () => {
       </div>
       <div className="register-form">
         <h1>Register your account</h1>
-        {error && (
-          <p className="error" style={{ color: 'red' }} role="alert">
-            {error}
-          </p>
+
+        <ErrorMessage error={error} className="mb-4" />
+        <SuccessMessage message={success} className="mb-4" />
+
+        {/* Manual verification button */}
+        {showVerificationButton && (
+          <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+            <button
+              type="button"
+              onClick={goToVerification}
+              style={{
+                backgroundColor: '#28a745',
+                color: 'white',
+                padding: '12px 24px',
+                border: 'none',
+                borderRadius: '5px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                transition: 'background-color 0.3s'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#218838'}
+              onMouseOut={(e) => e.target.style.backgroundColor = '#28a745'}
+            >
+              Go to Verification Page Now
+            </button>
+            <p style={{ fontSize: '14px', color: '#666', marginTop: '10px' }}>
+              Click the button above if automatic redirect doesn't work
+            </p>
+          </div>
         )}
         <form onSubmit={handleSubmit}>
           <div className="same-row">
@@ -276,8 +400,15 @@ const UserRegister = () => {
             </label>
           </div>
           <div className="create-account">
-            <button type="submit" disabled={loading} aria-busy={loading}>
-              {loading ? 'Registering...' : 'Create Account'}
+            <button type="submit" disabled={loading} aria-busy={loading} className="flex items-center justify-center">
+              {loading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Registering...
+                </>
+              ) : (
+                'Create Account'
+              )}
             </button>
           </div>
         </form>

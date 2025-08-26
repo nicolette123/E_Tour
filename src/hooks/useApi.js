@@ -137,12 +137,36 @@ export const useAuth = () => {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        const api = await getApiService();
-        const currentUser = api.getCurrentUser();
-        const authStatus = api.isAuthenticated();
+        // Check for stored authentication data
+        const token = localStorage.getItem('authToken');
+        const userData = localStorage.getItem('userData');
 
-        setUser(currentUser);
-        setIsAuthenticated(authStatus);
+        if (token && userData) {
+          try {
+            const parsedUser = JSON.parse(userData);
+            setUser(parsedUser);
+            setIsAuthenticated(true);
+
+            // Verify token is still valid in background
+            const api = await getApiService();
+            const response = await api.user.getProfile();
+
+            if (response.success) {
+              // Update with fresh data
+              setUser(response.data);
+              localStorage.setItem('userData', JSON.stringify(response.data));
+            } else if (response.status === 401) {
+              // Token expired, clear auth
+              await logout();
+            }
+          } catch (parseError) {
+            console.error('Error parsing stored user data:', parseError);
+            await logout();
+          }
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
       } catch (error) {
         console.error('Failed to initialize auth:', error);
         setUser(null);
@@ -182,21 +206,29 @@ export const useAuth = () => {
 
   const logout = useCallback(async () => {
     try {
-      const api = await getApiService();
-      const response = await api.auth.logout();
-
-      // Clear local storage
+      // Clear local storage first
       if (typeof window !== 'undefined') {
         localStorage.removeItem('authToken');
-        localStorage.removeItem('user');
-        localStorage.removeItem('userRole');
+        localStorage.removeItem('userData');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('userEmail');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('tokenExpiry');
       }
 
+      // Clear state
       setUser(null);
       setIsAuthenticated(false);
-      return { success: true, ...response };
+
+      // Try to call logout API (optional, don't fail if it doesn't work)
+      try {
+        const api = await getApiService();
+        await api.auth.logout();
+      } catch (apiError) {
+        console.warn('Logout API call failed:', apiError);
+      }
+
+      return { success: true };
     } catch (error) {
       console.error('Logout error:', error);
 

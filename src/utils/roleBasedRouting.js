@@ -7,21 +7,22 @@
  */
 export const getRoleBasedRoute = (role) => {
   if (!role) {
-    console.warn('No role provided, defaulting to client dashboard');
-    return '/client';
+    console.warn('No role provided, defaulting to tour packages');
+    return '/tour-packages';
   }
 
   const normalizedRole = role.toLowerCase().trim();
-  
+
   switch (normalizedRole) {
     case 'admin':
-      return '/admin/';
+      return '/admin';
     case 'agent':
-      return '/agent/';
+      return '/agent';
     case 'client':
     case 'user': // Handle alternative naming
+    case 'traveler':
     default:
-      return '/client';
+      return '/tour-packages'; // Clients go to tour packages instead of dashboard
   }
 };
 
@@ -66,13 +67,15 @@ export const getRoleRoutes = (role) => {
     
     case 'client':
     case 'user':
+    case 'traveler':
     default:
       return {
-        dashboard: '/client',
-        bookings: '/client/bookings',
+        dashboard: '/tour-packages', // Main landing page for clients
+        bookings: '/bookings',
         destinations: '/destinations',
-        tours: '/tours',
-        favorites: '/client/favorites',
+        tours: '/tour-packages',
+        favorites: '/favorites',
+        profile: '/profile',
         ...commonRoutes
       };
   }
@@ -191,13 +194,14 @@ export const getRoleNavigation = (role) => {
     
     case 'client':
     case 'user':
+    case 'traveler':
     default:
       return [
-        { name: 'Dashboard', href: '/client', icon: 'Home' },
-        { name: 'My Bookings', href: '/client/bookings', icon: 'Calendar' },
+        { name: 'Tour Packages', href: '/tour-packages', icon: 'Globe' },
+        { name: 'My Bookings', href: '/bookings', icon: 'Calendar' },
         { name: 'Destinations', href: '/destinations', icon: 'MapPin' },
-        { name: 'Tours', href: '/tours', icon: 'Globe' },
-        { name: 'Favorites', href: '/client/favorites', icon: 'Heart' }
+        { name: 'Favorites', href: '/favorites', icon: 'Heart' },
+        { name: 'Profile', href: '/profile', icon: 'User' }
       ];
   }
 };

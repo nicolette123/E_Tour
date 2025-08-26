@@ -4,6 +4,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../hooks/useApi';
 import { testLogin } from '../../utils/apiCheck';
+import { testAuthEndpoints, testApiConnectivity, validateAuthConfig } from '../../utils/authTest';
+import { runAllEndpointTests } from '../../utils/apiEndpointTest';
 import { getRoleBasedRoute, redirectToRoleDashboard } from '../../utils/roleBasedRouting';
 import {
   LoadingSpinner,
@@ -18,7 +20,8 @@ import {
   Play,
   LogOut,
   Shield,
-  BarChart3
+  BarChart3,
+  Settings
 } from 'lucide-react';
 
 const AuthTester = () => {
@@ -126,6 +129,64 @@ const AuthTester = () => {
   const goToDashboard = () => {
     if (user && user.role) {
       redirectToRoleDashboard({ push: (path) => window.location.href = path }, user.role);
+    }
+  };
+
+  const handleTestAuthEndpoints = async () => {
+    setTestLoading(true);
+    setTestResult(null);
+
+    try {
+      console.log('🧪 Testing authentication endpoints...');
+
+      // Run comprehensive auth tests
+      const results = await testAuthEndpoints();
+
+      setTestResult({
+        success: results.summary.failed === 0,
+        message: `Auth endpoints test completed: ${results.summary.passed}/${results.summary.total} passed`,
+        authTestResults: results,
+        type: 'auth-endpoints'
+      });
+    } catch (error) {
+      console.error('🧪 Auth endpoints test failed:', error);
+      setTestResult({
+        success: false,
+        error: error.message,
+        message: 'Auth endpoints test failed',
+        type: 'auth-endpoints'
+      });
+    } finally {
+      setTestLoading(false);
+    }
+  };
+
+  const handleTestEndpointConfig = async () => {
+    setTestLoading(true);
+    setTestResult(null);
+
+    try {
+      console.log('🔧 Testing endpoint configuration...');
+
+      // Run endpoint configuration tests
+      const results = runAllEndpointTests();
+
+      setTestResult({
+        success: results.summary.allTestsPassed,
+        message: `Endpoint configuration test completed: ${results.summary.allTestsPassed ? 'All tests passed' : `${results.summary.totalIssues} issues found`}`,
+        endpointTestResults: results,
+        type: 'endpoint-config'
+      });
+    } catch (error) {
+      console.error('🔧 Endpoint configuration test failed:', error);
+      setTestResult({
+        success: false,
+        error: error.message,
+        message: 'Endpoint configuration test failed',
+        type: 'endpoint-config'
+      });
+    } finally {
+      setTestLoading(false);
     }
   };
 
@@ -241,6 +302,55 @@ const AuthTester = () => {
                 </pre>
               </div>
             )}
+
+            {testResult.authTestResults && (
+              <div className="mt-3 p-3 bg-blue-50 rounded border border-blue-200">
+                <h3 className="font-medium text-sm mb-2 text-blue-800">Auth Endpoints Test Results:</h3>
+                <div className="text-xs text-blue-700 space-y-2">
+                  <div>Base URL: {testResult.authTestResults.baseUrl}</div>
+                  <div>Total Tests: {testResult.authTestResults.summary.total}</div>
+                  <div>Passed: {testResult.authTestResults.summary.passed}</div>
+                  <div>Failed: {testResult.authTestResults.summary.failed}</div>
+
+                  <div className="mt-2">
+                    <h4 className="font-medium mb-1">Endpoint Results:</h4>
+                    {Object.entries(testResult.authTestResults.endpoints).map(([endpoint, result]) => (
+                      <div key={endpoint} className="flex items-center space-x-2">
+                        <span className={`w-2 h-2 rounded-full ${
+                          result.status === 'PASS' || result.status === 'EXPECTED_FAIL' ? 'bg-green-500' : 'bg-red-500'
+                        }`}></span>
+                        <span>{endpoint}: {result.status}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {testResult.endpointTestResults && (
+              <div className="mt-3 p-3 bg-indigo-50 rounded border border-indigo-200">
+                <h3 className="font-medium text-sm mb-2 text-indigo-800">Endpoint Configuration Test Results:</h3>
+                <div className="text-xs text-indigo-700 space-y-2">
+                  <div>Base URL: {testResult.endpointTestResults.construction.baseUrl}</div>
+                  <div>Total Endpoints: {Object.keys(testResult.endpointTestResults.construction.endpoints).length}</div>
+                  <div>Configuration Issues: {testResult.endpointTestResults.construction.issues.length}</div>
+                  <div>Validation Status: {testResult.endpointTestResults.validation.valid ? 'Valid' : 'Invalid'}</div>
+                  <div>URL Construction: {testResult.endpointTestResults.urlConstruction.valid ? 'Valid' : 'Invalid'}</div>
+
+                  {testResult.endpointTestResults.construction.issues.length > 0 && (
+                    <div className="mt-2">
+                      <h4 className="font-medium mb-1">Issues Found:</h4>
+                      {testResult.endpointTestResults.construction.issues.map((issue, index) => (
+                        <div key={index} className="flex items-center space-x-2">
+                          <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                          <span>{issue}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -267,6 +377,44 @@ const AuthTester = () => {
                 <>
                   <Play className="w-4 h-4 mr-2" />
                   Run Login Test
+                </>
+              )}
+            </button>
+
+            {/* Auth Endpoints Test Button */}
+            <button
+              onClick={handleTestAuthEndpoints}
+              disabled={testLoading}
+              className="w-full flex items-center justify-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            >
+              {testLoading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Testing...
+                </>
+              ) : (
+                <>
+                  <Shield className="w-4 h-4 mr-2" />
+                  Test Auth Endpoints
+                </>
+              )}
+            </button>
+
+            {/* Endpoint Configuration Test Button */}
+            <button
+              onClick={handleTestEndpointConfig}
+              disabled={testLoading}
+              className="w-full flex items-center justify-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            >
+              {testLoading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Testing...
+                </>
+              ) : (
+                <>
+                  <Settings className="w-4 h-4 mr-2" />
+                  Test Endpoint Config
                 </>
               )}
             </button>

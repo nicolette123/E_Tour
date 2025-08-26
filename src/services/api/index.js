@@ -8,6 +8,8 @@ import authService from './authService';
 import userService from './userService';
 import destinationService from './destinationService';
 import tourService from './tourService';
+import tripService from './tripService';
+import agentService from './agentService';
 import bookingService from './bookingService';
 import dashboardService from './dashboardService';
 import uploadService from './uploadService';
@@ -24,6 +26,8 @@ export {
   userService,
   destinationService,
   tourService,
+  tripService,
+  agentService,
   bookingService,
   dashboardService,
   uploadService
@@ -37,6 +41,8 @@ class ApiService {
     this._user = null;
     this._destination = null;
     this._tour = null;
+    this._trip = null;
+    this._agent = null;
     this._booking = null;
     this._dashboard = null;
     this._upload = null;
@@ -69,6 +75,20 @@ class ApiService {
       this._tour = tourService;
     }
     return this._tour;
+  }
+
+  get trip() {
+    if (!this._trip) {
+      this._trip = tripService;
+    }
+    return this._trip;
+  }
+
+  get agent() {
+    if (!this._agent) {
+      this._agent = agentService;
+    }
+    return this._agent;
   }
 
   get booking() {
@@ -166,6 +186,8 @@ export const api = {
   user: userService,
   destination: destinationService,
   tour: tourService,
+  trip: tripService,
+  agent: agentService,
   booking: bookingService,
   dashboard: dashboardService,
   upload: uploadService,

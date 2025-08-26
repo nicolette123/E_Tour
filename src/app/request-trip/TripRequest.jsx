@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { Calendar, Users, DollarSign, MapPin, Phone, Mail, Building, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Users, DollarSign, MapPin, Phone, Mail, Building, CheckCircle, AlertCircle, FileText } from 'lucide-react';
 import styles from './TripRequest.module.scss';
-import api from '../../utils/api';
+import { api } from '../../services/api';
 
 const TripRequest = () => {
   const [formData, setFormData] = useState({
+    // Contact Information
     companyName: '',
     phone: '',
     email: '',
     address: '',
-    totalNumber: '',
-    amount: '',
-    startDate: '',
-    endDate: ''
+
+    // Trip Details (matching API requirements)
+    destination: '',
+    budget: '',
+    interests: '',
+    preferredStartDate: '',
+    preferredEndDate: '',
+    groupSize: '',
+    clientNotes: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -27,8 +33,8 @@ const TripRequest = () => {
 
   // Get minimum end date (day after start date)
   const getMinEndDate = () => {
-    if (!formData.startDate) return getTodayDate();
-    const startDate = new Date(formData.startDate);
+    if (!formData.preferredStartDate) return getTodayDate();
+    const startDate = new Date(formData.preferredStartDate);
     startDate.setDate(startDate.getDate() + 1);
     return startDate.toISOString().split('T')[0];
   };
@@ -51,10 +57,11 @@ const TripRequest = () => {
     if (!formData.phone.trim()) tempErrors.phone = 'Phone number is required';
     if (!formData.email.trim()) tempErrors.email = 'Email is required';
     if (!formData.address.trim()) tempErrors.address = 'Address is required';
-    if (!formData.totalNumber) tempErrors.totalNumber = 'Number of travelers is required';
-    if (!formData.amount.trim()) tempErrors.amount = 'Budget amount is required';
-    if (!formData.startDate) tempErrors.startDate = 'Start date is required';
-    if (!formData.endDate) tempErrors.endDate = 'End date is required';
+    if (!formData.destination.trim()) tempErrors.destination = 'Destination is required';
+    if (!formData.groupSize) tempErrors.groupSize = 'Number of travelers is required';
+    if (!formData.budget.trim()) tempErrors.budget = 'Budget amount is required';
+    if (!formData.preferredStartDate) tempErrors.preferredStartDate = 'Start date is required';
+    if (!formData.preferredEndDate) tempErrors.preferredEndDate = 'End date is required';
 
     // Email validation
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -67,34 +74,34 @@ const TripRequest = () => {
     }
 
     // Number validation
-    if (formData.totalNumber && (parseInt(formData.totalNumber) < 1 || parseInt(formData.totalNumber) > 50)) {
-      tempErrors.totalNumber = 'Number of travelers must be between 1 and 50';
+    if (formData.groupSize && (parseInt(formData.groupSize) < 1 || parseInt(formData.groupSize) > 50)) {
+      tempErrors.groupSize = 'Number of travelers must be between 1 and 50';
     }
 
-    // Amount validation
-    if (formData.amount && (parseFloat(formData.amount) < 100)) {
-      tempErrors.amount = 'Budget must be at least $100';
+    // Budget validation
+    if (formData.budget && (parseFloat(formData.budget) < 100)) {
+      tempErrors.budget = 'Budget must be at least $100';
     }
 
     // Date validation
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    if (formData.startDate) {
-      const startDate = new Date(formData.startDate);
+    if (formData.preferredStartDate) {
+      const startDate = new Date(formData.preferredStartDate);
       if (startDate < today) {
-        tempErrors.startDate = 'Start date cannot be in the past';
+        tempErrors.preferredStartDate = 'Start date cannot be in the past';
       }
     }
 
-    if (formData.endDate) {
-      const endDate = new Date(formData.endDate);
+    if (formData.preferredEndDate) {
+      const endDate = new Date(formData.preferredEndDate);
       if (endDate < today) {
-        tempErrors.endDate = 'End date cannot be in the past';
+        tempErrors.preferredEndDate = 'End date cannot be in the past';
       }
 
-      if (formData.startDate && endDate <= new Date(formData.startDate)) {
-        tempErrors.endDate = 'End date must be after start date';
+      if (formData.preferredStartDate && endDate <= new Date(formData.preferredStartDate)) {
+        tempErrors.preferredEndDate = 'End date must be after start date';
       }
     }
 
@@ -112,12 +119,24 @@ const TripRequest = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Prepare API payload according to the API documentation
+      const apiPayload = {
+        destination: formData.destination,
+        budget: parseFloat(formData.budget),
+        interests: formData.interests || undefined,
+        preferredStartDate: formData.preferredStartDate,
+        preferredEndDate: formData.preferredEndDate,
+        groupSize: parseInt(formData.groupSize),
+        clientNotes: `Company: ${formData.companyName}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nAddress: ${formData.address}\n\nAdditional Notes: ${formData.clientNotes || 'None'}`
+      };
 
+      // Make API call to create custom trip request
+      const response = await api.trip.createCustomTripRequest(apiPayload);
+
+      console.log('Trip request submitted successfully:', response);
       setIsSubmitted(true);
 
-      // Reset form after 3 seconds
+      // Reset form after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({
@@ -125,16 +144,29 @@ const TripRequest = () => {
           phone: '',
           email: '',
           address: '',
-          totalNumber: '',
-          amount: '',
-          startDate: '',
-          endDate: ''
+          destination: '',
+          budget: '',
+          interests: '',
+          preferredStartDate: '',
+          preferredEndDate: '',
+          groupSize: '',
+          clientNotes: ''
         });
-      }, 3000);
+      }, 5000);
 
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('There was an error submitting your request. Please try again.');
+      console.error('Error submitting trip request:', error);
+
+      // Show user-friendly error message
+      const errorMessage = error.message || 'There was an error submitting your request. Please try again.';
+      alert(`Error: ${errorMessage}`);
+
+      // If it's an authentication error, suggest login
+      if (error.status === 401) {
+        alert('Please log in to submit a trip request.');
+        // Optionally redirect to login page
+        // window.location.href = '/login';
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -149,9 +181,10 @@ const TripRequest = () => {
           <h2>Request Submitted Successfully!</h2>
           <p>Thank you for your trip request. We'll get back to you within 24 hours with a customized itinerary and pricing.</p>
           <div className={styles["success-details"]}>
-            <p><strong>Trip Duration:</strong> {formData.startDate} to {formData.endDate}</p>
-            <p><strong>Travelers:</strong> {formData.totalNumber} people</p>
-            <p><strong>Budget:</strong> ${formData.amount}</p>
+            <p><strong>Destination:</strong> {formData.destination}</p>
+            <p><strong>Trip Duration:</strong> {formData.preferredStartDate} to {formData.preferredEndDate}</p>
+            <p><strong>Travelers:</strong> {formData.groupSize} people</p>
+            <p><strong>Budget:</strong> ${formData.budget}</p>
           </div>
         </div>
       </div>
@@ -164,188 +197,258 @@ const TripRequest = () => {
       <h2 className={styles.title}>Request the trip on your own choice</h2>
 
       <form onSubmit={handleSubmit}>
-        <h3>Create a Trip</h3>
-        <div className={styles["form-grid"]}>
-          <div className={styles["form-field"]}>
-            <label htmlFor="companyName">
-              <Building size={18} />
-              Company/Organization Name *
-            </label>
-            <input
-              type="text"
-              id="companyName"
-              name="companyName"
-              value={formData.companyName}
-              onChange={handleChange}
-              placeholder="Enter your company or organization name"
-              className={errors.companyName ? styles.error : ''}
-            />
-            {errors.companyName && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.companyName}
-              </span>
-            )}
-          </div>
+        <h3>Create a Custom Trip Request</h3>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="phone">
-              <Phone size={18} />
-              Phone Number *
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="+250784800280"
-              className={errors.phone ? styles.error : ''}
-            />
-            {errors.phone && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.phone}
-              </span>
-            )}
-          </div>
+        {/* Trip Details Section */}
+        <div className={styles["form-section"]}>
+          <h4>Trip Details</h4>
+          <div className={styles["form-grid"]}>
+            <div className={styles["form-field"]}>
+              <label htmlFor="destination">
+                <MapPin size={18} />
+                Destination *
+              </label>
+              <input
+                type="text"
+                id="destination"
+                name="destination"
+                value={formData.destination}
+                onChange={handleChange}
+                placeholder="Where would you like to go? (e.g., Volcanoes National Park)"
+                className={errors.destination ? styles.error : ''}
+              />
+              {errors.destination && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.destination}
+                </span>
+              )}
+            </div>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="email">
-              <Mail size={18} />
-              Email Address *
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your.email@example.com"
-              className={errors.email ? styles.error : ''}
-            />
-            {errors.email && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.email}
-              </span>
-            )}
-          </div>
+            <div className={styles["form-field"]}>
+              <label htmlFor="budget">
+                <DollarSign size={18} />
+                Budget (USD) *
+              </label>
+              <input
+                type="number"
+                id="budget"
+                name="budget"
+                value={formData.budget}
+                onChange={handleChange}
+                placeholder="Your budget in USD"
+                min="100"
+                step="50"
+                className={errors.budget ? styles.error : ''}
+              />
+              {errors.budget && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.budget}
+                </span>
+              )}
+            </div>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="address">
-              <MapPin size={18} />
-              Address *
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              placeholder="Your full address"
-              className={errors.address ? styles.error : ''}
-            />
-            {errors.address && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.address}
-              </span>
-            )}
-          </div>
+            <div className={styles["form-field"]}>
+              <label htmlFor="groupSize">
+                <Users size={18} />
+                Number of Travelers *
+              </label>
+              <input
+                type="number"
+                id="groupSize"
+                name="groupSize"
+                value={formData.groupSize}
+                onChange={handleChange}
+                placeholder="How many people?"
+                min="1"
+                max="50"
+                className={errors.groupSize ? styles.error : ''}
+              />
+              {errors.groupSize && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.groupSize}
+                </span>
+              )}
+            </div>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="totalNumber">
-              <Users size={18} />
-              Number of Travelers *
-            </label>
-            <input
-              type="number"
-              id="totalNumber"
-              name="totalNumber"
-              value={formData.totalNumber}
-              onChange={handleChange}
-              placeholder="How many people?"
-              min="1"
-              max="50"
-              className={errors.totalNumber ? styles.error : ''}
-            />
-            {errors.totalNumber && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.totalNumber}
-              </span>
-            )}
-          </div>
+            <div className={styles["form-field"]}>
+              <label htmlFor="interests">
+                <FileText size={18} />
+                Interests & Activities
+              </label>
+              <input
+                type="text"
+                id="interests"
+                name="interests"
+                value={formData.interests}
+                onChange={handleChange}
+                placeholder="e.g., Gorilla trekking, cultural tours, hiking"
+              />
+            </div>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="amount">
-              <DollarSign size={18} />
-              Budget (USD) *
-            </label>
-            <input
-              type="number"
-              id="amount"
-              name="amount"
-              value={formData.amount}
-              onChange={handleChange}
-              placeholder="Your budget in USD"
-              min="100"
-              step="50"
-              className={errors.amount ? styles.error : ''}
-            />
-            {errors.amount && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.amount}
-              </span>
-            )}
-          </div>
+            <div className={styles["form-field"]}>
+              <label htmlFor="preferredStartDate">
+                <Calendar size={18} />
+                Preferred Start Date *
+              </label>
+              <input
+                type="date"
+                id="preferredStartDate"
+                name="preferredStartDate"
+                value={formData.preferredStartDate}
+                onChange={handleChange}
+                min={getTodayDate()}
+                className={errors.preferredStartDate ? styles.error : ''}
+              />
+              {errors.preferredStartDate && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.preferredStartDate}
+                </span>
+              )}
+            </div>
 
-          <div className={styles["form-field"]}>
-            <label htmlFor="startDate">
-              <Calendar size={18} />
-              Start Date *
-            </label>
-            <input
-              type="date"
-              id="startDate"
-              name="startDate"
-              value={formData.startDate}
-              onChange={handleChange}
-              min={getTodayDate()}
-              className={errors.startDate ? styles.error : ''}
-            />
-            {errors.startDate && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.startDate}
-              </span>
-            )}
-          </div>
-
-          <div className={styles["form-field"]}>
-            <label htmlFor="endDate">
-              <Calendar size={18} />
-              End Date *
-            </label>
-            <input
-              type="date"
-              id="endDate"
-              name="endDate"
-              value={formData.endDate}
-              onChange={handleChange}
-              min={getMinEndDate()}
-              className={errors.endDate ? styles.error : ''}
-            />
-            {errors.endDate && (
-              <span className={styles["error-message"]}>
-                <AlertCircle size={16} />
-                {errors.endDate}
-              </span>
-            )}
+            <div className={styles["form-field"]}>
+              <label htmlFor="preferredEndDate">
+                <Calendar size={18} />
+                Preferred End Date *
+              </label>
+              <input
+                type="date"
+                id="preferredEndDate"
+                name="preferredEndDate"
+                value={formData.preferredEndDate}
+                onChange={handleChange}
+                min={getMinEndDate()}
+                className={errors.preferredEndDate ? styles.error : ''}
+              />
+              {errors.preferredEndDate && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.preferredEndDate}
+                </span>
+              )}
+            </div>
           </div>
         </div>
+
+        {/* Contact Information Section */}
+        <div className={styles["form-section"]}>
+          <h4>Contact Information</h4>
+          <div className={styles["form-grid"]}>
+            <div className={styles["form-field"]}>
+              <label htmlFor="companyName">
+                <Building size={18} />
+                Company/Organization Name *
+              </label>
+              <input
+                type="text"
+                id="companyName"
+                name="companyName"
+                value={formData.companyName}
+                onChange={handleChange}
+                placeholder="Enter your company or organization name"
+                className={errors.companyName ? styles.error : ''}
+              />
+              {errors.companyName && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.companyName}
+                </span>
+              )}
+            </div>
+
+            <div className={styles["form-field"]}>
+              <label htmlFor="phone">
+                <Phone size={18} />
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="+250784800280"
+                className={errors.phone ? styles.error : ''}
+              />
+              {errors.phone && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.phone}
+                </span>
+              )}
+            </div>
+
+            <div className={styles["form-field"]}>
+              <label htmlFor="email">
+                <Mail size={18} />
+                Email Address *
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="your.email@example.com"
+                className={errors.email ? styles.error : ''}
+              />
+              {errors.email && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.email}
+                </span>
+              )}
+            </div>
+
+            <div className={styles["form-field"]}>
+              <label htmlFor="address">
+                <MapPin size={18} />
+                Address *
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                placeholder="Your full address"
+                className={errors.address ? styles.error : ''}
+              />
+              {errors.address && (
+                <span className={styles["error-message"]}>
+                  <AlertCircle size={16} />
+                  {errors.address}
+                </span>
+              )}
+            </div>
+
+            <div className={styles["form-field"]} style={{gridColumn: '1 / -1'}}>
+              <label htmlFor="clientNotes">
+                <FileText size={18} />
+                Additional Notes
+              </label>
+              <textarea
+                id="clientNotes"
+                name="clientNotes"
+                value={formData.clientNotes}
+                onChange={handleChange}
+                placeholder="Any special requests or additional information..."
+                rows="4"
+                maxLength="1000"
+                style={{resize: 'vertical'}}
+              />
+              <small style={{color: '#666', fontSize: '0.85em'}}>
+                {formData.clientNotes.length}/1000 characters
+              </small>
+            </div>
+          </div>
+        </div>
+
+
 
         <button
           type="submit"

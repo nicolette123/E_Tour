@@ -237,11 +237,27 @@ class BaseApiService {
           data: error.response.data
         };
       } else if (error.request) {
-        // Network error
+        // Network error - could be CORS, connection, or server issues
+        let errorMessage = 'Network error - please check your connection';
+        let userMessage = 'Unable to connect to server';
+
+        // Check for CORS-specific errors
+        if (error.message && error.message.includes('CORS')) {
+          errorMessage = 'CORS policy error - server configuration issue';
+          userMessage = 'Server configuration error. Please try again or contact support.';
+        } else if (error.message && error.message.includes('ERR_FAILED')) {
+          errorMessage = 'Network request failed - server may be unavailable';
+          userMessage = 'Server is currently unavailable. Please try again later.';
+        } else if (error.message && error.message.includes('ERR_NETWORK')) {
+          errorMessage = 'Network connection error';
+          userMessage = 'Please check your internet connection and try again.';
+        }
+
         return {
           success: false,
-          error: 'Network error - please check your connection',
-          message: 'Unable to connect to server'
+          error: errorMessage,
+          message: userMessage,
+          isNetworkError: true
         };
       } else {
         // Other error

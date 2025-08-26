@@ -51,39 +51,52 @@ class AuthService {
     }
   }
 
-  // Register new user
-  async signup(userData) {
-    try {
-      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.SIGNUP, {
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        email: userData.email,
-        password: userData.password,
-        confirmPassword: userData.confirmPassword,
-        phone: userData.phone,
-        role: userData.role || 'client', // Default to client role
-        agreeToTerms: userData.agreeToTerms,
-      });
+// Register new user - Alternative approach maintaining your expected structure
+async signup(userData) {
+  try {
+    const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.REGISTER, {
+      name: userData.name || `${userData.firstName} ${userData.lastName}`,
+      email: userData.email,
+      password: userData.password,
+      role: userData.role || 'client', // Default to client role
+      phone: userData.phone,
+      companyName: userData.companyName,
+      location: userData.location,
+      notificationsEnabled: userData.notificationsEnabled !== false,
+      agreedToTerms: userData.agreeToTerms || false,
+    });
 
-      if (response.success) {
-        return {
-          success: true,
-          data: {
-            message: SUCCESS_MESSAGES.SIGNUP_SUCCESS,
-            user: response.data.user,
-            requiresVerification: response.data.requiresVerification || false,
-          },
-        };
-      }
-
-      return response;
-    } catch (error) {
+    if (response.success) {
+      // FIXED: Correctly extract user data from API response
+      // The API returns user data directly under response.data
+      const apiUserData = response.data;
+      
       return {
-        success: false,
-        error: error,
+        success: true,
+        data: {
+          message: response.message || SUCCESS_MESSAGES.SIGNUP_SUCCESS,
+          // Wrap the user data in a 'user' property to match your frontend expectations
+          user: {
+            id: apiUserData.id,
+            name: apiUserData.name,
+            email: apiUserData.email,
+            role: apiUserData.role,
+            emailVerified: apiUserData.emailVerified || false,
+            emailSent: apiUserData.emailSent || false,
+          },
+          requiresVerification: apiUserData.emailVerified === false,
+        },
       };
     }
+
+    return response;
+  } catch (error) {
+    return {
+      success: false,
+      error: error,
+    };
   }
+}
 
   // Logout user
   async logout() {
@@ -121,11 +134,42 @@ class AuthService {
     }
   }
 
-  // Verify email
-  async verifyEmail(token) {
+  // Verify email - API expects userId and code (as per API documentation)
+  async verifyEmail(userId, code) {
     try {
-      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.VERIFY_EMAIL, {
-        token,
+      // API documentation specifies: { "userId": "uuid", "code": "ABC123" }
+      const payload = {
+        userId: userId,
+        code: code
+      };
+
+      console.log('Verifying email with payload:', payload);
+
+      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.VERIFY_EMAIL, payload);
+
+      if (response.success) {
+        return {
+          success: true,
+          data: response.data,
+          message: 'Email verified successfully',
+        };
+      }
+
+      return response;
+    } catch (error) {
+      console.error('Email verification error:', error);
+      return {
+        success: false,
+        error: error.message || 'Email verification failed',
+      };
+    }
+  }
+
+  // Resend verification email
+  async resendVerification(email) {
+    try {
+      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.RESEND_VERIFICATION, {
+        email,
       });
 
       return response;
@@ -137,10 +181,10 @@ class AuthService {
     }
   }
 
-  // Forgot password
-  async forgotPassword(email) {
+  // Request password reset
+  async requestPasswordReset(email) {
     try {
-      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.FORGOT_PASSWORD, {
+      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.RESET_PASSWORD_REQUEST, {
         email,
       });
 
@@ -154,12 +198,11 @@ class AuthService {
   }
 
   // Reset password
-  async resetPassword(token, newPassword, confirmPassword) {
+  async resetPassword(token, newPassword) {
     try {
       const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.RESET_PASSWORD, {
         token,
-        password: newPassword,
-        confirmPassword,
+        newPassword,
       });
 
       return response;

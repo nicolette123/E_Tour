@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '../../../hooks/useApi';
+import { api } from '../../../services/api';
 import { LoadingSpinner, ErrorMessage, SuccessMessage } from '../../../components/common/ApiComponents';
-import { runApiDiagnostics } from '../../../utils/apiCheck';
 import { redirectToRoleDashboard } from '../../../utils/roleBasedRouting';
 import '../../../styles/login.css';
 
@@ -21,19 +21,18 @@ const Login = () => {
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
-    // Run API diagnostics in development
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            runApiDiagnostics().catch(console.error);
-        }
-    }, []);
-
     // Redirect if already authenticated
     useEffect(() => {
         if (!authLoading && isAuthenticated && user) {
             console.log('User already authenticated, redirecting based on role:', user.role);
             console.log('User data:', user);
-            redirectToRoleDashboard(router, user.role, true); // Use replace to avoid back button issues
+
+            // Special routing for clients - go to tour packages instead of dashboard
+            if (user.role === 'client') {
+                router.replace('/tour-packages');
+            } else {
+                redirectToRoleDashboard(router, user.role, true);
+            }
         }
     }, [isAuthenticated, authLoading, user, router]);
 
@@ -74,25 +73,42 @@ const Login = () => {
         }
 
         try {
-            // Use the new API service for login
-            const response = await login({
+            // Use the API service directly for more control
+            const response = await api.auth.login({
                 email: formData.email,
                 password: formData.password,
-                rememberMe: formData.rememberMe,
             });
 
             if (response.success) {
-                setSuccess(response.data.message || 'Login successful!');
+                setSuccess('Login successful! Redirecting...');
 
                 // Get user role for routing
                 const userRole = response.data.user?.role || 'client';
+                const userName = response.data.user?.name || response.data.user?.firstName || 'User';
 
                 console.log('Login successful, redirecting based on role:', userRole);
                 console.log('User data:', response.data.user);
 
+                // Store authentication data
+                if (response.data.token) {
+                    localStorage.setItem('authToken', response.data.token);
+                }
+                if (response.data.user) {
+                    localStorage.setItem('userData', JSON.stringify(response.data.user));
+                }
+
                 // Route based on user role from API response
                 setTimeout(() => {
-                    redirectToRoleDashboard(router, userRole);
+                    if (userRole === 'client') {
+                        router.push('/tour-packages');
+                    } else if (userRole === 'agent') {
+                        router.push('/agent');
+                    } else if (userRole === 'admin') {
+                        router.push('/admin');
+                    } else {
+                        // Default fallback
+                        router.push('/tour-packages');
+                    }
                 }, 1500); // Show success message briefly before redirect
 
             } else {
@@ -102,7 +118,33 @@ const Login = () => {
 
         } catch (err) {
             console.error('Login Error:', err);
-            setError('An unexpected error occurred. Please try again.');
+
+            // Handle different types of errors
+            if (err.response) {
+                // Server responded with error status
+                const status = err.response.status;
+                const message = err.response.data?.message || err.message;
+
+                if (status === 401) {
+                    setError('Invalid email or password. Please try again.');
+                } else if (status === 403) {
+                    setError('Account is not verified. Please check your email for verification instructions.');
+                } else if (status === 429) {
+                    setError('Too many login attempts. Please try again later.');
+                } else {
+                    setError(message || 'Login failed. Please try again.');
+                }
+            } else if (err.request) {
+                // Network error - could be CORS or connection issue
+                if (err.message && (err.message.includes('CORS') || err.message.includes('ERR_FAILED'))) {
+                    setError('Server connection issue. Please ensure you\'re running the app on http://localhost:3000 or try refreshing the page.');
+                } else {
+                    setError('Unable to connect to server. Please check your internet connection.');
+                }
+            } else {
+                // Other error
+                setError('An unexpected error occurred. Please try again.');
+            }
         } finally {
             setLoading(false);
         }

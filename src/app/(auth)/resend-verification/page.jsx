@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import '../../../styles/login.css';
 import { post, API_URL } from '../../../utils/api';
+import { api } from '../../../services/api';
 
 const ResendVerification = () => {
     const router = useRouter();
@@ -48,16 +49,24 @@ const ResendVerification = () => {
 
         try {
             console.log('Resending verification code for email:', formData.email);
-            const response = await post('https://echoes-of-rwanda.onrender.com/api/v1/auth/resend-verification', {
-                email: formData.email,
-            });
-            alert('Verification code resent successfully! Redirecting to verification...');
-            console.log('Resend successful!');
-            console.log('Response data:', response.data);
-            setTimeout(() => router.push('/verification'), 2000);
+
+            const response = await api.auth.resendVerification(formData.email);
+
+            if (response.success) {
+                // Store email for verification process
+                localStorage.setItem('userEmail', formData.email);
+                localStorage.setItem('pendingVerification', 'true');
+
+                alert('Verification code resent successfully! Redirecting to verification...');
+                console.log('Resend successful!');
+                console.log('Response data:', response.data);
+                setTimeout(() => router.push('/verification'), 2000);
+            } else {
+                throw new Error(response.error || 'Failed to resend verification code');
+            }
         } catch (err) {
             console.error('Resend error:', err);
-            setError(err.response?.data?.message || 'Failed to resend verification code. Please try again.');
+            setError(err.message || 'Failed to resend verification code. Please try again.');
         } finally {
             setLoading(false);
         }

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useAuth, useDashboardStats, useBookings } from '../../../hooks/useApi';
+import { useAuth } from '../../../hooks/useApi';
+import { api } from '../../../services/api';
 import {
   LoadingSpinner,
   ErrorMessage,
@@ -40,29 +41,71 @@ export default function AgentDashboard() {
   const [dateRange, setDateRange] = useState('month');
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Fetch agent dashboard statistics
-  const {
-    data: agentStats,
-    loading: statsLoading,
-    error: statsError,
-    refresh: refreshStats
-  } = useDashboardStats({
-    period: dateRange,
-    key: refreshKey,
-    userType: 'agent'
-  });
+  // State for agent data
+  const [agentStats, setAgentStats] = useState(null);
+  const [agentBookings, setAgentBookings] = useState(null);
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [statsLoading, setStatsLoading] = useState(true);
+  const [bookingsLoading, setBookingsLoading] = useState(true);
+  const [statsError, setStatsError] = useState(null);
+  const [bookingsError, setBookingsError] = useState(null);
 
-  // Fetch agent's bookings
-  const {
-    data: agentBookings,
-    loading: bookingsLoading,
-    error: bookingsError
-  } = useBookings({
-    agentId: user?.id,
-    limit: 10,
-    sortBy: 'createdAt',
-    sortOrder: 'desc'
-  });
+  // Fetch agent dashboard statistics
+  const fetchAgentStats = async () => {
+    try {
+      setStatsLoading(true);
+      setStatsError(null);
+      const response = await api.agent.getDashboardStats(dateRange);
+
+      if (response.success) {
+        setAgentStats(response.data);
+      } else {
+        setStatsError(response.error || 'Failed to fetch statistics');
+      }
+    } catch (error) {
+      console.error('Error fetching agent stats:', error);
+      setStatsError(error.message || 'Failed to fetch statistics');
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
+  // Fetch agent bookings
+  const fetchAgentBookings = async () => {
+    try {
+      setBookingsLoading(true);
+      setBookingsError(null);
+      const response = await api.agent.getAgentBookings({
+        limit: 10,
+        sortBy: 'createdAt',
+        sortOrder: 'desc'
+      });
+
+      if (response.success) {
+        setAgentBookings(response);
+      } else {
+        setBookingsError(response.error || 'Failed to fetch bookings');
+      }
+    } catch (error) {
+      console.error('Error fetching agent bookings:', error);
+      setBookingsError(error.message || 'Failed to fetch bookings');
+    } finally {
+      setBookingsLoading(false);
+    }
+  };
+
+  // Fetch recent activities
+  const fetchRecentActivities = async () => {
+    try {
+      const response = await api.agent.getRecentActivities(5);
+
+      if (response.success) {
+        setRecentActivities(response.data);
+      }
+    } catch (error) {
+      console.error('Error fetching recent activities:', error);
+    }
+  };
 
   // Check authentication and permissions
   useEffect(() => {
@@ -71,9 +114,17 @@ export default function AgentDashboard() {
     }
   }, [isAuthenticated, user, authLoading]);
 
+  // Fetch data when component mounts or date range changes
+  useEffect(() => {
+    if (isAuthenticated && user?.role === 'agent') {
+      fetchAgentStats();
+      fetchAgentBookings();
+      fetchRecentActivities();
+    }
+  }, [isAuthenticated, user, dateRange, refreshKey]);
+
   const handleRefresh = () => {
     setRefreshKey(prev => prev + 1);
-    refreshStats();
   };
 
   const handleDateRangeChange = (newRange) => {
@@ -95,6 +146,20 @@ export default function AgentDashboard() {
       month: 'short',
       day: 'numeric'
     });
+  };
+
+  // Format time ago helper
+  const formatTimeAgo = (dateString) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffInSeconds = Math.floor((now - date) / 1000);
+
+    if (diffInSeconds < 60) return 'Just now';
+    if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
+    if (diffInSeconds < 86400) return `${Math.floor(diffInSeconds / 3600)} hours ago`;
+    if (diffInSeconds < 2592000) return `${Math.floor(diffInSeconds / 86400)} days ago`;
+
+    return formatDate(dateString);
   };
 
   if (authLoading || (!isAuthenticated || user?.role !== 'agent')) {
@@ -342,28 +407,10 @@ export default function AgentDashboard() {
             </div>
 
             <ActivityFeed
-              activities={[
-                {
-                  description: 'Created booking for John Smith',
-                  timestamp: '2 hours ago'
-                },
-                {
-                  description: 'Added new client: Sarah Johnson',
-                  timestamp: '5 hours ago'
-                },
-                {
-                  description: 'Updated tour package pricing',
-                  timestamp: '1 day ago'
-                },
-                {
-                  description: 'Completed client consultation call',
-                  timestamp: '2 days ago'
-                },
-                {
-                  description: 'Sent follow-up email to prospects',
-                  timestamp: '3 days ago'
-                }
-              ]}
+              activities={recentActivities.map(activity => ({
+                description: activity.description,
+                timestamp: formatTimeAgo(activity.timestamp)
+              }))}
               loading={statsLoading}
             />
           </div>
