@@ -14,124 +14,257 @@
   color: #111;
 }
 .trip-request-form form {
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
-  padding-top: 10px;
-  padding-left: 15px;
+  padding: 40px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  text-align: left;
 }
 .trip-request-form form h3 {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 700;
   color: #2e7d32;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+.trip-request-form form .form-section {
+  margin-bottom: 40px;
+  padding: 30px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #2e7d32;
+}
+.trip-request-form form .form-section h4 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.trip-request-form form .form-section h4::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: #2e7d32;
+  border-radius: 50%;
 }
 .trip-request-form form .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 25px;
-  margin-bottom: 30px;
 }
 .trip-request-form form .form-grid .form-field {
-  text-align: left;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
 }
 .trip-request-form form .form-grid .form-field label {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 6px;
-  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #2c3e50;
 }
-.trip-request-form form .form-grid .form-field input {
-  width: 90%;
-  padding: 12px 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  color: #333;
+.trip-request-form form .form-grid .form-field label svg {
+  color: #2e7d32;
 }
-.trip-request-form form .form-grid .form-field input::-moz-placeholder {
-  color: #aaa;
+.trip-request-form form .form-grid .form-field input,
+.trip-request-form form .form-grid .form-field textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #2c3e50;
+  background: #fff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
-.trip-request-form form .form-grid .form-field input::placeholder {
-  color: #aaa;
+.trip-request-form form .form-grid .form-field input::-moz-placeholder, .trip-request-form form .form-grid .form-field textarea::-moz-placeholder {
+  color: #95a5a6;
 }
-.trip-request-form form .form-grid .form-field input:focus {
+.trip-request-form form .form-grid .form-field input::placeholder,
+.trip-request-form form .form-grid .form-field textarea::placeholder {
+  color: #95a5a6;
+}
+.trip-request-form form .form-grid .form-field input:focus,
+.trip-request-form form .form-grid .form-field textarea:focus {
   border-color: #2e7d32;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
 }
-.trip-request-form form .form-grid .form-field .error {
-  color: red;
-  font-size: 12px;
+.trip-request-form form .form-grid .form-field input.error,
+.trip-request-form form .form-grid .form-field textarea.error {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+}
+.trip-request-form form .form-grid .form-field textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+.trip-request-form form .form-grid .form-field .error-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: 6px;
+  font-weight: 500;
+}
+.trip-request-form form .form-grid .form-field .error-message svg {
+  flex-shrink: 0;
+}
+.trip-request-form form .form-grid .form-field small {
   margin-top: 4px;
+  font-size: 12px;
+  color: #7f8c8d;
 }
 .trip-request-form form .submit-btn {
   width: 100%;
-  background: #2e7d32;
+  background: linear-gradient(135deg, #2e7d32, #388e3c);
   color: #fff;
   font-size: 16px;
   font-weight: 600;
-  padding: 14px 0;
+  padding: 16px 32px;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.3s ease;
-  margin-right: 0;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
 }
-.trip-request-form form .submit-btn:hover {
-  background: #256c29;
+.trip-request-form form .submit-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #256c29, #2e7d32);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(46, 125, 50, 0.4);
+}
+.trip-request-form form .submit-btn:active {
+  transform: translateY(0);
+}
+.trip-request-form form .submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.trip-request-form form .submit-btn .spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.trip-request-form .success-message {
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+  border-radius: 16px;
+  border: 2px solid #4caf50;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.trip-request-form .success-message svg {
+  color: #4caf50;
+  margin-bottom: 20px;
+}
+.trip-request-form .success-message h2 {
+  color: #2e7d32;
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.trip-request-form .success-message p {
+  color: #5d6d5d;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.trip-request-form .success-message .success-details {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 4px solid #4caf50;
+  text-align: left;
+}
+.trip-request-form .success-message .success-details p {
+  margin: 8px 0;
+  font-size: 15px;
+  color: #2c3e50;
+}
+.trip-request-form .success-message .success-details p strong {
+  color: #2e7d32;
+  font-weight: 600;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* === Responsive Enhancements and Date Picker === */
 @media (max-width: 768px) {
   .trip-request-form {
     padding: 20px 15px;
   }
+  .trip-request-form .title {
+    font-size: 24px;
+  }
   .trip-request-form form {
-    padding: 30px 15px;
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+  .trip-request-form form h3 {
+    font-size: 26px;
+  }
+  .trip-request-form form .form-section {
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  .trip-request-form form .form-section h4 {
+    font-size: 18px;
   }
   .trip-request-form form .form-grid {
     grid-template-columns: 1fr !important;
-    gap: 16px;
+    gap: 20px;
   }
-  .trip-request-form form button {
-    width: 100%;
+  .trip-request-form form .submit-btn {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+  .trip-request-form .success-message {
+    padding: 40px 20px;
+    margin: 0 10px;
+  }
+  .trip-request-form .success-message h2 {
+    font-size: 24px;
+  }
+  .trip-request-form .success-message .success-details {
+    padding: 20px;
   }
 }
-/* Input field enhancements */
-.trip-request-form form input[type=text],
-.trip-request-form form input[type=email],
-.trip-request-form form input[type=number],
-.trip-request-form form input[type=date] {
-  width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  background-color: #fff;
-}
-.trip-request-form form input[type=text]:focus,
-.trip-request-form form input[type=email]:focus,
-.trip-request-form form input[type=number]:focus,
-.trip-request-form form input[type=date]:focus {
-  border-color: #2e7d32;
-  outline: none;
-}
-
-/* Improve placeholders */
-.trip-request-form input::-moz-placeholder {
-  color: #999;
-  font-size: 13px;
-}
-.trip-request-form input::placeholder {
-  color: #999;
-  font-size: 13px;
-}
-
-/* Date picker style tweaks (optional, native input) */
+/* Additional enhancements for better UX */
 .trip-request-form input[type=date] {
   color-scheme: light;
+}
+.trip-request-form input:focus,
+.trip-request-form textarea:focus {
+  outline: 2px solid #2e7d32;
+  outline-offset: 2px;
+}
+.trip-request-form.loading {
+  pointer-events: none;
+  opacity: 0.8;
 }/*# sourceMappingURL=TripRequest.module.css.map */

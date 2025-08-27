@@ -14,6 +14,7 @@ const UserRegister = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    phone: '',
     receiveNotifications: true,
     agreeToTerms: false,
     isAgent: false,
@@ -34,7 +35,6 @@ const UserRegister = () => {
   const goToVerification = () => {
     console.log('🔄 Navigating to verification page...');
     
-    // Double-check localStorage before navigating
     const storedUserId = localStorage.getItem('userId');
     const storedUserEmail = localStorage.getItem('userEmail');
     
@@ -54,7 +54,6 @@ const UserRegister = () => {
       console.log('✅ Router.push called successfully');
     } catch (error) {
       console.error('❌ Router.push failed:', error);
-      // Fallback: use window.location if router fails
       try {
         window.location.href = '/verification';
         console.log('✅ Window.location fallback used');
@@ -73,7 +72,6 @@ const UserRegister = () => {
       ...(name === 'isAgent' && { role: checked ? 'agent' : 'client' }),
     }));
 
-    // Real-time validation
     if (name === 'email' && value && !validateEmail(value)) {
       setError('Please enter a valid email address');
     } else if (name === 'email' && error === 'Please enter a valid email address') {
@@ -94,16 +92,15 @@ const UserRegister = () => {
     setShowVerificationButton(false);
     setLoading(true);
 
-    // Enhanced validation
     if (!validateEmail(formData.email)) {
       setError('Please enter a valid email address');
       setLoading(false);
       return;
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     if (!passwordRegex.test(formData.password)) {
-      setError('Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, and a number.');
+      setError('Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, and a number.');
       setLoading(false);
       return;
     }
@@ -126,12 +123,12 @@ const UserRegister = () => {
       return;
     }
 
-    // Prepare payload according to API documentation
     const payload = {
       name: formData.name.trim(),
       email: formData.email.trim().toLowerCase(),
       password: formData.password,
       role: formData.role,
+      phone: formData.phone.trim() || undefined,
       notificationsEnabled: formData.receiveNotifications,
       agreedToTerms: formData.agreeToTerms,
       ...(formData.isAgent && {
@@ -148,25 +145,8 @@ const UserRegister = () => {
       if (response.success) {
         console.log('Full registration response:', response);
 
-        // FIXED: Handle the nested response structure where user data is at response.data.user
-        let userData;
-        
-        // Check if the response has the new nested structure
-        if (response.data && response.data.user) {
-          console.log('✅ Using nested user structure from response.data.user');
-          userData = response.data.user;
-        } else if (response.data && response.data.id) {
-          console.log('✅ Using direct structure from response.data');
-          userData = response.data;
-        } else {
-          console.error('❌ Unknown response structure');
-          console.log('Full response structure:', JSON.stringify(response, null, 2));
-          setError('Registration completed but user data structure is unexpected. Please contact support.');
-          setLoading(false);
-          return;
-        }
+        const userData = response.data.user;
 
-        // Extract user information from the correct location
         const userId = userData.id;
         const userEmail = userData.email;
         const userName = userData.name;
@@ -179,10 +159,9 @@ const UserRegister = () => {
           userName, 
           emailVerified,
           emailSent,
-          userDataSource: response.data.user ? 'response.data.user' : 'response.data'
+          userDataSource: 'response.data.user'
         });
 
-        // Validate that we have the required data
         if (!userId) {
           console.error('❌ No userId found in registration response!');
           console.log('Full response structure:', JSON.stringify(response, null, 2));
@@ -200,7 +179,6 @@ const UserRegister = () => {
           return;
         }
 
-        // Test localStorage before storing
         try {
           localStorage.setItem('test', 'test');
           localStorage.removeItem('test');
@@ -212,14 +190,12 @@ const UserRegister = () => {
           return;
         }
 
-        // Store user information for verification process
         try {
           localStorage.setItem('userId', userId);
           localStorage.setItem('userEmail', userEmail);
           localStorage.setItem('userName', userName || '');
           localStorage.setItem('pendingVerification', 'true');
           
-          // Verify storage worked
           const storedUserId = localStorage.getItem('userId');
           const storedUserEmail = localStorage.getItem('userEmail');
           const storedUserName = localStorage.getItem('userName');
@@ -247,14 +223,12 @@ const UserRegister = () => {
           return;
         }
 
-        // Show success message with registration details
         const successMessage = response.data.message || 'Registration successful! Please check your email for verification instructions.';
         setSuccess(successMessage);
         setShowVerificationButton(true);
         
         console.log('✅ Registration successful, showing verification button and auto-redirect...');
 
-        // Show countdown and redirect to verification page
         let countdown = 5;
         const countdownInterval = setInterval(() => {
           countdown--;
@@ -266,7 +240,6 @@ const UserRegister = () => {
           }
         }, 1000);
 
-        // Redirect to verification page after showing success message
         setTimeout(() => {
           clearInterval(countdownInterval);
           console.log('🔄 Auto-redirecting to verification page now...');
@@ -274,7 +247,7 @@ const UserRegister = () => {
         }, 5000);
         
       } else {
-        setError(response.message || 'Registration failed. Please try again.');
+        setError(response.message || response.error?.message || 'Registration failed. Please try again.');
       }
     } catch (err) {
       console.error('Registration error:', err);
@@ -329,7 +302,6 @@ const UserRegister = () => {
         <ErrorMessage error={error} className="mb-4" />
         <SuccessMessage message={success} className="mb-4" />
 
-        {/* Manual verification button */}
         {showVerificationButton && (
           <div style={{ textAlign: 'center', marginBottom: '20px' }}>
             <button
@@ -358,7 +330,6 @@ const UserRegister = () => {
           </div>
         )}
 
-        {/* Development Debug Panel */}
         {process.env.NODE_ENV === 'development' && (
           <div style={{ 
             background: '#f8f9fa', 
@@ -371,9 +342,9 @@ const UserRegister = () => {
           }}>
             <strong>🔧 Debug Info (Development Only):</strong><br />
             <div style={{ marginTop: '10px' }}>
-              <div>Form Valid: {formData.agreeToTerms && validateEmail(formData.email) && formData.password.length >= 8 ? 'Yes' : 'No'}</div>
+              <div>Form Valid: {formData.agreeToTerms && validateEmail(formData.email) && formData.password.length >= 6 ? 'Yes' : 'No'}</div>
               <div>Email Valid: {validateEmail(formData.email) ? 'Yes' : 'No'}</div>
-              <div>Password Strong: {/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(formData.password) ? 'Yes' : 'No'}</div>
+              <div>Password Strong: {/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(formData.password) ? 'Yes' : 'No'}</div>
               <div>Passwords Match: {formData.password === formData.confirmPassword ? 'Yes' : 'No'}</div>
               <div>Terms Agreed: {formData.agreeToTerms ? 'Yes' : 'No'}</div>
               <div>Is Agent: {formData.isAgent ? 'Yes' : 'No'}</div>
@@ -467,38 +438,53 @@ const UserRegister = () => {
               />
             </div>
           </div>
-          {formData.isAgent && (
-            <div className="same-row">
-              <div className="name-inputs">
-                <label htmlFor="companyName">Company Name</label>
-                <br />
-                <input
-                  type="text"
-                  id="companyName"
-                  name="companyName"
-                  placeholder="Enter your company name"
-                  value={formData.companyName}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-              </div>
-              <div className="name-inputs">
-                <label htmlFor="location">Location</label>
-                <br />
-                <input
-                  type="text"
-                  id="location"
-                  name="location"
-                  placeholder="Enter your location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  required
-                  disabled={loading}
-                />
-              </div>
+          <div className="same-row">
+            <div className="name-inputs">
+              <label htmlFor="phone">Phone Number</label>
+              <br />
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="Enter your phone number"
+                value={formData.phone}
+                onChange={handleChange}
+                disabled={loading}
+              />
             </div>
-          )}
+            {formData.isAgent && (
+              <>
+                <div className="name-inputs">
+                  <label htmlFor="companyName">Company Name</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    placeholder="Enter your company name"
+                    value={formData.companyName}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+                <div className="name-inputs">
+                  <label htmlFor="location">Location</label>
+                  <br />
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="Enter your location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    required
+                    disabled={loading}
+                  />
+                </div>
+              </>
+            )}
+          </div>
           <div className="checkboxes">
             <label>
               <input

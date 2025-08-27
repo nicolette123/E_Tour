@@ -1,8 +1,7 @@
 // API Configuration for E_Tour Backend
 const API_CONFIG = {
   // Base URL for the E_Tour backend API (matching the API documentation)
-  // Always use the direct backend URL - proxy configuration wasn't working correctly
-  BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://echoes-of-rwanda.onrender.com',
+  BASE_URL: 'https://echoes-of-rwanda.onrender.com',
 
   // API Version
   VERSION: 'v1',
@@ -58,6 +57,7 @@ const API_CONFIG = {
     DELETE_TRIP: '/api/v1/agent/trips/:id',
     GET_BOOKINGS: '/api/v1/agent/bookings',
     GET_PERFORMANCE: '/api/v1/agent/performance',
+    CREATE_BOOKING: '/api/v1/agent/bookings',
   },
 
   // Admin endpoints (matching API documentation)

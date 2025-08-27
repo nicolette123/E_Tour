@@ -40,6 +40,7 @@ export default function AgentDashboard() {
   const { user, isAuthenticated, loading: authLoading } = useAuth();
   const [dateRange, setDateRange] = useState('month');
   const [refreshKey, setRefreshKey] = useState(0);
+  const [showCreateTripModal, setShowCreateTripModal] = useState(false);
 
   // State for agent data
   const [agentStats, setAgentStats] = useState(null);
@@ -49,6 +50,21 @@ export default function AgentDashboard() {
   const [bookingsLoading, setBookingsLoading] = useState(true);
   const [statsError, setStatsError] = useState(null);
   const [bookingsError, setBookingsError] = useState(null);
+  const [createTripError, setCreateTripError] = useState(null);
+  const [createTripSuccess, setCreateTripSuccess] = useState(null);
+
+  // State for the trip form
+  const [tripForm, setTripForm] = useState({
+    title: '',
+    description: '',
+    itinerary: '',
+    price: '',
+    maxSeats: '',
+    location: '',
+    startDate: '',
+    endDate: '',
+    images: [''],
+  });
 
   // Fetch agent dashboard statistics
   const fetchAgentStats = async () => {
@@ -107,6 +123,104 @@ export default function AgentDashboard() {
     }
   };
 
+  // Handle trip form changes
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setTripForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle image URL changes
+  const handleImageChange = (index, value) => {
+    const newImages = [...tripForm.images];
+    newImages[index] = value;
+    setTripForm((prev) => ({
+      ...prev,
+      images: newImages,
+    }));
+  };
+
+  // Add new image field
+  const addImageField = () => {
+    if (tripForm.images.length < 10) {
+      setTripForm((prev) => ({
+        ...prev,
+        images: [...prev.images, ''],
+      }));
+    }
+  };
+
+  // Submit trip form
+  const handleCreateTrip = async (e) => {
+    e.preventDefault();
+    setCreateTripError(null);
+    setCreateTripSuccess(null);
+
+    // Validate required fields
+    const requiredFields = {
+      title: tripForm.title,
+      price: tripForm.price,
+      maxSeats: tripForm.maxSeats,
+      location: tripForm.location,
+      startDate: tripForm.startDate,
+      endDate: tripForm.endDate,
+    };
+
+    for (const [key, value] of Object.entries(requiredFields)) {
+      if (!value) {
+        setCreateTripError(`Please fill in the ${key} field.`);
+        return;
+      }
+    }
+
+    // Validate dates
+    if (new Date(tripForm.startDate) > new Date(tripForm.endDate)) {
+      setCreateTripError('End date must be after start date.');
+      return;
+    }
+
+    // Prepare payload
+    const payload = {
+      title: tripForm.title,
+      description: tripForm.description || '',
+      itinerary: tripForm.itinerary || '',
+      price: tripForm.price,
+      maxSeats: parseInt(tripForm.maxSeats, 10),
+      location: tripForm.location,
+      startDate: tripForm.startDate,
+      endDate: tripForm.endDate,
+      images: tripForm.images.filter((url) => url.trim() !== ''),
+    };
+
+    try {
+      const response = await api.agent.createTrip(payload);
+
+      if (response.success) {
+        setCreateTripSuccess('Trip created successfully!');
+        setTripForm({
+          title: '',
+          description: '',
+          itinerary: '',
+          price: '',
+          maxSeats: '',
+          location: '',
+          startDate: '',
+          endDate: '',
+          images: [''],
+        });
+        setShowCreateTripModal(false);
+        // Optionally refresh trips if a getTrips method exists
+      } else {
+        setCreateTripError(response.error?.message || 'Failed to create trip.');
+      }
+    } catch (error) {
+      console.error('Error creating trip:', error);
+      setCreateTripError(error.message || 'Failed to create trip.');
+    }
+  };
+
   // Check authentication and permissions
   useEffect(() => {
     if (!authLoading && (!isAuthenticated || user?.role !== 'agent')) {
@@ -124,7 +238,7 @@ export default function AgentDashboard() {
   }, [isAuthenticated, user, dateRange, refreshKey]);
 
   const handleRefresh = () => {
-    setRefreshKey(prev => prev + 1);
+    setRefreshKey((prev) => prev + 1);
   };
 
   const handleDateRangeChange = (newRange) => {
@@ -144,7 +258,7 @@ export default function AgentDashboard() {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -169,6 +283,7 @@ export default function AgentDashboard() {
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -191,10 +306,7 @@ export default function AgentDashboard() {
               <option value="year">This Year</option>
             </select>
 
-            <RetryButton
-              onRetry={handleRefresh}
-              loading={statsLoading}
-            />
+            <RetryButton onRetry={handleRefresh} loading={statsLoading} />
           </div>
         </div>
       </div>
@@ -203,11 +315,7 @@ export default function AgentDashboard() {
       <div className="p-6 space-y-6">
         {/* Error handling */}
         {statsError && (
-          <ErrorMessage
-            error={statsError}
-            onRetry={handleRefresh}
-            className="mb-6"
-          />
+          <ErrorMessage error={statsError} onRetry={handleRefresh} className="mb-6" />
         )}
 
         {/* Stats Cards */}
@@ -372,11 +480,11 @@ export default function AgentDashboard() {
               onClick={() => window.location.href = '/agent/clients/create'}
             />
             <QuickActionCard
-              title="Create Booking"
-              description="Make a new booking"
+              title="Create Trip"
+              description="Create a new trip"
               icon={Plus}
               color="green"
-              onClick={() => window.location.href = '/agent/bookings/create'}
+              onClick={() => setShowCreateTripModal(true)}
             />
             <QuickActionCard
               title="View Commissions"
@@ -407,9 +515,9 @@ export default function AgentDashboard() {
             </div>
 
             <ActivityFeed
-              activities={recentActivities.map(activity => ({
+              activities={recentActivities.map((activity) => ({
                 description: activity.description,
-                timestamp: formatTimeAgo(activity.timestamp)
+                timestamp: formatTimeAgo(activity.timestamp),
               }))}
               loading={statsLoading}
             />
@@ -430,25 +538,34 @@ export default function AgentDashboard() {
                   id: 1,
                   task: 'Follow up with John Doe about Rwanda tour',
                   dueDate: '2025-08-15',
-                  priority: 'high'
+                  priority: 'high',
                 },
                 {
                   id: 2,
                   task: 'Prepare presentation for corporate client',
                   dueDate: '2025-08-18',
-                  priority: 'medium'
+                  priority: 'medium',
                 },
                 {
                   id: 3,
                   task: 'Update client database with new contacts',
                   dueDate: '2025-08-20',
-                  priority: 'low'
-                }
+                  priority: 'low',
+                },
               ].map((task) => (
-                <div key={task.id} className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg">
-                  <div className={`w-3 h-3 rounded-full ${task.priority === 'high' ? 'bg-red-500' :
-                      task.priority === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
-                    }`}></div>
+                <div
+                  key={task.id}
+                  className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg"
+                >
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      task.priority === 'high'
+                        ? 'bg-red-500'
+                        : task.priority === 'medium'
+                        ? 'bg-yellow-500'
+                        : 'bg-green-500'
+                    }`}
+                  ></div>
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">{task.task}</p>
                     <p className="text-xs text-gray-500">Due: {task.dueDate}</p>
@@ -462,6 +579,146 @@ export default function AgentDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Create Trip Modal */}
+      {showCreateTripModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4">Create New Trip</h2>
+            {createTripError && (
+              <ErrorMessage error={createTripError} className="mb-4" />
+            )}
+            {createTripSuccess && (
+              <div className="text-green-600 mb-4">{createTripSuccess}</div>
+            )}
+            <form onSubmit={handleCreateTrip}>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Title *</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={tripForm.title}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Description</label>
+                <textarea
+                  name="description"
+                  value={tripForm.description}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  maxLength={2000}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Itinerary</label>
+                <textarea
+                  name="itinerary"
+                  value={tripForm.itinerary}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  maxLength={5000}
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Price *</label>
+                <input
+                  type="number"
+                  name="price"
+                  value={tripForm.price}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Max Seats *</label>
+                <input
+                  type="number"
+                  name="maxSeats"
+                  value={tripForm.maxSeats}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Location *</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={tripForm.location}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Start Date *</label>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={tripForm.startDate}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">End Date *</label>
+                <input
+                  type="date"
+                  name="endDate"
+                  value={tripForm.endDate}
+                  onChange={handleFormChange}
+                  className="w-full p-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-1">Images (max 10)</label>
+                {tripForm.images.map((image, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    value={image}
+                    onChange={(e) => handleImageChange(index, e.target.value)}
+                    className="w-full p-2 border rounded mb-2"
+                    placeholder="Image URL"
+                  />
+                ))}
+                {tripForm.images.length < 10 && (
+                  <button
+                    type="button"
+                    onClick={addImageField}
+                    className="text-blue-600 hover:text-blue-800 text-sm"
+                  >
+                    Add Another Image
+                  </button>
+                )}
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowCreateTripModal(false)}
+                  className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  Create Trip
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

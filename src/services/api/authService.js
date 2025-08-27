@@ -51,52 +51,52 @@ class AuthService {
     }
   }
 
-// Register new user - Alternative approach maintaining your expected structure
-async signup(userData) {
-  try {
-    const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.REGISTER, {
-      name: userData.name || `${userData.firstName} ${userData.lastName}`,
-      email: userData.email,
-      password: userData.password,
-      role: userData.role || 'client', // Default to client role
-      phone: userData.phone,
-      companyName: userData.companyName,
-      location: userData.location,
-      notificationsEnabled: userData.notificationsEnabled !== false,
-      agreedToTerms: userData.agreeToTerms || false,
-    });
+  // Register new user - Alternative approach maintaining your expected structure
+  async signup(userData) {
+    try {
+      const response = await this.baseService.post(API_CONFIG.AUTH_ENDPOINTS.REGISTER, {
+        name: userData.name || `${userData.firstName} ${userData.lastName}`,
+        email: userData.email,
+        password: userData.password,
+        role: userData.role || 'client', // Default to client role
+        phone: userData.phone,
+        companyName: userData.companyName,
+        location: userData.location,
+        notificationsEnabled: userData.notificationsEnabled !== false,
+        agreedToTerms: userData.agreeToTerms || false,
+      });
 
-    if (response.success) {
-      // FIXED: Correctly extract user data from API response
-      // The API returns user data directly under response.data
-      const apiUserData = response.data;
-      
-      return {
-        success: true,
-        data: {
-          message: response.message || SUCCESS_MESSAGES.SIGNUP_SUCCESS,
-          // Wrap the user data in a 'user' property to match your frontend expectations
-          user: {
-            id: apiUserData.id,
-            name: apiUserData.name,
-            email: apiUserData.email,
-            role: apiUserData.role,
-            emailVerified: apiUserData.emailVerified || false,
-            emailSent: apiUserData.emailSent || false,
+      if (response.success) {
+        // FIXED: Correctly extract user data from API response
+        // The API returns user data directly under response.data
+        const apiUserData = response.data;
+        
+        return {
+          success: true,
+          data: {
+            message: response.message || SUCCESS_MESSAGES.SIGNUP_SUCCESS,
+            // Wrap the user data in a 'user' property to match your frontend expectations
+            user: {
+              id: apiUserData.id,
+              name: apiUserData.name,
+              email: apiUserData.email,
+              role: apiUserData.role,
+              emailVerified: apiUserData.emailVerified || false,
+              emailSent: apiUserData.emailSent || false,
+            },
+            requiresVerification: apiUserData.emailVerified === false,
           },
-          requiresVerification: apiUserData.emailVerified === false,
-        },
+        };
+      }
+
+      return response;
+    } catch (error) {
+      return {
+        success: false,
+        error: error,
       };
     }
-
-    return response;
-  } catch (error) {
-    return {
-      success: false,
-      error: error,
-    };
   }
-}
 
   // Logout user
   async logout() {
