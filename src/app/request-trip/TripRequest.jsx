@@ -1,17 +1,19 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Calendar, Users, DollarSign, MapPin, Phone, Mail, Building, CheckCircle, AlertCircle, FileText } from 'lucide-react';
 import styles from './TripRequest.module.scss';
 import { api } from '../../services/api';
+import { useAuth } from '../../hooks/useApi';
 
 const TripRequest = () => {
+  const { isAuthenticated } = useAuth();
+
   const [formData, setFormData] = useState({
-    // Contact Information
     companyName: '',
     phone: '',
     email: '',
     address: '',
-
-    // Trip Details (matching API requirements)
     destination: '',
     budget: '',
     interests: '',
@@ -24,14 +26,13 @@ const TripRequest = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
 
-  // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   };
 
-  // Get minimum end date (day after start date)
   const getMinEndDate = () => {
     if (!formData.preferredStartDate) return getTodayDate();
     const startDate = new Date(formData.preferredStartDate);
@@ -43,7 +44,6 @@ const TripRequest = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -52,38 +52,20 @@ const TripRequest = () => {
   const validate = () => {
     let tempErrors = {};
 
-    // Basic required field validation
-    if (!formData.companyName.trim()) tempErrors.companyName = 'Company name is required';
-    if (!formData.phone.trim()) tempErrors.phone = 'Phone number is required';
-    if (!formData.email.trim()) tempErrors.email = 'Email is required';
-    if (!formData.address.trim()) tempErrors.address = 'Address is required';
     if (!formData.destination.trim()) tempErrors.destination = 'Destination is required';
     if (!formData.groupSize) tempErrors.groupSize = 'Number of travelers is required';
     if (!formData.budget.trim()) tempErrors.budget = 'Budget amount is required';
     if (!formData.preferredStartDate) tempErrors.preferredStartDate = 'Start date is required';
     if (!formData.preferredEndDate) tempErrors.preferredEndDate = 'End date is required';
 
-    // Email validation
-    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      tempErrors.email = 'Please enter a valid email address';
-    }
-
-    // Phone validation
-    if (formData.phone && !/^\+?[\d\s\-\(\)]{10,}$/.test(formData.phone)) {
-      tempErrors.phone = 'Please enter a valid phone number';
-    }
-
-    // Number validation
     if (formData.groupSize && (parseInt(formData.groupSize) < 1 || parseInt(formData.groupSize) > 50)) {
       tempErrors.groupSize = 'Number of travelers must be between 1 and 50';
     }
 
-    // Budget validation
     if (formData.budget && (parseFloat(formData.budget) < 100)) {
       tempErrors.budget = 'Budget must be at least $100';
     }
 
-    // Date validation
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -116,10 +98,14 @@ const TripRequest = () => {
       return;
     }
 
+    if (!isAuthenticated) {
+      setSubmitMessage('Please click on Get Started to log in and submit your request.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Prepare API payload according to the API documentation
       const apiPayload = {
         destination: formData.destination,
         budget: parseFloat(formData.budget),
@@ -130,13 +116,16 @@ const TripRequest = () => {
         clientNotes: `Company: ${formData.companyName}\nPhone: ${formData.phone}\nEmail: ${formData.email}\nAddress: ${formData.address}\n\nAdditional Notes: ${formData.clientNotes || 'None'}`
       };
 
-      // Make API call to create custom trip request
       const response = await api.trip.createCustomTripRequest(apiPayload);
 
-      console.log('Trip request submitted successfully:', response);
-      setIsSubmitted(true);
+      if (response.success) {
+        console.log('Trip request submitted successfully:', response);
+        setIsSubmitted(true);
+        setSubmitMessage('You will receive an email that your trip has been received.');
+      } else {
+        throw new Error(response.message || 'Failed to submit trip request');
+      }
 
-      // Reset form after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({
@@ -156,15 +145,10 @@ const TripRequest = () => {
 
     } catch (error) {
       console.error('Error submitting trip request:', error);
-
-      // Show user-friendly error message
       const errorMessage = error.message || 'There was an error submitting your request. Please try again.';
       alert(`Error: ${errorMessage}`);
-
-      // If it's an authentication error, suggest login
-      if (error.status === 401) {
+      if (error.response?.status === 401) {
         alert('Please log in to submit a trip request.');
-        // Optionally redirect to login page
         // window.location.href = '/login';
       }
     } finally {
@@ -172,7 +156,6 @@ const TripRequest = () => {
     }
   };
 
-  // Success state
   if (isSubmitted) {
     return (
       <div className={styles["trip-request-form"]}>
@@ -196,10 +179,20 @@ const TripRequest = () => {
       <p className={styles.subtitle}>Request your Trip</p>
       <h2 className={styles.title}>Request the trip on your own choice</h2>
 
+      {submitMessage && (
+        <div className={styles["submit-message"]}>
+          {submitMessage}
+          {!isAuthenticated && (
+            <button onClick={() => window.location.href = '/login'} className={styles["get-started-btn"]}>
+              Get Started
+            </button>
+          )}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
         <h3>Create a Custom Trip Request</h3>
 
-        {/* Trip Details Section */}
         <div className={styles["form-section"]}>
           <h4>Trip Details</h4>
           <div className={styles["form-grid"]}>
@@ -334,14 +327,13 @@ const TripRequest = () => {
           </div>
         </div>
 
-        {/* Contact Information Section */}
         <div className={styles["form-section"]}>
           <h4>Contact Information</h4>
           <div className={styles["form-grid"]}>
             <div className={styles["form-field"]}>
               <label htmlFor="companyName">
                 <Building size={18} />
-                Company/Organization Name *
+                Company/Organization Name
               </label>
               <input
                 type="text"
@@ -350,20 +342,13 @@ const TripRequest = () => {
                 value={formData.companyName}
                 onChange={handleChange}
                 placeholder="Enter your company or organization name"
-                className={errors.companyName ? styles.error : ''}
               />
-              {errors.companyName && (
-                <span className={styles["error-message"]}>
-                  <AlertCircle size={16} />
-                  {errors.companyName}
-                </span>
-              )}
             </div>
 
             <div className={styles["form-field"]}>
               <label htmlFor="phone">
                 <Phone size={18} />
-                Phone Number *
+                Phone Number
               </label>
               <input
                 type="tel"
@@ -372,20 +357,13 @@ const TripRequest = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 placeholder="+250784800280"
-                className={errors.phone ? styles.error : ''}
               />
-              {errors.phone && (
-                <span className={styles["error-message"]}>
-                  <AlertCircle size={16} />
-                  {errors.phone}
-                </span>
-              )}
             </div>
 
             <div className={styles["form-field"]}>
               <label htmlFor="email">
                 <Mail size={18} />
-                Email Address *
+                Email Address
               </label>
               <input
                 type="email"
@@ -394,20 +372,13 @@ const TripRequest = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="your.email@example.com"
-                className={errors.email ? styles.error : ''}
               />
-              {errors.email && (
-                <span className={styles["error-message"]}>
-                  <AlertCircle size={16} />
-                  {errors.email}
-                </span>
-              )}
             </div>
 
             <div className={styles["form-field"]}>
               <label htmlFor="address">
                 <MapPin size={18} />
-                Address *
+                Address
               </label>
               <input
                 type="text"
@@ -416,17 +387,10 @@ const TripRequest = () => {
                 value={formData.address}
                 onChange={handleChange}
                 placeholder="Your full address"
-                className={errors.address ? styles.error : ''}
               />
-              {errors.address && (
-                <span className={styles["error-message"]}>
-                  <AlertCircle size={16} />
-                  {errors.address}
-                </span>
-              )}
             </div>
 
-            <div className={styles["form-field"]} style={{gridColumn: '1 / -1'}}>
+            <div className={styles["form-field"]} style={{ gridColumn: '1 / -1' }}>
               <label htmlFor="clientNotes">
                 <FileText size={18} />
                 Additional Notes
@@ -439,16 +403,14 @@ const TripRequest = () => {
                 placeholder="Any special requests or additional information..."
                 rows="4"
                 maxLength="1000"
-                style={{resize: 'vertical'}}
+                style={{ resize: 'vertical' }}
               />
-              <small style={{color: '#666', fontSize: '0.85em'}}>
+              <small style={{ color: '#666', fontSize: '0.85em' }}>
                 {formData.clientNotes.length}/1000 characters
               </small>
             </div>
           </div>
         </div>
-
-
 
         <button
           type="submit"

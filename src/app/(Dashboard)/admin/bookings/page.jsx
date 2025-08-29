@@ -30,56 +30,7 @@ export default function AdminBookings() {
   const [selectedBookings, setSelectedBookings] = useState([]);
   const [editRowId, setEditRowId] = useState(null);
   const [editFormData, setEditFormData] = useState({});
-  const [bookings, setBookings] = useState([
-    {
-      id: '1',
-      bookingId: 'BK-2024-001',
-      customerName: 'John Doe',
-      customerEmail: 'john@example.com',
-      tripTitle: 'Gorilla Trekking Adventure',
-      destination: 'Volcanoes National Park',
-      bookingDate: '2024-01-15',
-      tripDate: '2024-02-15',
-      status: 'confirmed',
-      amount: 1200,
-      currency: 'USD',
-      seatsBooked: 2,
-      paymentStatus: 'paid',
-      agentName: 'Safari Guide Co.'
-    },
-    {
-      id: '2',
-      bookingId: 'BK-2024-002',
-      customerName: 'Jane Smith',
-      customerEmail: 'jane@example.com',
-      tripTitle: 'Lake Kivu Relaxation',
-      destination: 'Lake Kivu',
-      bookingDate: '2024-01-14',
-      tripDate: '2024-02-20',
-      status: 'pending',
-      amount: 800,
-      currency: 'USD',
-      seatsBooked: 1,
-      paymentStatus: 'pending',
-      agentName: 'Lakeside Tours'
-    },
-    {
-      id: '3',
-      bookingId: 'BK-2024-003',
-      customerName: 'Mike Johnson',
-      customerEmail: 'mike@example.com',
-      tripTitle: 'Nyungwe Forest Canopy Walk',
-      destination: 'Nyungwe Forest',
-      bookingDate: '2024-01-13',
-      tripDate: '2024-02-10',
-      status: 'cancelled',
-      amount: 600,
-      currency: 'USD',
-      seatsBooked: 3,
-      paymentStatus: 'refunded',
-      agentName: 'Forest Adventures'
-    }
-  ]);
+  const [bookings, setBookings] = useState([]);
 
   // Check authentication
   useEffect(() => {
@@ -91,9 +42,25 @@ export default function AdminBookings() {
   const fetchBookings = async () => {
     setLoading(true);
     try {
-      // GET /admin/bookings
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      // In real implementation, update bookings from API
+      const response = await api.admin.getCustomTrips(); // Fetch custom trips from admin endpoint
+      if (response.success) {
+        setBookings(response.data.map((trip, index) => ({
+          id: trip.id || index.toString(),
+          bookingId: `TR-${index + 1}`,
+          customerName: 'Custom Request', // Can extract from clientNotes if needed
+          customerEmail: trip.clientNotes.match(/Email: (.*)/)?.[1] || '',
+          tripTitle: 'Custom Trip to ' + trip.destination,
+          destination: trip.destination,
+          bookingDate: trip.createdAt || new Date().toISOString().split('T')[0],
+          tripDate: trip.preferredStartDate,
+          status: 'pending',
+          amount: trip.budget,
+          currency: 'USD',
+          seatsBooked: trip.groupSize,
+          paymentStatus: 'pending',
+          agentName: 'Unassigned'
+        })));
+      }
     } catch (error) {
       console.error('Failed to fetch bookings:', error);
     } finally {
